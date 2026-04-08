@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amplifier Selector</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0d0f14;--surface:#16191f;--surface2:#1e2229;--border:#2a2e38;--accent:#e8b86d;--text:#f0ede8;--muted:#7a8090;}
+  body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;}
+  .phone-wrap{max-width:420px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;overflow:hidden;padding-bottom:90px;}
+  .phone-wrap::before{content:'';position:absolute;top:-120px;right:-120px;width:380px;height:380px;background:radial-gradient(circle,rgba(232,184,109,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
+  .phone-wrap::after{content:'';position:absolute;bottom:0;left:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(100,120,200,0.06) 0%,transparent 70%);pointer-events:none;z-index:0;}
+  .content{position:relative;z-index:1;}
+  .header{padding:2rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
+  .header-eyebrow{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:8px;}
+  .header-title{font-family:'DM Serif Display',serif;font-size:26px;line-height:1.2;color:var(--text);font-weight:400;}
+  .header-title em{color:var(--accent);font-style:normal;}
+  .header-sub{font-size:13px;color:var(--muted);margin-top:6px;font-weight:300;}
+  .progress-bar{height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);transition:width 0.4s ease;width:0%;}
+  .steps{padding:1.25rem 1.5rem;}
+  .step-inner{padding:1rem 0;border-bottom:1px solid var(--border);}
+  .step-inner:last-child{border-bottom:none;}
+  .step-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .step-num{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+  .step-num.done{color:var(--accent);}
+  .change-btn{font-size:11px;color:var(--accent);background:none;border:1px solid rgba(232,184,109,0.3);cursor:pointer;padding:2px 8px;border-radius:20px;font-family:'DM Sans',sans-serif;letter-spacing:0.04em;transition:all 0.15s;}
+  .change-btn:hover{background:rgba(232,184,109,0.1);}
+  .btn-group{display:flex;flex-wrap:wrap;gap:8px;}
+  .btn-opt{border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:10px 16px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;cursor:pointer;transition:all 0.15s;letter-spacing:0.01em;}
+  .btn-opt:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-opt.active{background:var(--accent);color:#0d0f14;border-color:var(--accent);font-weight:500;}
+  .result-wrap{padding:0 1.5rem 1rem;}
+  .result-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;}
+  .result-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);}
+  .result-eyebrow{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .result-amps{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;}
+  .amp-pill{background:rgba(232,184,109,0.12);border:1px solid rgba(232,184,109,0.3);color:var(--accent);font-family:'DM Serif Display',serif;font-size:22px;padding:8px 18px;border-radius:10px;letter-spacing:0.02em;}
+  .result-divider{height:1px;background:var(--border);margin:1rem 0;}
+  .result-meta{display:flex;flex-wrap:wrap;gap:12px 20px;}
+  .meta-item{font-size:12px;color:var(--muted);}
+  .meta-item span{color:var(--text);font-weight:500;display:block;font-size:13px;margin-top:1px;}
+  .combo-note{font-size:11px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+  .bottom-toolbar{position:sticky;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--border);padding:12px 1.5rem;display:flex;gap:10px;z-index:10;max-width:420px;margin:0 auto;}
+  .tool-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.04em;padding:11px 16px;border-radius:10px;cursor:pointer;transition:all 0.15s;}
+  .tool-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent);}
+  .tool-btn:disabled{opacity:0.25;pointer-events:none;}
+  .tool-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .reset-btn:hover:not(:disabled){border-color:#c0464a;color:#c0464a;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .fadein{animation:fadeUp 0.25s ease forwards;}
+</style>
+</head>
+<body>
+<div class="phone-wrap">
+  <div class="content">
+    <div class="header">
+      <div class="header-eyebrow">Amplifier Selector</div>
+      <div class="header-title">Find your <em>perfect</em> amp</div>
+      <div class="header-sub">Answer each question to get your recommendation.</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <div class="steps">
+      <div class="step" id="s-cat">
+        <div class="step-inner">
+          <div class="step-header"><span class="step-num" id="n-cat">01 — Category</span></div>
+          <div class="btn-group" id="g-cat">
+            <button class="btn-opt" data-val="Design Centric">Design Centric</button>
+            <button class="btn-opt" data-val="Landscape">Landscape</button>
+            <button class="btn-opt" data-val="Soundbars">Soundbars</button>
+            <button class="btn-opt" data-val="Performance & Theater">Performance & Theater</button>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="s-prod" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header"><span class="step-num" id="n-prod">02 — Product</span><button class="change-btn" onclick="resetFrom('s-prod')">change</button></div>
+          <div class="btn-group" id="g-prod"></div>
+        </div>
+      </div>
+      <div class="step" id="s-ohm" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header"><span class="step-num" id="n-ohm">— Connection type</span><button class="change-btn" onclick="resetFrom('s-ohm')">change</button></div>
+          <div class="btn-group" id="g-ohm"></div>
+        </div>
+      </div>
+      <div class="step" id="s-spk" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header"><span class="step-num" id="n-spk">— Speakers</span><button class="change-btn" onclick="resetFrom('s-spk')">change</button></div>
+          <div class="btn-group" id="g-spk"></div>
+        </div>
+      </div>
+      <div class="step" id="s-sub" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header"><span class="step-num" id="n-sub">— Subwoofers</span><button class="change-btn" onclick="resetFrom('s-sub')">change</button></div>
+          <div class="btn-group" id="g-sub"></div>
+        </div>
+      </div>
+    </div>
+    <div class="result-wrap" id="result-area"></div>
+  </div>
+  <div class="bottom-toolbar">
+    <button class="tool-btn" id="back-btn" onclick="goBack()" disabled>
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
+    </button>
+    <button class="tool-btn reset-btn" id="reset-btn" onclick="fullReset()" disabled>
+      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>Reset
+    </button>
+  </div>
+</div>
+<script>
+const NO_SUB_PRODS=['ALSB64','ALSB85','ALSB106'];
+const SINGLE_OHM={'ASM63':'8ohm','SBR4':'8ohm','ASBR4':'8ohm','ASBR5':'8ohm','ASBR6':'8ohm','ASM5600':'8ohm','ASM3600':'8ohm'};
+const SPK_ORDER={"Mono":0,"LCR":1,"L&R":2};
+const raw=[
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"2",sub:0,res:"250.1"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"4",sub:0,res:"250.2"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"6",sub:0,res:"250.4"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"8",sub:0,res:"250.4"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
+  {cat:"Design Centric",prod:"MOS",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"2",sub:0,res:"125.1"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"4",sub:0,res:"125.2"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"6",sub:0,res:"125.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"8",sub:0,res:"125.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"8",sub:1,res:"250.1+125.4"},
+  {cat:"Design Centric",prod:"Blends 602",ohm:null,spk:"8",sub:2,res:"250.2+125.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"2",sub:0,res:"250.1"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"4",sub:0,res:"250.2"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"6",sub:0,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"8",sub:0,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
+  {cat:"Design Centric",prod:"Blends 802",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"2",sub:0,res:"250.1"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"4",sub:0,res:"250.2"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"6",sub:0,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"8",sub:0,res:"250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
+  {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"ALSB64",ohm:"70v",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB64",ohm:"8ohm",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB64",ohm:"70v",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB64",ohm:"8ohm",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB64",ohm:"70v",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB64",ohm:"8ohm",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB85",ohm:"70v",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB85",ohm:"8ohm",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB85",ohm:"70v",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB85",ohm:"8ohm",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB85",ohm:"70v",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB85",ohm:"8ohm",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB106",ohm:"70v",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB106",ohm:"8ohm",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB106",ohm:"70v",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB106",ohm:"8ohm",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB106",ohm:"70v",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"ALSB106",ohm:"8ohm",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"2",sub:1,res:"250.2"},
+  {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"2",sub:2,res:"250.4"},
+  {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"4",sub:1,res:"250.4"},
+  {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"4",sub:2,res:"250.4"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"Mono",sub:0,res:"125.1"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"LCR",sub:0,res:"125.2"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"L&R",sub:0,res:"125.1"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"Mono",sub:1,res:"250.2"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"LCR",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"L&R",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"Mono",sub:0,res:"250.1"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"LCR",sub:0,res:"250.1"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"L&R",sub:0,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"Mono",sub:1,res:"250.2"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"LCR",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"L&R",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"Mono",sub:0,res:"250.1"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"LCR",sub:0,res:"250.2"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"L&R",sub:0,res:"250.1"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"Mono",sub:1,res:"250.1"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"LCR",sub:1,res:"250.2"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"L&R",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"Mono",sub:0,res:"1000.1"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"LCR",sub:0,res:"1000.2"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"L&R",sub:0,res:"1000.1"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"Mono",sub:1,res:"1000.2"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"LCR",sub:1,res:"1000.4"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"L&R",sub:1,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"1",sub:0,res:"1000.1"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"2",sub:0,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"3",sub:0,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"4",sub:0,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"5",sub:0,res:"1000.1+1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"1",sub:1,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"2",sub:1,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"3",sub:1,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"4",sub:1,res:"1000.1+1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"5",sub:1,res:"1000.2+1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"1",sub:2,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"2",sub:2,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"3",sub:2,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"4",sub:2,res:"1000.1+1000.4"},
+  {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"5",sub:2,res:"1000.2+1000.4"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"1",sub:0,res:"1000.1"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"2",sub:0,res:"1000.1"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"3",sub:0,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"5",sub:0,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"1",sub:1,res:"1000.1"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"3",sub:1,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"5",sub:1,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"1",sub:2,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"2",sub:2,res:"1000.2"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"3",sub:2,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"5",sub:2,res:"1000.4"},
+];
+const catProds={"Design Centric":["MOS","Blends 602","Blends 802","Blends 803"],"Landscape":["LSR40","LSR80","ALSB64","ALSB85","ALSB106","LS44","LS64","ASM63"],"Soundbars":["SBR4","ASBR4","ASBR5","ASBR6"],"Performance & Theater":["ASM5600","ASM3600"]};
+let sel={cat:null,prod:null,ohm:null,spk:null,sub:null};
+const stepOrder=['s-cat','s-prod','s-ohm','s-spk','s-sub'];
+let history=[];
+function noSub(){return sel.prod&&NO_SUB_PRODS.includes(sel.prod);}
+function singleOhm(){return sel.prod&&SINGLE_OHM[sel.prod]?SINGLE_OHM[sel.prod]:null;}
+function getOhmOptions(){return [...new Set(raw.filter(d=>d.cat===sel.cat&&d.prod===sel.prod).map(d=>d.ohm).filter(v=>v!==null&&v!==undefined))];}
+function needsOhmStep(){if(singleOhm())return false;return getOhmOptions().length>1;}
+function uniqueSpk(filtered){const vals=[...new Set(filtered.map(d=>d.spk).filter(v=>v!==null&&v!==undefined))];if(vals.every(v=>!isNaN(v)))return vals.sort((a,b)=>parseInt(a)-parseInt(b));return vals.sort((a,b)=>(SPK_ORDER[a]??99)-(SPK_ORDER[b]??99));}
+function uniqueSub(filtered){return [...new Set(filtered.map(d=>d.sub).filter(v=>v!==null&&v!==undefined))].sort((a,b)=>a-b);}
+function getFiltered(upTo){return raw.filter(d=>{if(sel.cat&&d.cat!==sel.cat)return false;if(upTo==='cat')return true;if(sel.prod&&d.prod!==sel.prod)return false;if(upTo==='prod')return true;const effOhm=singleOhm()||sel.ohm;if(effOhm&&d.ohm!==null&&d.ohm!==effOhm)return false;if(upTo==='ohm')return true;if(sel.spk!==null&&d.spk!==sel.spk)return false;return true;});}
+function stepCount(){let s=2;if(needsOhmStep())s++;s++;if(!noSub())s++;return s;}
+function doneCount(){let c=0;if(sel.cat)c++;if(sel.prod)c++;if(needsOhmStep()&&sel.ohm)c++;if(sel.spk!==null)c++;if(!noSub()&&sel.sub!==null)c++;return c;}
+function updateProgress(){const tot=Math.max(stepCount(),3);document.getElementById('progress').style.width=Math.round((doneCount()/tot)*100)+'%';}
+function updateToolbar(){document.getElementById('back-btn').disabled=history.length===0;document.getElementById('reset-btn').disabled=history.length===0;}
+function showStep(sid){const el=document.getElementById(sid);el.style.display='';el.classList.add('fadein');setTimeout(()=>el.classList.remove('fadein'),400);}
+function collapse(gid){document.querySelectorAll('#'+gid+' .btn-opt').forEach(b=>{b.style.display=b.classList.contains('active')?'':'none';});}
+function uncollapse(gid){document.querySelectorAll('#'+gid+' .btn-opt').forEach(b=>{b.style.display='';});}
+function rebuildGroup(gid,vals){const g=document.getElementById(gid);g.innerHTML='';vals.forEach(v=>{const b=document.createElement('button');b.className='btn-opt';b.dataset.val=String(v);b.textContent=String(v);g.appendChild(b);});}
+function clearStepFrom(sid){const idx=stepOrder.indexOf(sid);const keys=['cat','prod','ohm','spk','sub'];const gids=['g-cat','g-prod','g-ohm','g-spk','g-sub'];stepOrder.slice(idx).forEach((s,i)=>{sel[keys[idx+i]]=null;const g=document.getElementById(gids[idx+i]);if(g){g.querySelectorAll('.btn-opt').forEach(b=>{b.style.display='';b.classList.remove('active');});}const numEl=document.getElementById('n-'+keys[idx+i]);if(numEl)numEl.classList.remove('done');if(idx+i>0)document.getElementById(s).style.display='none';});document.getElementById('result-area').innerHTML='';}
+function resetFrom(sid){const idx=stepOrder.indexOf(sid);history=history.filter(h=>stepOrder.indexOf(h)<idx);clearStepFrom(sid);updateProgress();updateToolbar();}
+function fullReset(){history=[];clearStepFrom('s-cat');updateProgress();updateToolbar();}
+function goBack(){if(history.length===0)return;const lastCompleted=history[history.length-1];resetFrom(lastCompleted);uncollapse(lastCompleted.replace('s-','g-'));document.getElementById(lastCompleted).style.display='';}
+function renderResult(){const area=document.getElementById('result-area');const effOhm=singleOhm()||sel.ohm;const skipSub=noSub();const complete=sel.cat&&sel.prod&&(!needsOhmStep()||sel.ohm)&&sel.spk!==null&&(skipSub||sel.sub!==null);if(!complete){area.innerHTML='';return;}const match=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&(skipSub||d.sub===sel.sub));if(!match||String(match.res).toUpperCase()==='N/A'){area.innerHTML='';return;}const parts=String(match.res).split('+');const isCombo=parts.length>1;const spkLabel=sel.cat==='Soundbars'?'Configuration':'Speakers';area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">${spkLabel}<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${isCombo?'<div class="combo-note">This configuration requires two amplifier models.</div>':''}</div>`;}
+function goToSpeakers(){const filtered=getFiltered('ohm');const spks=uniqueSpk(filtered);rebuildGroup('g-spk',spks);const stepN=needsOhmStep()?4:3;const label=sel.cat==='Soundbars'?'Speaker configuration':'Number of speakers';document.getElementById('n-spk').textContent=`0${stepN} — ${label}`;showStep('s-spk');}
+function afterProduct(){const so=singleOhm();const ohmOpts=getOhmOptions();if(ohmOpts.length===0){sel.ohm=null;document.getElementById('s-ohm').style.display='none';goToSpeakers();}else if(so||ohmOpts.length===1){sel.ohm=so||ohmOpts[0];document.getElementById('s-ohm').style.display='none';goToSpeakers();}else{rebuildGroup('g-ohm',ohmOpts);document.getElementById('n-ohm').textContent='03 — Connection type';showStep('s-ohm');}updateProgress();updateToolbar();}
+function afterSpeakers(){if(noSub()){sel.sub=null;document.getElementById('s-sub').style.display='none';updateProgress();updateToolbar();renderResult();}else{const effOhm=singleOhm()||sel.ohm;const validSubs=uniqueSub(getFiltered('spk')).filter(sv=>{const m=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&d.sub===sv);return m&&String(m.res).toUpperCase()!=='N/A';});rebuildGroup('g-sub',validSubs);const stepN=needsOhmStep()?5:4;document.getElementById('n-sub').textContent=`0${stepN} — Subwoofers`;showStep('s-sub');updateProgress();updateToolbar();}}
+document.getElementById('g-cat').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-cat');sel.cat=e.target.dataset.val;e.target.classList.add('active');collapse('g-cat');document.getElementById('n-cat').classList.add('done');history.push('s-cat');rebuildGroup('g-prod',catProds[sel.cat]);showStep('s-prod');updateProgress();updateToolbar();});
+document.getElementById('g-prod').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-prod');sel.prod=e.target.dataset.val;e.target.classList.add('active');collapse('g-prod');document.getElementById('n-prod').classList.add('done');history.push('s-prod');afterProduct();});
+document.getElementById('g-ohm').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-ohm');sel.ohm=e.target.dataset.val;e.target.classList.add('active');collapse('g-ohm');document.getElementById('n-ohm').classList.add('done');history.push('s-ohm');goToSpeakers();updateProgress();updateToolbar();});
+document.getElementById('g-spk').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-spk');sel.spk=e.target.dataset.val;e.target.classList.add('active');collapse('g-spk');document.getElementById('n-spk').classList.add('done');history.push('s-spk');afterSpeakers();});
+document.getElementById('g-sub').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-sub');sel.sub=parseInt(e.target.dataset.val);e.target.classList.add('active');collapse('g-sub');document.getElementById('n-sub').classList.add('done');history.push('s-sub');updateProgress();updateToolbar();renderResult();});
+</script>
+</body>
+</html>
