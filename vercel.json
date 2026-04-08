@@ -1,0 +1,1 @@
+{"version":2,"name":"amplifinder","builds":[{"src":"*.html","use":"@vercel/static"}]}
