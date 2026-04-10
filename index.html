@@ -475,10 +475,25 @@ function updateHouseBadge(){
   badge.style.display=n>0?'flex':'none';
 }
 function mergeAmps(list){
-  const twos={};const others=[];
-  for(const amp of list){const m=amp.match(/^(\d+)\.2$/);if(m){twos[m[1]]=(twos[m[1]]||0)+1;}else{others.push(amp);}}
-  const result=[...others];
-  for(const [base,count] of Object.entries(twos)){const pairs=Math.floor(count/2);const rem=count%2;for(let i=0;i<pairs;i++)result.push(base+'.4');for(let i=0;i<rem;i++)result.push(base+'.2');}
+  // Group by wattage family (125, 250, 1000, 1200); pass through anything that doesn't match X.1/X.2/X.4
+  const groups={};const unmatched=[];
+  for(const amp of list){const m=amp.match(/^(\d+)\.(1|2|4)$/);if(m){const w=m[1];if(!groups[w])groups[w]={n1:0,n2:0,n4:0};groups[w]['n'+m[2]]++;}else{unmatched.push(amp);}}
+  const result=[...unmatched];
+  for(const [watt,g] of Object.entries(groups)){
+    let{n1,n2,n4}=g;
+    // Apply rules iteratively until no more merges possible:
+    // Rule 1: .1+.1 → .2  |  Rule 2: .1+.2 → .4  |  Rule 3: .2+.2 → .4
+    let changed=true;
+    while(changed){
+      changed=false;
+      if(n1>=2){n2+=Math.floor(n1/2);n1=n1%2;changed=true;}
+      if(n2>=2){n4+=Math.floor(n2/2);n2=n2%2;changed=true;}
+      if(n1>=1&&n2>=1){n4++;n1--;n2--;changed=true;}
+    }
+    for(let i=0;i<n4;i++)result.push(watt+'.4');
+    for(let i=0;i<n2;i++)result.push(watt+'.2');
+    for(let i=0;i<n1;i++)result.push(watt+'.1');
+  }
   result.sort((a,b)=>parseFloat(a)-parseFloat(b));
   return result;
 }
