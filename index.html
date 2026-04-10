@@ -73,22 +73,57 @@
   .amp-product-img{height:46px;flex:1;min-width:0;border-radius:6px;object-fit:contain;object-position:center;background:var(--surface2);border:1px solid var(--border);}
   .amp-combo-imgs{display:flex;flex-direction:column;gap:6px;flex-basis:100%;margin-top:2px;}
   .amp-product-img-sm{height:34px;flex:1;min-width:0;border-radius:6px;object-fit:contain;object-position:center;background:var(--surface2);border:1px solid var(--border);}
-  .bottom-toolbar{position:sticky;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--border);padding:12px 1.5rem;display:flex;gap:10px;z-index:10;max-width:420px;margin:0 auto;}
+  .bottom-toolbar{position:sticky;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--border);padding:12px 1.5rem;display:flex;flex-direction:column;gap:8px;z-index:10;max-width:420px;margin:0 auto;}
+  .toolbar-row{display:flex;gap:10px;}
   .tool-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.04em;padding:11px 16px;border-radius:10px;cursor:pointer;transition:all 0.15s;}
   .tool-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent);}
   .tool-btn:disabled{opacity:0.25;pointer-events:none;}
   .tool-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
   .reset-btn:hover:not(:disabled){border-color:#c0464a;color:#c0464a;}
+  .add-project-btn{width:100%;display:none;align-items:center;justify-content:center;gap:8px;background:var(--accent);border:1px solid var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.04em;padding:13px 16px;border-radius:10px;cursor:pointer;transition:all 0.15s;}
+  .add-project-btn:hover{background:#3d8ee6;border-color:#3d8ee6;}
+  .add-project-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
   .fadein{animation:fadeUp 0.25s ease forwards;}
+  @keyframes popIn{0%{transform:scale(0.7);opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1);opacity:1;}}
+  .header-wrap{position:relative;}
+  .house-btn{position:absolute;top:50%;right:0;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:6px;color:var(--muted);transition:color 0.15s;display:flex;align-items:center;justify-content:center;}
+  .house-btn:hover{color:var(--accent);}
+  .house-btn svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .house-badge{position:absolute;top:-2px;right:-2px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;min-width:17px;height:17px;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px;line-height:1;animation:popIn 0.25s ease;}
+  .project-panel{position:fixed;top:0;left:50%;transform:translateX(100%) translateX(-50%);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+  .project-panel.open{transform:translateX(-50%);}
+  .project-panel::before{content:'';position:absolute;top:-120px;right:-120px;width:380px;height:380px;background:radial-gradient(circle,rgba(77,158,246,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
+  .project-header{position:relative;z-index:1;padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
+  .project-back{background:none;border:none;color:var(--accent);cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.04em;padding:0;margin-bottom:12px;opacity:0.85;transition:opacity 0.15s;}
+  .project-back:hover{opacity:1;}
+  .project-back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+  .project-eyebrow{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+  .project-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);font-weight:400;}
+  .project-divider{height:2px;background:linear-gradient(90deg,var(--accent),transparent);}
+  .project-content{position:relative;z-index:1;flex:1;padding:1.25rem 1.5rem;overflow-y:auto;}
+  .project-empty{text-align:center;color:var(--muted);font-size:13px;margin-top:3rem;line-height:1.6;}
+  .project-empty svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px;}
+  .project-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1rem 1rem 1rem;margin-bottom:10px;position:relative;overflow:hidden;}
+  .project-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);}
+  .project-item-amp{font-family:'DM Serif Display',serif;font-size:20px;color:var(--accent);margin-bottom:6px;}
+  .project-item-meta{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px;}
+  .project-item-meta span{color:var(--text);font-weight:500;}
+  .project-item-remove{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:6px;transition:color 0.15s;display:flex;}
+  .project-item-remove:hover{color:#c0464a;}
+  .project-item-remove svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
 </style>
 </head>
 <body>
 <div class="phone-wrap">
   <div class="content">
-    <div class="header">
+    <div class="header header-wrap">
       <img src="/assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png" alt="AmpliFinder" style="height:68px;width:auto;display:block;margin:0 auto 8px;">
       <div class="header-sub" style="text-align:center;">Answer each question to get your recommendation.</div>
+      <button class="house-btn" id="house-btn" onclick="openProject()">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        <span class="house-badge" id="house-badge">0</span>
+      </button>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
     <div class="steps">
@@ -142,13 +177,34 @@
     <div class="sub-detail-divider"></div>
     <div class="sub-detail-content" id="sub-detail-content"></div>
   </div>
+  <div class="project-panel" id="project-panel">
+    <div class="project-header">
+      <button class="project-back" onclick="closeProject()">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
+      </button>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+        <div>
+          <div class="project-eyebrow">My Project</div>
+          <div class="project-title">Selected Amplifiers</div>
+        </div>
+        <button onclick="clearProject()" style="background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;padding:5px 10px;border-radius:6px;cursor:pointer;margin-bottom:4px;transition:all 0.15s;" onmouseover="this.style.borderColor='#c0464a';this.style.color='#c0464a'" onmouseout="this.style.borderColor='';this.style.color=''">Clear All</button>
+      </div>
+    </div>
+    <div class="project-divider"></div>
+    <div class="project-content" id="project-content"></div>
+  </div>
   <div class="bottom-toolbar">
-    <button class="tool-btn" id="back-btn" onclick="goBack()" disabled>
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
+    <button class="add-project-btn" id="add-project-btn" onclick="addToProject()">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add to Project
     </button>
-    <button class="tool-btn reset-btn" id="reset-btn" onclick="fullReset()" disabled>
-      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>Reset
-    </button>
+    <div class="toolbar-row">
+      <button class="tool-btn" id="back-btn" onclick="goBack()" disabled>
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back
+      </button>
+      <button class="tool-btn reset-btn" id="reset-btn" onclick="fullReset()" disabled>
+        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>Reset
+      </button>
+    </div>
   </div>
 </div>
 <script>
@@ -387,9 +443,55 @@ function uncollapse(gid){document.querySelectorAll('#'+gid+' button').forEach(b=
 function rebuildGroup(gid,vals){const g=document.getElementById(gid);g.innerHTML='';vals.forEach(v=>{const b=document.createElement('button');b.className='btn-opt';b.dataset.val=String(v);b.textContent=String(v);g.appendChild(b);});}
 function clearStepFrom(sid){const idx=stepOrder.indexOf(sid);const keys=['cat','prod','ohm','spk','sub'];const gids=['g-cat','g-prod','g-ohm','g-spk','g-sub'];stepOrder.slice(idx).forEach((s,i)=>{sel[keys[idx+i]]=null;const g=document.getElementById(gids[idx+i]);if(g){g.querySelectorAll('button').forEach(b=>{b.style.display='';b.classList.remove('active');});}const numEl=document.getElementById('n-'+keys[idx+i]);if(numEl)numEl.classList.remove('done');if(idx+i>0)document.getElementById(s).style.display='none';});document.getElementById('result-area').innerHTML='';}
 function resetFrom(sid){const idx=stepOrder.indexOf(sid);history=history.filter(h=>stepOrder.indexOf(h)<idx);clearStepFrom(sid);updateProgress();updateToolbar();}
-function fullReset(){history=[];clearStepFrom('s-cat');updateProgress();updateToolbar();}
+function fullReset(){history=[];clearStepFrom('s-cat');updateProgress();updateToolbar();setAddProjectBtn(false);}
 function goBack(){if(history.length===0)return;const lastCompleted=history[history.length-1];resetFrom(lastCompleted);uncollapse(lastCompleted.replace('s-','g-'));document.getElementById(lastCompleted).style.display='';}
-function renderResult(){const area=document.getElementById('result-area');const effOhm=singleOhm()||sel.ohm;const skipSub=noSub();const complete=sel.cat&&sel.prod&&(!needsOhmStep()||sel.ohm)&&sel.spk!==null&&(skipSub||sel.sub!==null);if(!complete){area.innerHTML='';return;}const match=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&(skipSub||d.sub===sel.sub));if(!match||String(match.res).toUpperCase()==='N/A'){area.innerHTML='';return;}const parts=String(match.res).split('+');const isCombo=parts.length>1;const spkLabel=sel.cat==='Soundbars'?'Configuration':'Speakers';const IMGS={'250.2':'/assests/Screenshot%202026-04-08%20at%201.24.19%20PM.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.4':'/assests/ProA1200.4.png'};const comboImgs=parts.map(p=>IMGS[p.trim()]?`<img class="amp-product-img-sm" src="${IMGS[p.trim()]}" alt="ProA${p.trim()}">`:'').join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const sugSub=getSugSub(match);const pills=arr=>arr.map(v=>`<button class="sug-sub-pill" onclick="openSubDetail('${v}')">${v}</button>`).join('');const sugSubHtml=sugSub?(sugSub.perf.length?`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-options"><div class="sug-sub-option"><div class="sug-sub-option-label">Coverage</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div><div class="sug-sub-option"><div class="sug-sub-option-label">Performance</div><div class="sug-sub-pills">${pills(sugSub.perf)}</div></div></div></div>`:`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div>`):'';area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">${spkLabel}<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${isCombo?'<div class="combo-note">This configuration requires two amplifier models.</div>':''}${sugSubHtml}</div>`;}
+function setAddProjectBtn(visible){const btn=document.getElementById('add-project-btn');btn.style.display=visible?'flex':'none';}
+const ADD_BTN_HTML='<svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add to Project';
+let projectItems=JSON.parse(localStorage.getItem('af_project')||'[]');
+function saveProject(){localStorage.setItem('af_project',JSON.stringify(projectItems));}
+function addToProject(){
+  const parts=document.querySelector('.amp-pill')?[...document.querySelectorAll('.amp-pill')].map(p=>p.textContent.trim()):[];
+  if(!parts.length)return;
+  const item={id:Date.now(),amps:parts.join(' + '),cat:sel.cat,prod:sel.prod,ohm:sel.ohm,spk:sel.spk,sub:sel.sub};
+  projectItems.push(item);
+  saveProject();
+  updateHouseBadge();
+  const btn=document.getElementById('add-project-btn');
+  btn.innerHTML='<svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg>Added!';
+  btn.style.background='#2a9d5c';btn.style.borderColor='#2a9d5c';
+  setTimeout(()=>{btn.innerHTML=ADD_BTN_HTML;btn.style.background='';btn.style.borderColor='';fullReset();window.scrollTo({top:0,behavior:'smooth'});},1000);
+}
+function updateHouseBadge(){
+  const badge=document.getElementById('house-badge');
+  const n=projectItems.length;
+  badge.textContent=n;
+  badge.style.display=n>0?'flex':'none';
+}
+function openProject(){renderProjectPanel();document.getElementById('project-panel').classList.add('open');}
+function closeProject(){document.getElementById('project-panel').classList.remove('open');}
+function removeProjectItem(id){projectItems=projectItems.filter(i=>i.id!==id);saveProject();updateHouseBadge();renderProjectPanel();}
+function clearProject(){projectItems=[];saveProject();updateHouseBadge();renderProjectPanel();}
+function renderProjectPanel(){
+  const el=document.getElementById('project-content');
+  if(!projectItems.length){
+    el.innerHTML='<div class="project-empty"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg><div>No amplifiers added yet.</div><div>Select a configuration and tap<br><strong>Add to Project</strong>.</div></div>';
+    return;
+  }
+  el.innerHTML=projectItems.map(item=>{
+    const spkLabel=item.cat==='Soundbars'?'Config':'Speakers';
+    const metaParts=[
+      '<div class="project-item-meta">',
+      item.cat?item.cat+' &nbsp;·&nbsp; ':'',
+      item.prod?'<span>'+item.prod+'</span>':'',
+      item.ohm?' &nbsp;·&nbsp; '+item.ohm:'',
+      item.spk?' &nbsp;·&nbsp; '+spkLabel+': <span>'+item.spk+'</span>':'',
+      item.sub!=null&&item.sub>0?' &nbsp;·&nbsp; Subs: <span>'+item.sub+'</span>':'',
+      '</div>'
+    ].join('');
+    return '<div class="project-item fadein"><button class="project-item-remove" onclick="removeProjectItem('+item.id+')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="project-item-amp">'+item.amps+'</div>'+metaParts+'</div>';
+  }).join('');
+}
+function renderResult(){const area=document.getElementById('result-area');const effOhm=singleOhm()||sel.ohm;const skipSub=noSub();const complete=sel.cat&&sel.prod&&(!needsOhmStep()||sel.ohm)&&sel.spk!==null&&(skipSub||sel.sub!==null);if(!complete){area.innerHTML='';setAddProjectBtn(false);return;}const match=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&(skipSub||d.sub===sel.sub));if(!match||String(match.res).toUpperCase()==='N/A'){area.innerHTML='';setAddProjectBtn(false);return;}const parts=String(match.res).split('+');const isCombo=parts.length>1;const spkLabel=sel.cat==='Soundbars'?'Configuration':'Speakers';const IMGS={'250.2':'/assests/Screenshot%202026-04-08%20at%201.24.19%20PM.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.4':'/assests/ProA1200.4.png'};const comboImgs=parts.map(p=>IMGS[p.trim()]?`<img class="amp-product-img-sm" src="${IMGS[p.trim()]}" alt="ProA${p.trim()}">`:'').join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const sugSub=getSugSub(match);const pills=arr=>arr.map(v=>`<button class="sug-sub-pill" onclick="openSubDetail('${v}')">${v}</button>`).join('');const sugSubHtml=sugSub?(sugSub.perf.length?`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-options"><div class="sug-sub-option"><div class="sug-sub-option-label">Coverage</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div><div class="sug-sub-option"><div class="sug-sub-option-label">Performance</div><div class="sug-sub-pills">${pills(sugSub.perf)}</div></div></div></div>`:`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div>`):'';setAddProjectBtn(true);area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">${spkLabel}<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${isCombo?'<div class="combo-note">This configuration requires two amplifier models.</div>':''}${sugSubHtml}</div>`;}
 function goToSpeakers(){const filtered=getFiltered('ohm');const spks=uniqueSpk(filtered);rebuildGroup('g-spk',spks);const stepN=needsOhmStep()?4:3;const label=sel.cat==='Soundbars'?'Speaker configuration':'Number of speakers';document.getElementById('n-spk').textContent=`0${stepN} — ${label}`;showStep('s-spk');}
 function afterProduct(){const so=singleOhm();const ohmOpts=getOhmOptions();if(ohmOpts.length===0){sel.ohm=null;document.getElementById('s-ohm').style.display='none';goToSpeakers();}else if(so||ohmOpts.length===1){sel.ohm=so||ohmOpts[0];document.getElementById('s-ohm').style.display='none';goToSpeakers();}else{rebuildGroup('g-ohm',ohmOpts);document.getElementById('n-ohm').textContent='03 — Connection type';showStep('s-ohm');}updateProgress();updateToolbar();}
 function afterSpeakers(){if(noSub()){sel.sub=null;document.getElementById('s-sub').style.display='none';updateProgress();updateToolbar();renderResult();}else{const effOhm=singleOhm()||sel.ohm;const validSubs=uniqueSub(getFiltered('spk')).filter(sv=>{const m=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&d.sub===sv);return m&&String(m.res).toUpperCase()!=='N/A';});rebuildGroup('g-sub',validSubs);const stepN=needsOhmStep()?5:4;document.getElementById('n-sub').textContent=`0${stepN} — Subwoofers`;showStep('s-sub');updateProgress();updateToolbar();}}
@@ -398,6 +500,7 @@ document.getElementById('g-prod').addEventListener('click',e=>{if(!e.target.clas
 document.getElementById('g-ohm').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-ohm');sel.ohm=e.target.dataset.val;e.target.classList.add('active');collapse('g-ohm');document.getElementById('n-ohm').classList.add('done');history.push('s-ohm');goToSpeakers();updateProgress();updateToolbar();});
 document.getElementById('g-spk').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-spk');sel.spk=e.target.dataset.val;e.target.classList.add('active');collapse('g-spk');document.getElementById('n-spk').classList.add('done');history.push('s-spk');afterSpeakers();});
 document.getElementById('g-sub').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-sub');sel.sub=parseInt(e.target.dataset.val);e.target.classList.add('active');collapse('g-sub');document.getElementById('n-sub').classList.add('done');history.push('s-sub');updateProgress();updateToolbar();renderResult();});
+updateHouseBadge();
 function openSubDetail(model){document.getElementById('sub-detail-title').textContent=model;document.getElementById('sub-detail-content').innerHTML='';document.getElementById('sub-detail-page').classList.add('open');}
 function closeSubDetail(){document.getElementById('sub-detail-page').classList.remove('open');}
 </script>
