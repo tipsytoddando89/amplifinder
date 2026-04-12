@@ -704,40 +704,70 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
       if(isSub)groups[ampId].subs.push(entry);
       else groups[ampId].spks.push(entry);
     });
+    // Calculate per-amp Y positions (dynamic — 70v speakers stack vertically and need more room)
+    var is70v=ohm==='70v';
+    var spkSlotH=78; // vertical step per speaker in 70v mode
+    var ampYPos=[];
+    var yAccum=20;
+    parts.forEach(function(_,ai){
+      ampYPos.push(yAccum);
+      var grp=groups['amp-'+ai]||{spks:[],subs:[]};
+      var slotH;
+      if(is70v){
+        slotH=115+Math.max(1,grp.spks.length)*spkSlotH+(grp.subs.length>0?spkSlotH:0)+30;
+      } else {
+        slotH=SLOT;
+      }
+      yAccum+=slotH;
+    });
     // Phase 3: Now push amp nodes (channels[] have corrected wattages)
     ampData.forEach(function(ad){
       var chCount=ad.channels.length;
       var nodeW=Math.max(110,chCount*40);
       var ampX=CW/2-nodeW/2;
-      var ampY=20+ad.ai*SLOT;
+      var ampY=ampYPos[ad.ai];
       nodes.push({id:'amp-'+ad.ai,type:'ampNode',position:{x:ampX,y:ampY},data:{model:ad.model,channels:ad.channels},draggable:false,selectable:false});
     });
     // Render each amp's speakers then subs directly below it
     parts.forEach(function(_,ai){
       var ampId='amp-'+ai;
       var grp=groups[ampId];
-      var ampY=20+ai*SLOT;
-      // Speakers row
+      var ampY=ampYPos[ai];
+      // Speakers
       var spkRow=grp.spks;
       if(spkRow.length>0){
-        var rw=spkRow.length*spkW+(spkRow.length-1)*spkGap;
-        var rx=Math.max(0,(CW-rw)/2);
-        var sy=ampY+115;
-        spkRow.forEach(function(e,gi){
-          var color=e.ch?e.ch.color:'#555';
-          nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:rx+gi*(spkW+spkGap),y:sy},data:{label:e.out.l,type:e.out.t||'',color:color},draggable:false,selectable:false});
-          // Push one edge per assigned channel (ASM5600 gets 2 edges → 1 speaker)
-          (e.assignedChs||[e.ch]).forEach(function(ach,ei){
-            if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',style:{stroke:ach.color,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:ach.color,width:14,height:14}});
+        if(is70v){
+          // 70v: stack speakers vertically in a single column
+          var vx=CW/2-spkW/2;
+          var vy=ampY+115;
+          spkRow.forEach(function(e,gi){
+            var color=e.ch?e.ch.color:'#555';
+            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:vx,y:vy+gi*spkSlotH},data:{label:e.out.l,type:e.out.t||'',color:color},draggable:false,selectable:false});
+            (e.assignedChs||[e.ch]).forEach(function(ach,ei){
+              if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',style:{stroke:ach.color,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:ach.color,width:14,height:14}});
+            });
           });
-        });
+        } else {
+          // Standard: speakers in a horizontal row
+          var rw=spkRow.length*spkW+(spkRow.length-1)*spkGap;
+          var rx=Math.max(0,(CW-rw)/2);
+          var sy=ampY+115;
+          spkRow.forEach(function(e,gi){
+            var color=e.ch?e.ch.color:'#555';
+            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:rx+gi*(spkW+spkGap),y:sy},data:{label:e.out.l,type:e.out.t||'',color:color},draggable:false,selectable:false});
+            (e.assignedChs||[e.ch]).forEach(function(ach,ei){
+              if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',style:{stroke:ach.color,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:ach.color,width:14,height:14}});
+            });
+          });
+        }
       }
-      // Subs row (below speakers row)
+      // Subs row (always horizontal, below speakers)
       var subRow=grp.subs;
       if(subRow.length>0){
+        var subOffsetY=is70v?spkRow.length*spkSlotH:( spkRow.length>0?85:0);
         var sw=subRow.length*spkW+(subRow.length-1)*spkGap;
         var sx=Math.max(0,(CW-sw)/2);
-        var sby=ampY+115+(spkRow.length>0?85:0);
+        var sby=ampY+115+subOffsetY;
         subRow.forEach(function(e,gi){
           var color='#f6a020';
           nodes.push({id:'out-'+e.oi,type:'subNode',position:{x:sx+gi*(spkW+spkGap),y:sby},data:{label:e.out.l,color:color},draggable:false,selectable:false});
