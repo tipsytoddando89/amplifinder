@@ -292,7 +292,7 @@ const raw=[
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
-  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
@@ -672,35 +672,54 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
       }
       ampData.push({model:model,channels:channels,ai:ai});
     });
+    var is70v=ohm==='70v';
     var spkW=64,spkGap=10,edges=[];
     // Phase 2: Assign outputs using pool+pointer so DNU-paired channels can be removed mid-loop
     var groups={};
     parts.forEach(function(_,ai){groups['amp-'+ai]={spks:[],subs:[]};});
     var pool=allActive.slice(),ptr=0;
+    // For 70v with subs: speakers always on CH1 (first active channel),
+    // subs always on CH3 (second active channel). Never shared.
+    var spkPool70=null,subPool70=null,spkPtr70=0,subPtr70=0;
+    if(is70v&&numSubs>0&&pool.length>0){
+      spkPool70=[pool[0]]; // CH1 — all speakers
+      subPool70=pool.length>1?[pool[1]]:[pool[0]]; // CH3 — all subs (fallback CH1 if only 1 channel)
+    }
     allOutputs.forEach(function(out,oi){
       var isSub=out.nodeType==='subNode';
       // ASM5600 speakers are bridged — each speaker uses 2 channels
       var needCh=(!isSub&&prod==='ASM5600')?2:1;
       var assignedChs=[];
       for(var nc=0;nc<needCh;nc++){
-        if(pool.length===0)break;
-        var poolPos=ptr%pool.length;
-        var pch=pool[poolPos];
-        ptr++;
-        assignedChs.push(pch);
-        // Sub on a 250.x amp: show 250w, DNU-grey the bridged pair channel
-        if(isSub&&pch&&pch.model&&/^250\./.test(pch.model)){
-          pch.chRef.watt='250w';
-          if(pool.length>0){
-            var nextPos=ptr%pool.length;
-            if(pool[nextPos]&&pool[nextPos].ampId===pch.ampId){
-              var pair=pool[nextPos];
-              pair.chRef.watt='DNU';
-              pair.chRef.active=false;
-              pool.splice(nextPos,1);
+        var pch=null;
+        if(spkPool70){
+          // 70v with subs: use dedicated speaker or sub pool — never shared
+          if(isSub){
+            if(subPool70.length>0){pch=subPool70[subPtr70%subPool70.length];subPtr70++;}
+          } else {
+            if(spkPool70.length>0){pch=spkPool70[spkPtr70%spkPool70.length];spkPtr70++;}
+          }
+        } else {
+          // Standard round-robin
+          if(pool.length===0)break;
+          var poolPos=ptr%pool.length;
+          pch=pool[poolPos];
+          ptr++;
+          // Sub on a 250.x amp: show 250w, DNU-grey the bridged pair channel
+          if(isSub&&pch&&pch.model&&/^250\./.test(pch.model)){
+            pch.chRef.watt='250w';
+            if(pool.length>0){
+              var nextPos=ptr%pool.length;
+              if(pool[nextPos]&&pool[nextPos].ampId===pch.ampId){
+                var pair=pool[nextPos];
+                pair.chRef.watt='DNU';
+                pair.chRef.active=false;
+                pool.splice(nextPos,1);
+              }
             }
           }
         }
+        if(pch)assignedChs.push(pch);
       }
       var ch=assignedChs[0]||null;
       var ampId=ch?ch.ampId:'amp-0';
@@ -710,7 +729,6 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
       else groups[ampId].spks.push(entry);
     });
     // Calculate per-amp Y positions (dynamic — 70v speakers stack vertically and need more room)
-    var is70v=ohm==='70v';
     var spkSlotH=78; // vertical step per speaker in 70v mode
     var ampYPos=[];
     var yAccum=20;
@@ -727,7 +745,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     });
     // Phase 3: Now push amp nodes (channels[] have corrected wattages)
     var ampLeftX=8; // left column x for 70v side layout
-    var spkRightX=210; // right column x for 70v side layout
+    var spkRightX=245; // right column x for 70v side layout
     ampData.forEach(function(ad){
       var chCount=ad.channels.length;
       var ampX,ampY=ampYPos[ad.ai];
@@ -753,13 +771,13 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
       var spkRow=grp.spks;
       if(spkRow.length>0){
         if(is70v){
-          // 70v: speakers stacked vertically in right column
+          // 70v: speakers stacked vertically in right column, all same color
           var vy=ampYPos[ai];
+          var spk70Color='#4d9ef6'; // uniform blue for all 70v speakers
           spkRow.forEach(function(e,gi){
-            var color=e.ch?e.ch.color:'#555';
-            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:spkRightX,y:vy+gi*spkSlotH},data:{label:e.out.l,type:e.out.t||'',color:color,side:true},draggable:false,selectable:false});
+            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:spkRightX,y:vy+gi*spkSlotH},data:{label:e.out.l,type:e.out.t||'',color:spk70Color,side:true},draggable:false,selectable:false});
             (e.assignedChs||[e.ch]).forEach(function(ach,ei){
-              if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',style:{stroke:ach.color,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:ach.color,width:14,height:14}});
+              if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',style:{stroke:spk70Color,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:spk70Color,width:14,height:14}});
             });
           });
         } else {
