@@ -288,21 +288,21 @@ const raw=[
   {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
-  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
-  {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
-  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
-  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
@@ -328,21 +328,21 @@ const raw=[
   {cat:"Landscape",prod:"ALSB106",ohm:"8ohm",spk:"8",sub:null,res:"1000.4"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
-  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
-  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
-  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"2",sub:1,res:"250.1"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
-  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"4",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
@@ -606,8 +606,10 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     return sp.s[key]||sp.s['8ohm']||[];
   }
   function AmpNode(props){
-    var data=props.data,n=data.channels.length;
-    return h('div',{style:{background:'linear-gradient(135deg,rgba(77,158,246,0.18),rgba(77,158,246,0.06))',border:'1.5px solid rgba(77,158,246,0.5)',borderRadius:12,padding:'10px 14px 22px',color:'#fff',fontFamily:'"DM Serif Display",serif',fontSize:17,textAlign:'center',minWidth:Math.max(110,n*40),position:'relative',boxShadow:'0 4px 24px rgba(77,158,246,0.18)'}},
+    var data=props.data,n=data.channels.length,side=data.side;
+    var chW=side?22:40;
+    var nodeMinW=Math.max(side?100:110,n*chW);
+    return h('div',{style:{background:'linear-gradient(135deg,rgba(77,158,246,0.18),rgba(77,158,246,0.06))',border:'1.5px solid rgba(77,158,246,0.5)',borderRadius:12,padding:side?'10px 18px 10px 14px':'10px 14px 22px',color:'#fff',fontFamily:'"DM Serif Display",serif',fontSize:17,textAlign:'center',minWidth:nodeMinW,position:'relative',boxShadow:'0 4px 24px rgba(77,158,246,0.18)'}},
       h('div',{style:{fontSize:9,letterSpacing:'0.13em',textTransform:'uppercase',color:'rgba(77,158,246,0.8)',marginBottom:3,fontFamily:'"DM Sans",sans-serif'}},'Amplifier'),
       h('div',null,'ProA '+data.model),
       h('div',{style:{display:'flex',justifyContent:'space-around',marginTop:7,gap:1}},
@@ -616,15 +618,18 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
           h('div',{style:{fontSize:7,color:ch.active?'rgba(255,255,255,0.65)':'rgba(255,255,255,0.12)',fontFamily:'"DM Sans",sans-serif',marginTop:1}},ch.watt)
         );})
       ),
-      data.channels.map(function(ch,i){return h(Handle,{key:'h'+i,type:'source',position:Position.Bottom,id:ch.id,
-        style:{left:((i+0.5)/n*100)+'%',background:ch.active?ch.color:'rgba(255,255,255,0.1)',width:10,height:10,border:'2px solid #0d0f14',bottom:-5,opacity:ch.active?1:0.25}
-      });})
+      data.channels.map(function(ch,i){
+        var hStyle=side
+          ?{top:((i+0.5)/n*100)+'%',right:-5,background:ch.active?ch.color:'rgba(255,255,255,0.1)',width:10,height:10,border:'2px solid #0d0f14',opacity:ch.active?1:0.25}
+          :{left:((i+0.5)/n*100)+'%',background:ch.active?ch.color:'rgba(255,255,255,0.1)',width:10,height:10,border:'2px solid #0d0f14',bottom:-5,opacity:ch.active?1:0.25};
+        return h(Handle,{key:'h'+i,type:'source',position:side?Position.Right:Position.Bottom,id:ch.id,style:hStyle});
+      })
     );
   }
   function SpeakerNode(props){
-    var data=props.data;
+    var data=props.data,side=data.side;
     return h('div',{style:{background:'rgba(255,255,255,0.035)',border:'1.5px solid '+data.color+'55',borderRadius:10,padding:'14px 10px 10px',color:'#ddd',fontFamily:'"DM Sans",sans-serif',fontSize:11,textAlign:'center',minWidth:62,boxShadow:'0 2px 12px '+data.color+'18',position:'relative'}},
-      h(Handle,{type:'target',position:Position.Top,id:'in',style:{background:data.color,width:10,height:10,border:'2px solid #0d0f14',top:-5}}),
+      h(Handle,{type:'target',position:side?Position.Left:Position.Top,id:'in',style:side?{background:data.color,width:10,height:10,border:'2px solid #0d0f14',left:-5}:{background:data.color,width:10,height:10,border:'2px solid #0d0f14',top:-5}}),
       data.type?h('div',{style:{fontSize:8,letterSpacing:'0.09em',textTransform:'uppercase',color:'rgba(255,255,255,0.28)',marginBottom:3}},data.type):null,
       h('div',{style:{fontWeight:500}},data.label)
     );
@@ -721,12 +726,23 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
       yAccum+=slotH;
     });
     // Phase 3: Now push amp nodes (channels[] have corrected wattages)
+    var ampLeftX=8; // left column x for 70v side layout
+    var spkRightX=210; // right column x for 70v side layout
     ampData.forEach(function(ad){
       var chCount=ad.channels.length;
-      var nodeW=Math.max(110,chCount*40);
-      var ampX=CW/2-nodeW/2;
-      var ampY=ampYPos[ad.ai];
-      nodes.push({id:'amp-'+ad.ai,type:'ampNode',position:{x:ampX,y:ampY},data:{model:ad.model,channels:ad.channels},draggable:false,selectable:false});
+      var ampX,ampY=ampYPos[ad.ai];
+      if(is70v){
+        // Center amp vertically relative to its speaker group
+        var grp=groups['amp-'+ad.ai]||{spks:[],subs:[]};
+        var spkCount=grp.spks.length;
+        var groupH=Math.max(1,spkCount)*spkSlotH;
+        ampX=ampLeftX;
+        ampY=ampYPos[ad.ai]+(groupH/2)-40; // -40 to roughly center the amp node
+      } else {
+        var nodeW=Math.max(110,chCount*40);
+        ampX=CW/2-nodeW/2;
+      }
+      nodes.push({id:'amp-'+ad.ai,type:'ampNode',position:{x:ampX,y:ampY},data:{model:ad.model,channels:ad.channels,side:is70v},draggable:false,selectable:false});
     });
     // Render each amp's speakers then subs directly below it
     parts.forEach(function(_,ai){
@@ -737,12 +753,11 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
       var spkRow=grp.spks;
       if(spkRow.length>0){
         if(is70v){
-          // 70v: stack speakers vertically in a single column
-          var vx=CW/2-spkW/2;
-          var vy=ampY+115;
+          // 70v: speakers stacked vertically in right column
+          var vy=ampYPos[ai];
           spkRow.forEach(function(e,gi){
             var color=e.ch?e.ch.color:'#555';
-            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:vx,y:vy+gi*spkSlotH},data:{label:e.out.l,type:e.out.t||'',color:color},draggable:false,selectable:false});
+            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:spkRightX,y:vy+gi*spkSlotH},data:{label:e.out.l,type:e.out.t||'',color:color,side:true},draggable:false,selectable:false});
             (e.assignedChs||[e.ch]).forEach(function(ach,ei){
               if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',style:{stroke:ach.color,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:ach.color,width:14,height:14}});
             });
