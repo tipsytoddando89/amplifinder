@@ -60,7 +60,7 @@
   .sug-sub-pill{background:rgba(77,158,246,0.15);border:1px solid rgba(77,158,246,0.3);color:var(--accent);font-size:13px;font-weight:500;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;display:inline-flex;align-items:center;gap:5px;}
   .sug-sub-pill:hover{background:rgba(77,158,246,0.28);border-color:var(--accent);}
   .sug-sub-pill::after{content:'›';font-size:15px;opacity:0.7;}
-  .sub-detail-page{position:fixed;top:0;left:50%;transform:translateX(100%) translateX(-50%);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+  .sub-detail-page{position:fixed;top:0;left:50%;transform:translateX(100vw);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
   .sub-detail-page.open{transform:translateX(-50%);}
   .sub-detail-page::before{content:'';position:absolute;top:-120px;right:-120px;width:380px;height:380px;background:radial-gradient(circle,rgba(77,158,246,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
   .sub-detail-header{position:relative;z-index:1;padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
@@ -143,7 +143,7 @@
   .house-btn:hover{color:var(--accent);}
   .house-btn svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
   .house-badge{position:absolute;top:-2px;right:-2px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;min-width:17px;height:17px;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px;line-height:1;animation:popIn 0.25s ease;}
-  .project-panel{position:fixed;top:0;left:50%;transform:translateX(100%) translateX(-50%);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+  .project-panel{position:fixed;top:0;left:50%;transform:translateX(100vw);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
   .project-panel.open{transform:translateX(-50%);}
   .project-panel::before{content:'';position:absolute;top:-120px;right:-120px;width:380px;height:380px;background:radial-gradient(circle,rgba(77,158,246,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
   .project-header{position:relative;z-index:1;padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
@@ -172,7 +172,7 @@
   .project-summary-merged-note{font-size:11px;color:var(--muted);margin-top:8px;opacity:0.7;}
   .project-zones-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:4px;}
 /* Wiring diagram */
-.wiring-panel{position:fixed;top:0;left:50%;transform:translateX(100%) translateX(-50%);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:300;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+.wiring-panel{position:fixed;top:0;left:50%;transform:translateX(100vw);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:300;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
 .wiring-panel.open{transform:translateX(-50%);}
 #wiring-root .react-flow__background{fill:var(--bg)!important;}
 #wiring-root .react-flow__attribution{display:none!important;}
