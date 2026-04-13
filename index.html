@@ -109,7 +109,8 @@
     .bottom-toolbar{max-width:720px;padding:14px 2.5rem;}
     .tool-btn{font-size:14px;padding:13px 20px;}
     .add-project-btn{font-size:15px;padding:15px 20px;}
-    .project-panel,.sub-detail-page,.wiring-panel{max-width:720px;}
+    .project-panel,.sub-detail-page,.wiring-panel{max-width:100%;left:0;transform:translateX(100vw);}
+    .project-panel.open,.sub-detail-page.open,.wiring-panel.open{transform:translateX(0);}
     .project-header,.sub-detail-header{padding:2rem 2.5rem 1.25rem;}
     .project-title,.sub-detail-title{font-size:32px;}
     .project-content,.sub-detail-content{padding:1.75rem 2.5rem;}
@@ -126,7 +127,8 @@
   @media(min-width:900px){
     .phone-wrap{max-width:860px;}
     .bottom-toolbar{max-width:860px;}
-    .project-panel,.sub-detail-page,.wiring-panel{max-width:860px;}
+    .project-panel,.sub-detail-page,.wiring-panel{max-width:100%;left:0;transform:translateX(100vw);}
+    .project-panel.open,.sub-detail-page.open,.wiring-panel.open{transform:translateX(0);}
     .btn-cat{min-width:calc(20% - 7px);}
     .header{padding:3rem 3rem 1.5rem;}
     .steps{padding:2rem 3rem;}
@@ -350,6 +352,16 @@ const raw=[
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"4",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"4",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
@@ -357,9 +369,9 @@ const raw=[
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
-  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:1,res:"1000.4"},
-  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:2,res:"1000.4"},
-  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"4",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"4",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"ALSB64",ohm:"70v",spk:"2",sub:null,res:"1000.2"},
   {cat:"Landscape",prod:"ALSB64",ohm:"8ohm",spk:"2",sub:null,res:"1000.2"},
   {cat:"Landscape",prod:"ALSB64",ohm:"70v",spk:"4",sub:null,res:"1000.2"},
@@ -505,8 +517,8 @@ const raw=[
   {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
   {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
 ];
-function getSugSub(m){if(!m||!m.sub)return null;const c=m.cat,p=m.prod,sub=m.sub,ohm=m.ohm,spk=m.spk;let cov=[],perf=[];if(c==='Design Centric'){if(p==='MOS'){cov=['MOS SUB'];perf=['CSUB10'];}else{cov=['BLENDSSUB800'];perf=['BLENDS CSUB10'];}}else if(c==='Landscape'){if(p==='LSR40'||p==='LSR80'){cov=['10HDR','10BPIG','S11BP'];perf=['12HDR','12BPIG'];}else if(p==='LS44'||p==='LS64'||p==='ASM63'){cov=['OSUB10','OSUB12'];perf=['12HDR','12BPIG'];}}else if(c==='Soundbars'){cov=['CSUB10'];if(p==='ASBR6')perf=['AMD210'];}else if(c==='Performance & Theater'){cov=['AMD210'];}else if(c==='Architectural Speakers'){cov=['CSUB10','DSUB6x2','DSUB6F5K'];}if(!cov.length&&!perf.length)return null;return{cov,perf};}
-const catProds={"Design Centric":["MOS","Blends 602","Blends 802","Blends 803"],"Landscape":["LSR40","LSR80","ALSB64","ALSB85","ALSB106","LS44","LS64","ASM63"],"Soundbars":["SBR4","ASBR4","ASBR5","ASBR6"],"Performance & Theater":["ASM5600","ASM3600"],"Architectural Speakers":["D50","D60","D80","D100"]};
+function getSugSub(m){if(!m||!m.sub)return null;const c=m.cat,p=m.prod,sub=m.sub,ohm=m.ohm,spk=m.spk;let cov=[],perf=[];if(c==='Design Centric'){if(p==='MOS'){cov=['MOS SUB'];perf=['CSUB10IW','CSUB10R'];}else{cov=['BLENDSSUB800'];perf=['BLENDS CSUB10'];}}else if(c==='Landscape'){if(p==='LSR40'||p==='LSR60'||p==='LSR80'){cov=['10HDR','10BPIG','S11BP'];perf=['12HDR','12BPIG'];}else if(p==='LS44'||p==='LS64'||p==='ASM63'){cov=['OSUB10','OSUB12'];perf=['12HDR','12BPIG'];}}else if(c==='Soundbars'){cov=['CSUB10IW','CSUB10R'];if(p==='ASBR6')perf=['AMD210'];}else if(c==='Performance & Theater'){cov=['AMD210'];}else if(c==='Architectural Speakers'){cov=['CSUB10IW','CSUB10R','DSUB6x2','DSUB6F5K'];}if(!cov.length&&!perf.length)return null;return{cov,perf};}
+const catProds={"Design Centric":["MOS","Blends 602","Blends 802","Blends 803"],"Landscape":["LSR40","LSR60","LSR80","ALSB64","ALSB85","ALSB106","LS44","LS64","ASM63"],"Soundbars":["SBR4","ASBR4","ASBR5","ASBR6"],"Performance & Theater":["ASM5600","ASM3600"],"Architectural Speakers":["D50","D60","D80","D100"]};
 let sel={cat:null,prod:null,ohm:null,spk:null,sub:null};
 const stepOrder=['s-cat','s-prod','s-ohm','s-spk','s-sub'];
 let history=[];
@@ -712,7 +724,85 @@ const SUB_DATA={
       ['70V','Uses JB1W300 Junction Box. Red = (+) / Black = (−). 70V toroidal transformer included separately.'],
     ],
     contact:{phone:'(844) 674-4461',email:'info@ambisonicsystems.com',web:'ambisonicsystems.com',hours:'Mon–Fri, 8am–5pm PT'},
-  }
+  },
+  'DSUB6x2':{
+    variants:'DSUB6X2 — Director In-Ceiling Subwoofer',
+    specs:[
+      ['System Type','Three chamber bandpass vibration canceling'],
+      ['Driver','Two 6.5" poly cone subwoofers'],
+      ['Crossover','Recommended LPF 150Hz or less, 24dB/oct Butterworth'],
+      ['Frequency Response','32Hz – 180Hz (−10dB)\n40Hz – 150Hz (±3dB)'],
+      ['Max SPL','111dB Continuous / 114dB Peak'],
+      ['Sensitivity','90dB @ 2.83V / 1m'],
+      ['Power Handling','60W Pink Noise / 120W Program / 240W Peak'],
+      ['Rec. Amp Power','50 – 250W (FCT) @ 4Ω'],
+      ['Impedance','6Ω'],
+      ['Input','Gold plated spring push terminals'],
+      ['Enclosure','MDF'],
+      ['Mounting','Overlapping formed steel straps, adjustable 14.5" – 22.5"'],
+      ['Dimensions','14"W × 22"L × 7"H (356mm × 559mm × 177mm)'],
+      ['Weight','29.5 lbs (13.4kg)'],
+      ['Compatibility','Pairs with Director 5", 6" & 8" series in-ceiling speakers'],
+      ['Weather Rating','Indoor only'],
+    ],
+    wiring:[
+      ['8OHM','Gold plated spring push terminals. Recommended LPF 150Hz or less. Pairs with Origin ProA or DSP60.8 amplifier.'],
+    ],
+    contact:{phone:'(844) 674-4461',email:'sales@originacoustics.com',web:'originacoustics.com',hours:'Mon–Fri, 8am–5pm PT'},
+  },
+  'CSUB10IW':{
+    variants:'CSUBIW10N — In-Wall Subwoofer (Pre-Construction)',
+    specs:[
+      ['System Type','In-wall subwoofer'],
+      ['Installation','Pre-construction only'],
+      ['Driver','10" Rigid aluminum cone woofer with rubber surround'],
+      ['Crossover','HPF = 25Hz, 24dB/oct BW · LPF = 120Hz or less, 24dB/oct BW'],
+      ['Frequency Response','29Hz – 150Hz (−10dB)\n36Hz – 120Hz (±3dB)'],
+      ['Max SPL','111dB Continuous / 114dB Peak'],
+      ['Sensitivity','85dB @ 2.83V / 1m, half space'],
+      ['Power Handling','200W Noise / 400W Program / 800W Peak'],
+      ['Rec. Amp Power','100 – 800W (FCT) @ 4Ω'],
+      ['Impedance','8Ω nominal / 6.9Ω minimum'],
+      ['Input','Gold plated spring push terminals'],
+      ['Enclosure','Extruded aluminum'],
+      ['Cut-Out','10 7/16" × 10 7/16" (265mm × 265mm)'],
+      ['Mounting Depth','3 1/2" (88mm)'],
+      ['Overall Size','12.99"W × 25.20"H (330mm × 640mm)'],
+      ['Weather Rating','Indoor only'],
+      ['Grille','Fully paintable micro-perforation'],
+    ],
+    wiring:[
+      ['8OHM','Gold plated spring push terminals. Connect amp output directly. Pairs with Origin ProA amplifier with dedicated DSP profile.'],
+    ],
+    contact:{phone:'(844) 674-4461',email:'sales@originacoustics.com',web:'ambisonicsystems.com',hours:'Mon–Fri, 8am–5pm PT'},
+  },
+  'CSUB10R':{
+    variants:'CSUBIW10R EX — In-Wall Subwoofer (Retrofit · IP66)',
+    specs:[
+      ['System Type','In-wall subwoofer'],
+      ['Installation','Retrofit only (slide-in enclosure)'],
+      ['Driver','10" Rigid aluminum cone woofer with rubber surround\nFiberglass voice coil former'],
+      ['Crossover','HPF = 25Hz, 24dB/oct BW · LPF = 120Hz or less, 24dB/oct BW'],
+      ['Frequency Response','32Hz – 155Hz (−10dB)\n39Hz – 129Hz (±3dB)'],
+      ['Max SPL','111dB Continuous / 114dB Peak'],
+      ['Sensitivity','85dB @ 2.83V / 1m, half space'],
+      ['Power Handling','200W Noise / 400W Program / 800W Peak'],
+      ['Rec. Amp Power','100 – 800W (FCT) @ 4Ω'],
+      ['Impedance','8Ω nominal'],
+      ['Input','Gold plated spring push terminals'],
+      ['Enclosure','Extruded aluminum'],
+      ['Cut-Out','13" W × 13" H (300mm × 300mm)'],
+      ['Mounting Depth','3 1/2" (88mm)'],
+      ['Overall Size','12.99"W × 13.94"H × 13.94"D'],
+      ['Total Install Depth','16.97" (431mm)'],
+      ['Weather Rating','IP66 (outdoor / marine rated)'],
+      ['Grille','Fully paintable micro-perforation'],
+    ],
+    wiring:[
+      ['8OHM','Gold plated spring push terminals. Connect amp output directly. Pairs with Origin ProA amplifier with dedicated DSP profile.'],
+    ],
+    contact:{phone:'(844) 674-4461',email:'sales@originacoustics.com',web:'ambisonicsystems.com',hours:'Mon–Fri, 8am–5pm PT'},
+  },
 };
 function openSubDetail(model){
   document.getElementById('sub-detail-title').textContent=model;
@@ -775,6 +865,24 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     '1200.2':{ch:4,s:{'8ohm':['400w','400w','400w','400w'],'4ohm':['750w','750w','750w','750w'],'2ohm':['750w','750w','750w','750w'],'70v':['1200w(70v)',null,'1200w(70v)',null]}},
     '1200.4':{ch:8,s:{'8ohm':['400w','400w','400w','400w','400w','400w','400w','400w'],'4ohm':['750w','750w','750w','750w','750w','750w','750w','750w'],'2ohm':['750w','750w','750w','750w','750w','750w','750w','750w'],'70v':['1200w(70v)',null,'1200w(70v)',null,'1200w(70v)',null,'1200w(70v)',null]}},
   };
+  // Per-speaker 70v watt draw (tap wattage). Add ALSB values when available.
+  var SPEAKER_70V_WATTS={
+    'LSR40':50,
+    'LSR60':75,
+    'LSR80':100,
+    'LS44':30,
+    'LS64':50
+    // ALSB64, ALSB85, ALSB106: TBD
+  };
+  // Per-product sub 70v watt draw. Add other product subs as data is confirmed.
+  var SUB_70V_WATTS={
+    'LSR40':300,
+    'LSR60':300,
+    'LSR80':300,
+    'LS44':300,
+    'LS64':300,
+    'ASM63':300
+  };
   function getChSpecs(model,ohm){
     var sp=AMP_SPECS[model];if(!sp)return['—','—'];
     var key=ohm==='70v'?'70v':ohm==='4ohm'?'4ohm':ohm==='2ohm'?'2ohm':'8ohm';
@@ -797,21 +905,35 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
         rows.push(h('div',{key:'row'+r,style:{display:'flex',gap:2,justifyContent:'space-between',marginBottom:r<1?3:0}},
           rowChs.map(function(ch,ci){
             var gi=r*4+ci;
+            var hasMeter=data.is70v&&ch.maxW>0;
+            var pct70=hasMeter?Math.min(100,Math.round((ch.usedW||0)/ch.maxW*100)):0;
+            var mc70=pct70>=90?'#f64d4d':pct70>=70?'#f6a020':'#4db87a';
             return h('div',{key:gi,style:{flex:1,textAlign:'center',padding:'2px 1px',background:'rgba(255,255,255,0.03)',borderRadius:3}},
               h('div',{style:{fontSize:7,color:ch.active?ch.color:'rgba(255,255,255,0.18)',fontFamily:'"DM Sans",sans-serif',letterSpacing:'0.03em'}},'CH'+(gi+1)),
-              h('div',{style:{fontSize:6,color:ch.active?'rgba(255,255,255,0.6)':'rgba(255,255,255,0.12)',fontFamily:'"DM Sans",sans-serif',marginTop:1}},ch.watt)
+              h('div',{style:{fontSize:6,color:ch.active?'rgba(255,255,255,0.6)':'rgba(255,255,255,0.12)',fontFamily:'"DM Sans",sans-serif',marginTop:1}},ch.watt),
+              hasMeter?h('div',{style:{height:2,background:'rgba(255,255,255,0.08)',borderRadius:1,overflow:'hidden',marginTop:2}},
+                h('div',{style:{height:'100%',width:pct70+'%',background:mc70,borderRadius:1,transition:'width 0.4s ease'}})
+              ):null
             );
           })
         ));
       }
       channelsEl=h('div',{style:{marginTop:8,borderTop:'1px solid rgba(77,158,246,0.18)',paddingTop:5}},rows);
     } else {
-      // 2- or 4-ch: single vertical list
+      // 2- or 4-ch: single vertical list with per-channel load meter (70v only)
       channelsEl=h('div',{style:{marginTop:8,borderTop:'1px solid rgba(77,158,246,0.18)',paddingTop:4}},
         data.channels.map(function(ch,i){
-          return h('div',{key:i,style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'3px 2px',borderBottom:'1px solid rgba(255,255,255,0.04)'}},
-            h('div',{style:{fontSize:8,color:ch.active?ch.color:'rgba(255,255,255,0.18)',fontFamily:'"DM Sans",sans-serif',letterSpacing:'0.04em'}},'CH'+(i+1)),
-            h('div',{style:{fontSize:7,color:ch.active?'rgba(255,255,255,0.6)':'rgba(255,255,255,0.12)',fontFamily:'"DM Sans",sans-serif'}},ch.watt)
+          var hasMeter=data.is70v&&ch.maxW>0;
+          var pct70=hasMeter?Math.min(100,Math.round((ch.usedW||0)/ch.maxW*100)):0;
+          var mc70=pct70>=90?'#f64d4d':pct70>=70?'#f6a020':'#4db87a';
+          return h('div',{key:i,style:{padding:'3px 2px',borderBottom:'1px solid rgba(255,255,255,0.04)'}},
+            h('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between'}},
+              h('div',{style:{fontSize:8,color:ch.active?ch.color:'rgba(255,255,255,0.18)',fontFamily:'"DM Sans",sans-serif',letterSpacing:'0.04em'}},'CH'+(i+1)),
+              h('div',{style:{fontSize:7,color:ch.active?'rgba(255,255,255,0.6)':'rgba(255,255,255,0.12)',fontFamily:'"DM Sans",sans-serif'}},ch.watt)
+            ),
+            hasMeter?h('div',{style:{height:3,background:'rgba(255,255,255,0.08)',borderRadius:2,overflow:'hidden',marginTop:2}},
+              h('div',{style:{height:'100%',width:pct70+'%',background:mc70,borderRadius:2,transition:'width 0.4s ease'}})
+            ):null
           );
         })
       );
@@ -976,7 +1098,29 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
         var nodeW=Math.max(110,chCount*40);
         ampX=CW/2-nodeW/2;
       }
-      nodes.push({id:'amp-'+ad.ai,type:'ampNode',position:{x:ampX,y:ampY},data:{model:ad.model,channels:ad.channels,side:useSideLayout},draggable:false,selectable:false});
+      // Per-channel 70v capacity: each channel gets maxW (80% of rated) and usedW from connected speakers
+      var chUsedW={};
+      if(is70v){
+        var grp70=groups['amp-'+ad.ai]||{spks:[],subs:[]};
+        var spkTap=SPEAKER_70V_WATTS[prod]||0;
+        var subTap=SUB_70V_WATTS[prod]||0;
+        grp70.spks.forEach(function(e){
+          if(e.ch){chUsedW[e.ch.id]=(chUsedW[e.ch.id]||0)+spkTap;}
+        });
+        grp70.subs.forEach(function(e){
+          if(e.ch){chUsedW[e.ch.id]=(chUsedW[e.ch.id]||0)+subTap;}
+        });
+      }
+      ad.channels.forEach(function(ch){
+        if(is70v&&ch.watt&&ch.watt.indexOf('(70v)')!==-1){
+          var w=parseInt(ch.watt);
+          ch.maxW=isNaN(w)?0:Math.round(w*0.8);
+          ch.usedW=chUsedW[ch.id]||0;
+        } else {
+          ch.maxW=0;ch.usedW=0;
+        }
+      });
+      nodes.push({id:'amp-'+ad.ai,type:'ampNode',position:{x:ampX,y:ampY},data:{model:ad.model,channels:ad.channels,side:useSideLayout,is70v:is70v},draggable:false,selectable:false});
     });
     // Render each amp's speakers then subs
     parts.forEach(function(model,ai){
