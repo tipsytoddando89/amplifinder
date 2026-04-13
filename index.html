@@ -88,7 +88,8 @@
   .fadein{animation:fadeUp 0.25s ease forwards;}
   @keyframes popIn{0%{transform:scale(0.7);opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1);opacity:1;}}
   .header-wrap{position:relative;}
-  .house-btn{position:absolute;top:50%;right:0;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:6px;color:var(--muted);transition:color 0.15s;display:flex;align-items:center;justify-content:center;}
+  .house-btn{position:absolute;top:50%;right:0;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:6px;color:var(--muted);transition:color 0.15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+  .house-btn-label{font-size:9px;font-family:'DM Sans',sans-serif;letter-spacing:0.08em;text-transform:uppercase;line-height:1;}
   .house-btn:hover{color:var(--accent);}
   .house-btn svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
   .house-badge{position:absolute;top:-2px;right:-2px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;min-width:17px;height:17px;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px;line-height:1;animation:popIn 0.25s ease;}
@@ -137,11 +138,14 @@
 <div class="phone-wrap">
   <div class="content">
     <div class="header header-wrap">
-      <img src="/assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png" alt="AmpliFinder" style="height:68px;width:auto;display:block;margin:0 auto 8px;">
+      <button onclick="fullReset()" style="background:none;border:none;cursor:pointer;padding:0;display:block;margin:0 auto 8px;" title="Start over">
+        <img src="/assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png" alt="AmpliFinder" style="height:68px;width:auto;display:block;">
+      </button>
       <div class="header-sub" style="text-align:center;">Answer each question to get your recommendation.</div>
       <button class="house-btn" id="house-btn" onclick="openProject()">
         <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
         <span class="house-badge" id="house-badge">0</span>
+        <span class="house-btn-label">Projects</span>
       </button>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
