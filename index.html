@@ -937,10 +937,11 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
         if(useSideLayout){
           // Side layout: speakers stacked vertically in right column
           var vy=ampYPos[ai];
+          var stairStep=18; // each speaker steps this many px further right
           // 70v uses uniform blue; tall amp (non-70v) uses per-channel colors
           spkRow.forEach(function(e,gi){
             var spkColor=is70v?'#4d9ef6':(e.ch?e.ch.color:'#4d9ef6');
-            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:spkRightX,y:vy+gi*spkSlotH},data:{label:e.out.l,type:e.out.t||'',color:spkColor,side:true},draggable:false,selectable:false});
+            nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:spkRightX+gi*stairStep,y:vy+gi*spkSlotH},data:{label:e.out.l,type:e.out.t||'',color:spkColor,side:true},draggable:false,selectable:false});
             (e.assignedChs||[e.ch]).forEach(function(ach,ei){
               var edgeColor=is70v?'#4d9ef6':(ach?ach.color:'#4d9ef6');
               if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',style:{stroke:edgeColor,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:edgeColor,width:14,height:14}});
