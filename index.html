@@ -728,15 +728,15 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
   }
   function AmpNode(props){
     var data=props.data,n=data.channels.length,side=data.side;
-    // 1000.x and 1200.x amps always use compact layout regardless of side mode
-    var isTall=/^(1[02]00\.)/.test(data.model);
-    // For 8-ch tall amps: 2 rows × 4 cols; for 4-ch tall: single column list
-    var isTallGrid=isTall&&n>=8;
-    var nodeMinW=isTallGrid?134:(side&&!isTall?Math.max(100,n*22):(isTall?134:Math.max(110,n*40)));
-    var nodePad=side?'10px 18px 10px 14px':(isTall?'10px 14px 10px 14px':'10px 14px 22px');
+    // All amps use compact vertical layout; 8-ch uses 2×4 grid
+    var isTall=/^(1[02]00\.)/.test(data.model); // kept for height calc compat
+    var useCompact=side||isTall; // all side-layout amps use vertical channel display
+    var isTallGrid=useCompact&&n>=8; // 2 rows × 4 cols for 8-channel amps
+    var nodeMinW=134; // fixed compact width for all side-layout amps
+    var nodePad='10px 14px 10px 14px';
     var channelsEl;
     if(isTallGrid){
-      // 8 channels split into 2 rows of 4
+      // 8 channels: 2 rows × 4 cols grid
       var rows=[];
       for(var r=0;r<2;r++){
         var rowChs=data.channels.slice(r*4,(r+1)*4);
@@ -751,8 +751,8 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
         ));
       }
       channelsEl=h('div',{style:{marginTop:8,borderTop:'1px solid rgba(77,158,246,0.18)',paddingTop:5}},rows);
-    } else if(isTall){
-      // 4-ch tall: single vertical list
+    } else {
+      // 2- or 4-ch: single vertical list
       channelsEl=h('div',{style:{marginTop:8,borderTop:'1px solid rgba(77,158,246,0.18)',paddingTop:4}},
         data.channels.map(function(ch,i){
           return h('div',{key:i,style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'3px 2px',borderBottom:'1px solid rgba(255,255,255,0.04)'}},
@@ -760,14 +760,6 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
             h('div',{style:{fontSize:7,color:ch.active?'rgba(255,255,255,0.6)':'rgba(255,255,255,0.12)',fontFamily:'"DM Sans",sans-serif'}},ch.watt)
           );
         })
-      );
-    } else {
-      // Standard horizontal row
-      channelsEl=h('div',{style:{display:'flex',justifyContent:'space-around',marginTop:7,gap:1}},
-        data.channels.map(function(ch,i){return h('div',{key:i,style:{flex:1,textAlign:'center'}},
-          h('div',{style:{fontSize:8,color:ch.active?ch.color:'rgba(255,255,255,0.18)',fontFamily:'"DM Sans",sans-serif',letterSpacing:'0.04em'}},'CH'+(i+1)),
-          h('div',{style:{fontSize:7,color:ch.active?'rgba(255,255,255,0.65)':'rgba(255,255,255,0.12)',fontFamily:'"DM Sans",sans-serif',marginTop:1}},ch.watt)
-        );})
       );
     }
     return h('div',{style:{background:'linear-gradient(135deg,rgba(77,158,246,0.18),rgba(77,158,246,0.06))',border:'1.5px solid rgba(77,158,246,0.5)',borderRadius:12,padding:nodePad,color:'#fff',fontFamily:'"DM Serif Display",serif',fontSize:17,textAlign:'center',minWidth:nodeMinW,position:'relative',boxShadow:'0 4px 24px rgba(77,158,246,0.18)'}},
@@ -831,8 +823,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     });
     var is70v=ohm==='70v';
     // Tall amps (1000.x, 1200.x) always use side layout: amp left, speakers stacked right
-    var isTallAmp=parts.every(function(m){return /^(1[02]00\.)/.test(m);});
-    var useSideLayout=is70v||isTallAmp;
+    var useSideLayout=true; // all diagrams: amp left, speakers/subs right
     var spkW=64,spkGap=10,edges=[];
     // Phase 2: Assign outputs using pool+pointer so DNU-paired channels can be removed mid-loop
     var groups={};
@@ -892,11 +883,8 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     var spkSlotH=65; // vertical step per speaker in side layout
     // Helper: estimated rendered height of an amp node
     function ampNodeHeight(model,chCount){
-      if(/^(1[02]00\.)/.test(model)){
-        if(chCount>=8)return 110; // 2×4 grid layout (2 rows)
-        return 64+chCount*18;     // single-column list (4-ch = 136px)
-      }
-      return 80; // standard horizontal layout
+      if(chCount>=8)return 110;  // 2×4 grid (2 rows)
+      return 64+chCount*18;      // vertical list: 2ch=100, 4ch=136
     }
     var ampYPos=[];
     var yAccum=20;
@@ -927,7 +915,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
         var grp=groups['amp-'+ad.ai]||{spks:[],subs:[]};
         var spkCount=grp.spks.length;
         var groupH=Math.max(1,spkCount)*spkSlotH;
-        var aHForCenter=is70v?80:ampNodeHeight(ad.model,chCount);
+        var aHForCenter=ampNodeHeight(ad.model,chCount);
         ampX=ampLeftX;
         ampY=ampYPos[ad.ai]+(groupH/2)-(aHForCenter/2);
       } else {
@@ -942,7 +930,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
       var grp=groups[ampId];
       var ampY=ampYPos[ai];
       var chCnt=AMP_SPECS[model]?AMP_SPECS[model].ch:2;
-      var aH=useSideLayout?ampNodeHeight(model,chCnt):ampNodeHeight(model,chCnt);
+      var aH=ampNodeHeight(model,chCnt);
       // Speakers
       var spkRow=grp.spks;
       if(spkRow.length>0){
