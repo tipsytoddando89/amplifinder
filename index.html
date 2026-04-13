@@ -85,6 +85,56 @@
   .add-project-btn:hover{background:#3d8ee6;border-color:#3d8ee6;}
   .add-project-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  /* ── Tablet / iPad (600px+) ── */
+  @media(min-width:600px){
+    .phone-wrap{max-width:720px;padding-bottom:100px;}
+    .phone-wrap::before{width:500px;height:500px;}
+    .header{padding:2.5rem 2.5rem 1.25rem;}
+    .header-title{font-size:32px;}
+    .header-sub{font-size:15px;}
+    .steps{padding:1.75rem 2.5rem;}
+    .result-wrap{padding:0 2.5rem 1.5rem;}
+    .btn-cat{min-width:calc(33.333% - 6px);font-size:14px;padding:14px 12px;}
+    .btn-cat img{width:60px;height:60px;}
+    .btn-opt{padding:13px 22px;font-size:15px;}
+    .amp-pill{font-size:26px;padding:10px 22px;}
+    .result-card{padding:2rem;}
+    .result-eyebrow{font-size:11px;}
+    .meta-item{font-size:14px;}
+    .meta-item span{font-size:15px;}
+    .step-num{font-size:11px;}
+    .change-btn{font-size:12px;padding:3px 12px;}
+    .sug-sub-pill{font-size:14px;padding:8px 14px;}
+    .wiring-btn{font-size:14px;padding:14px 20px;}
+    .bottom-toolbar{max-width:720px;padding:14px 2.5rem;}
+    .tool-btn{font-size:14px;padding:13px 20px;}
+    .add-project-btn{font-size:15px;padding:15px 20px;}
+    .project-panel,.sub-detail-page,.wiring-panel{max-width:720px;}
+    .project-header,.sub-detail-header{padding:2rem 2.5rem 1.25rem;}
+    .project-title,.sub-detail-title{font-size:32px;}
+    .project-content,.sub-detail-content{padding:1.75rem 2.5rem;}
+    .project-item{padding:1.25rem;}
+    .project-item-amp{font-size:24px;}
+    .project-item-meta{font-size:14px;}
+    .house-btn svg{width:30px;height:30px;}
+    .house-btn-label{font-size:10px;}
+    .house-badge{min-width:20px;height:20px;font-size:11px;}
+    .amp-product-img{height:58px;}
+    .amp-product-img-sm{height:44px;}
+  }
+  /* ── iPad landscape / large tablet (900px+) ── */
+  @media(min-width:900px){
+    .phone-wrap{max-width:860px;}
+    .bottom-toolbar{max-width:860px;}
+    .project-panel,.sub-detail-page,.wiring-panel{max-width:860px;}
+    .btn-cat{min-width:calc(20% - 7px);}
+    .header{padding:3rem 3rem 1.5rem;}
+    .steps{padding:2rem 3rem;}
+    .result-wrap{padding:0 3rem 1.5rem;}
+    .bottom-toolbar{padding:16px 3rem;}
+    .project-content,.sub-detail-content{padding:2rem 3rem;}
+    .project-header,.sub-detail-header{padding:2rem 3rem 1.5rem;}
+  }
   .fadein{animation:fadeUp 0.25s ease forwards;}
   @keyframes popIn{0%{transform:scale(0.7);opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1);opacity:1;}}
   .header-wrap{position:relative;}
@@ -796,7 +846,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     );
   }
   var nodeTypes={ampNode:AmpNode,speakerNode:SpeakerNode,subNode:SubNode};
-  function buildGraph(ampStr,spkVal,ohm,cat,subCount,prod){
+  function buildGraph(ampStr,spkVal,ohm,cat,subCount,prod,containerW){
     var parts=ampStr.split('+').map(function(s){return s.trim();});
     var isBar=cat==='Soundbars';
     var spkItems;
@@ -810,7 +860,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     spkItems.forEach(function(s){allOutputs.push(s);});
     subItems.forEach(function(s){allOutputs.push(s);});
     // Phase 1: build channels and allActive (with chRef) — do NOT push amp nodes yet
-    var allActive=[],ampData=[],nodes=[],CW=320;
+    var allActive=[],ampData=[],nodes=[],CW=Math.max(320,Math.min((containerW||320)-20,800));
     var SLOT=numSubs>0?300:220; // extra vertical room when subs are present
     parts.forEach(function(model,ai){
       var spec=AMP_SPECS[model],chCount=spec?spec.ch:2;
@@ -991,7 +1041,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     return{nodes:nodes,edges:edges};
   }
   function WiringDiagram(props){
-    var g=buildGraph(props.ampStr,props.spkVal,props.ohm||'8ohm',props.cat,props.subCount||0,props.prod||'');
+    var g=buildGraph(props.ampStr,props.spkVal,props.ohm||'8ohm',props.cat,props.subCount||0,props.prod||'',props.containerW||320);
     var ns=useNodesState(g.nodes),es=useEdgesState(g.edges);
     return h(ReactFlow,{nodes:ns[0],edges:es[0],nodeTypes:nodeTypes,onNodesChange:ns[2],onEdgesChange:es[2],
       fitView:true,fitViewOptions:{padding:0.28,maxZoom:1.2},
@@ -1006,7 +1056,7 @@ function closeWiring(){document.getElementById('wiring-panel').classList.remove(
     try{if(_wRoot)_wRoot.unmount();}catch(e){}
     el.innerHTML='';
     _wRoot=RD.createRoot(el);
-    _wRoot.render(h(WiringDiagram,data));
+    _wRoot.render(h(WiringDiagram,Object.assign({},data,{containerW:el.offsetWidth||320})));
     window._pendingWiringMount=null;
   };
   if(window._pendingWiringMount){var pw=window._pendingWiringMount;window._mountWiringDiagram(pw.el,pw.d);}
