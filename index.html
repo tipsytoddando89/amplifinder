@@ -62,6 +62,9 @@
   .sug-sub-pill::after{content:'›';font-size:15px;opacity:0.7;}
   .sub-detail-page{position:fixed;top:0;left:50%;transform:translateX(100vw);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
   .sub-detail-page.open{transform:translateX(-50%);}
+  /* Wiring panel — base styles must appear before media queries so breakpoints can override */
+  .wiring-panel{position:fixed;top:0;left:50%;transform:translateX(100vw);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:300;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+  .wiring-panel.open{transform:translateX(-50%);}
   .sub-detail-page::before{content:'';position:absolute;top:-120px;right:-120px;width:380px;height:380px;background:radial-gradient(circle,rgba(77,158,246,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
   .sub-detail-header{position:relative;z-index:1;padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
   .sub-detail-back{background:none;border:none;color:var(--accent);cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.04em;padding:0;margin-bottom:12px;opacity:0.85;transition:opacity 0.15s;}
@@ -173,9 +176,6 @@
   .project-summary-pill{background:rgba(77,158,246,0.12);border:1px solid rgba(77,158,246,0.3);color:var(--accent);font-family:'DM Serif Display',serif;font-size:20px;padding:5px 15px;border-radius:8px;letter-spacing:0.02em;}
   .project-summary-merged-note{font-size:11px;color:var(--muted);margin-top:8px;opacity:0.7;}
   .project-zones-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:4px;}
-/* Wiring diagram */
-.wiring-panel{position:fixed;top:0;left:50%;transform:translateX(100vw);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:300;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
-.wiring-panel.open{transform:translateX(-50%);}
 #wiring-root .react-flow__background{fill:var(--bg)!important;}
 #wiring-root .react-flow__attribution{display:none!important;}
 #wiring-root .react-flow__controls{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:8px!important;overflow:hidden!important;box-shadow:none!important;}
