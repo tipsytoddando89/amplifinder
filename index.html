@@ -135,6 +135,10 @@
     .project-header,.sub-detail-header{padding:2rem 2.5rem 1.25rem;}
     .project-title,.sub-detail-title{font-size:32px;}
     .project-content,.sub-detail-content{padding:1.75rem 2.5rem;}
+    /* Compact wiring panel header on tablet to give more canvas space */
+    .wiring-panel .sub-detail-header{padding:0.75rem 1.5rem 0.6rem;}
+    .wiring-panel .sub-detail-back{margin-bottom:5px;}
+    .wiring-panel .sub-detail-title{font-size:22px;}
     .project-item{padding:1.25rem;}
     .project-item-amp{font-size:24px;}
     .project-item-meta{font-size:14px;}
@@ -1059,12 +1063,12 @@ function openWiring(){
   document.getElementById('wiring-panel-title').textContent=d.ampStr.split('+').map(s=>'ProA '+s.trim()).join(' + ');
   document.getElementById('wiring-panel').classList.add('open');
   const el=document.getElementById('wiring-root');
-  // Small delay so the panel is visible before React Flow measures container dimensions
+  // Delay so the panel transition is well underway before React Flow measures container
   setTimeout(function(){
     var dWithSub=Object.assign({},d,{selectedSub:window._selectedSub||''});
     if(window._mountWiringDiagram){window._mountWiringDiagram(el,dWithSub);}
     else{el.innerHTML='<div style="color:#7a8090;text-align:center;padding:3rem 2rem;font-size:13px;font-family:DM Sans,sans-serif">Loading diagram…</div>';window._pendingWiringMount={el,d:dWithSub};}
-  },80);
+  },160);
 }
 function closeWiring(){document.getElementById('wiring-panel').classList.remove('open');}
 var DISPERSION_IMGS={
@@ -1389,7 +1393,7 @@ function closeDispersion(){
     spkItems.forEach(function(s){allOutputs.push(s);});
     subItems.forEach(function(s){allOutputs.push(s);});
     // Phase 1: build channels and allActive (with chRef) — do NOT push amp nodes yet
-    var allActive=[],ampData=[],nodes=[],CW=Math.max(320,Math.min((containerW||320)-20,800));
+    var allActive=[],ampData=[],nodes=[],CW=Math.max(320,Math.min((containerW||320)-20,1100));
     var SLOT=numSubs>0?300:220; // extra vertical room when subs are present
     parts.forEach(function(model,ai){
       var spec=AMP_SPECS[model],chCount=spec?spec.ch:2;
@@ -1628,10 +1632,13 @@ function closeDispersion(){
     return{nodes:nodes,edges:edges};
   }
   function WiringDiagram(props){
-    var g=buildGraph(props.ampStr,props.spkVal,props.ohm||'8ohm',props.cat,props.subCount||0,props.prod||'',props.containerW||320,props.selectedSub||'');
+    var cw=props.containerW||320;
+    var fitPad=cw>=900?0.10:cw>=600?0.14:0.28;
+    var fitMaxZ=cw>=900?2.0:cw>=600?1.6:1.2;
+    var g=buildGraph(props.ampStr,props.spkVal,props.ohm||'8ohm',props.cat,props.subCount||0,props.prod||'',cw,props.selectedSub||'');
     var ns=useNodesState(g.nodes),es=useEdgesState(g.edges);
     return h(ReactFlow,{nodes:ns[0],edges:es[0],nodeTypes:nodeTypes,onNodesChange:ns[2],onEdgesChange:es[2],
-      fitView:true,fitViewOptions:{padding:0.28,maxZoom:1.2},
+      fitView:true,fitViewOptions:{padding:fitPad,maxZoom:fitMaxZ},
       panOnDrag:true,zoomOnScroll:false,zoomOnPinch:true,
       nodesDraggable:false,nodesConnectable:false,elementsSelectable:false,
       proOptions:{hideAttribution:true},style:{background:'#0d0f14',width:'100%',height:'100%'}},
