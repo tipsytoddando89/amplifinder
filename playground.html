@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AmpliFinder Playground</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── Design tokens (mirrors index.html :root) ─── */
+:root {
+  --bg: #0d0f14;
+  --surface: #16191f;
+  --surface2: #1e2229;
+  --border: #2a2e38;
+  --text: #f0ede8;
+  --muted: #7a8090;
+  --accent: #4d9ef6;
+  --gold: #f6a020;
+  --green: #4db87a;
+  --red: #f64d4d;
+  --radius-card: 16px;
+  --radius-btn: 8px;
+  --radius-pill: 10px;
+}
+
+/* ─── Playground shell ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  overflow: hidden;
+}
+
+/* ─── Left: control panel ─── */
+#panel {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#panel-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 18px 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+#panel-scroll::-webkit-scrollbar { width: 5px; }
+#panel-scroll::-webkit-scrollbar-track { background: transparent; }
+#panel-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+#panel-actions {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin: 20px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.section-label:first-child { margin-top: 0; }
+
+/* color row: label | picker | hex input */
+.color-row {
+  display: grid;
+  grid-template-columns: 1fr 56px 84px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.color-row label {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.color-row input[type=color] {
+  width: 56px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  cursor: pointer;
+  padding: 2px 3px;
+}
+.color-row input[type=text] {
+  width: 84px;
+  height: 30px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.color-row input[type=text]:focus { outline: none; border-color: var(--accent); }
+
+/* range row */
+.range-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.range-row label { font-size: 12px; color: var(--text); }
+.range-row input[type=range] {
+  width: 140px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.range-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  min-width: 38px;
+  text-align: right;
+}
+
+/* action buttons */
+.btn-primary {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #fff;
+  border-radius: var(--radius-btn);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-secondary {
+  width: 100%;
+  padding: 9px 16px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: var(--radius-btn);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── Right: gallery stage ─── */
+#stage {
+  background: var(--bg);
+  overflow-y: auto;
+  padding: 32px 36px 60px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+#stage::-webkit-scrollbar { width: 6px; }
+#stage::-webkit-scrollbar-track { background: transparent; }
+#stage::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.stage-header {
+  margin-bottom: 32px;
+}
+.stage-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.stage-header p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.stage-header code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+/* gallery section */
+.gallery-section {
+  margin-bottom: 36px;
+}
+.gallery-section-title {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.gallery-section-title code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  background: rgba(77,158,246,0.08);
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ─── Duplicated element styles (from index.html) ─── */
+
+/* Category cards */
+.btn-cat {
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  border-radius: var(--radius-btn);
+  padding: 22px 18px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  cursor: default;
+  transition: all 0.15s;
+  letter-spacing: 0.01em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  min-width: calc(33.333% - 6px);
+  min-height: 96px;
+  text-align: center;
+}
+.btn-cat.active {
+  background: rgba(77,158,246,0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+/* Option buttons */
+.btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn-opt {
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  border-radius: var(--radius-btn);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  cursor: default;
+  transition: all 0.15s;
+  letter-spacing: 0.01em;
+}
+.btn-opt.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  font-weight: 500;
+}
+.btn-opt.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Wide option */
+.btn-opt-wide {
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  border-radius: var(--radius-btn);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  cursor: default;
+  letter-spacing: 0.01em;
+  flex: 1;
+}
+.btn-opt-wide.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+/* Resource buttons */
+.resource-btn {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 10px;
+  font-size: 11px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  cursor: default;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+/* Step header */
+.step-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.step-num {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.step-num.done { color: var(--accent); }
+.change-btn {
+  font-size: 11px;
+  color: var(--accent);
+  background: none;
+  border: 1px solid rgba(77,158,246,0.3);
+  cursor: default;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* Progress bar */
+.progress-bar { height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 1px; }
+
+/* Result card */
+.result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.result-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.result-amps { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+.amp-pill {
+  background: rgba(77,158,246,0.12);
+  border: 1px solid rgba(77,158,246,0.3);
+  color: var(--accent);
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.02em;
+}
+.result-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+.result-meta { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+.meta-item { font-size: 12px; color: var(--muted); }
+.meta-item span { color: var(--text); font-weight: 500; display: block; font-size: 13px; margin-top: 1px; }
+.combo-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+/* Suggested subwoofer */
+.sug-sub {
+  margin-top: 0;
+  padding: 10px 14px;
+  background: rgba(77,158,246,0.07);
+  border: 1px solid rgba(77,158,246,0.2);
+  border-radius: var(--radius-pill);
+}
+.sug-sub-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.sug-sub-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.sug-sub-pill {
+  background: rgba(77,158,246,0.15);
+  border: 1px solid rgba(77,158,246,0.3);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: default;
+  font-family: 'DM Sans', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.sug-sub-pill::after { content: '›'; font-size: 15px; opacity: 0.7; }
+.sug-sub-pill.selected {
+  background: rgba(246,160,32,0.18);
+  border-color: rgba(246,160,32,0.65);
+  color: var(--gold);
+}
+.sug-sub-pill.selected::after { content: '✓'; font-size: 12px; opacity: 1; }
+
+/* Bottom toolbar */
+.bottom-toolbar {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 12px 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+.toolbar-row { display: flex; gap: 10px; }
+.tool-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 11px 16px;
+  border-radius: var(--radius-pill);
+  cursor: default;
+}
+.tool-btn.disabled { opacity: 0.35; }
+.tool-btn svg {
+  width: 13px; height: 13px;
+  fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+}
+.add-project-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(77,158,246,0.1);
+  border: 1px solid rgba(77,158,246,0.4);
+  color: var(--accent);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 13px 16px;
+  border-radius: var(--radius-pill);
+  cursor: default;
+}
+.add-project-btn svg {
+  width: 15px; height: 15px;
+  fill: none; stroke: currentColor;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+}
+
+/* Channel legend */
+.ch-legend { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.ch-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text);
+}
+.ch-dot-circle { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+
+/* Generated CSS pane */
+#css-preview {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  white-space: pre;
+  overflow-x: auto;
+}
+.css-key { color: var(--text); }
+.css-val { color: var(--accent); }
+.css-punct { color: var(--muted); }
+
+/* Gallery layout helpers */
+.card-row { display: flex; gap: 12px; }
+.card-row > * { flex: 1; }
+.gap-8 { gap: 8px; }
+
+/* Toast */
+#toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  padding: 9px 20px;
+  border-radius: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s, transform 0.22s;
+  z-index: 9999;
+  white-space: nowrap;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LEFT PANEL ═══════════════════ -->
+<aside id="panel">
+  <div id="panel-scroll">
+
+    <div class="section-label">Surfaces</div>
+
+    <div class="color-row">
+      <label>--bg</label>
+      <input type="color" id="c-bg" value="#0d0f14">
+      <input type="text"  id="t-bg" value="#0D0F14">
+    </div>
+    <div class="color-row">
+      <label>--surface</label>
+      <input type="color" id="c-surface" value="#16191f">
+      <input type="text"  id="t-surface" value="#16191F">
+    </div>
+    <div class="color-row">
+      <label>--surface2</label>
+      <input type="color" id="c-surface2" value="#1e2229">
+      <input type="text"  id="t-surface2" value="#1E2229">
+    </div>
+    <div class="color-row">
+      <label>--border</label>
+      <input type="color" id="c-border" value="#2a2e38">
+      <input type="text"  id="t-border" value="#2A2E38">
+    </div>
+
+    <div class="section-label">Text</div>
+
+    <div class="color-row">
+      <label>--text</label>
+      <input type="color" id="c-text" value="#f0ede8">
+      <input type="text"  id="t-text" value="#F0EDE8">
+    </div>
+    <div class="color-row">
+      <label>--muted</label>
+      <input type="color" id="c-muted" value="#7a8090">
+      <input type="text"  id="t-muted" value="#7A8090">
+    </div>
+
+    <div class="section-label">Accents</div>
+
+    <div class="color-row">
+      <label>--accent</label>
+      <input type="color" id="c-accent" value="#4d9ef6">
+      <input type="text"  id="t-accent" value="#4D9EF6">
+    </div>
+    <div class="color-row">
+      <label>--gold</label>
+      <input type="color" id="c-gold" value="#f6a020">
+      <input type="text"  id="t-gold" value="#F6A020">
+    </div>
+    <div class="color-row">
+      <label>--green</label>
+      <input type="color" id="c-green" value="#4db87a">
+      <input type="text"  id="t-green" value="#4DB87A">
+    </div>
+    <div class="color-row">
+      <label>--red</label>
+      <input type="color" id="c-red" value="#f64d4d">
+      <input type="text"  id="t-red" value="#F64D4D">
+    </div>
+
+    <div class="section-label">Shape</div>
+
+    <div class="range-row">
+      <label>--radius-card</label>
+      <input type="range" id="r-card" min="0" max="32" value="16">
+      <span class="range-val" id="rv-card">16px</span>
+    </div>
+    <div class="range-row">
+      <label>--radius-btn</label>
+      <input type="range" id="r-btn" min="0" max="24" value="8">
+      <span class="range-val" id="rv-btn">8px</span>
+    </div>
+    <div class="range-row">
+      <label>--radius-pill</label>
+      <input type="range" id="r-pill" min="0" max="32" value="10">
+      <span class="range-val" id="rv-pill">10px</span>
+    </div>
+
+  </div><!-- /panel-scroll -->
+
+  <div id="panel-actions">
+    <button class="btn-primary" onclick="copyCss()">Copy CSS</button>
+    <button class="btn-secondary" onclick="resetDefaults()">Reset to defaults</button>
+    <button class="btn-secondary" onclick="window.open('/', '_blank')">Open live app →</button>
+  </div>
+</aside>
+
+<!-- ═══════════════════ RIGHT STAGE ═══════════════════ -->
+<main id="stage">
+
+  <div class="stage-header">
+    <h1>Element Gallery</h1>
+    <p>Every element is wired to the same CSS variables as <code>index.html</code>.</p>
+  </div>
+
+  <!-- 1. Category cards -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Category Cards <code>.btn-cat</code></div>
+    <div class="btn-group gap-8">
+      <button class="btn-cat">Design Centric</button>
+      <button class="btn-cat">Landscape</button>
+      <button class="btn-cat active">Soundbars</button>
+      <button class="btn-cat">Performance &amp; Theater</button>
+      <button class="btn-cat">Architectural</button>
+      <button class="btn-cat">Professional</button>
+    </div>
+  </div>
+
+  <!-- 2. Option buttons -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Option Buttons <code>.btn-opt</code></div>
+
+    <!-- Pill options -->
+    <div style="margin-bottom:6px;font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;">Count — default / active / disabled</div>
+    <div class="btn-group" style="margin-bottom:14px;">
+      <button class="btn-opt">2</button>
+      <button class="btn-opt active">4</button>
+      <button class="btn-opt">6</button>
+      <button class="btn-opt disabled">8</button>
+    </div>
+
+    <!-- Wide options — 70V / 8 Ohm -->
+    <div style="margin-bottom:6px;font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;">Impedance</div>
+    <div class="btn-group" style="margin-bottom:14px;">
+      <button class="btn-opt-wide active">70V</button>
+      <button class="btn-opt-wide">8 Ohm</button>
+    </div>
+
+    <!-- Wide options — channel config -->
+    <div style="margin-bottom:6px;font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;">Channel Configuration</div>
+    <div class="btn-group" style="margin-bottom:14px;">
+      <button class="btn-opt-wide">Mono</button>
+      <button class="btn-opt-wide active">L &amp; R</button>
+      <button class="btn-opt-wide">LCR</button>
+    </div>
+
+    <!-- Resource buttons -->
+    <div style="margin-bottom:6px;font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;">Resource buttons <code style="font-family:monospace;font-size:10px;color:var(--accent)">.resource-btn</code></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <button class="resource-btn">Data Sheets</button>
+      <button class="resource-btn">DSP Library</button>
+      <button class="resource-btn">Installation Guides</button>
+    </div>
+
+    <!-- Change button inline -->
+    <div style="margin-bottom:6px;font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;">Step with change <code style="font-family:monospace;font-size:10px;color:var(--accent)">.step-num.done + .change-btn</code></div>
+    <div class="step-header" style="max-width:320px;">
+      <span class="step-num done">01 — Category</span>
+      <button class="change-btn">change</button>
+    </div>
+  </div>
+
+  <!-- 3. Step header & progress -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Step Header &amp; Progress <code>.step-num</code> <code>.progress-bar</code></div>
+
+    <div class="step-header" style="margin-bottom:10px;">
+      <span class="step-num">02 — Product</span>
+    </div>
+    <div class="step-header" style="margin-bottom:16px;">
+      <span class="step-num done">03 — Configuration ✓</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:360px;">
+      <div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:0.08em;margin-bottom:4px;">25%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:0.08em;margin-bottom:4px;">60%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:0.08em;margin-bottom:4px;">100%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Result cards -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Result Card <code>.result-card</code></div>
+    <div class="card-row">
+      <!-- Single amp -->
+      <div class="result-card">
+        <div class="result-eyebrow">Recommended Amplifier</div>
+        <div class="result-amps">
+          <span class="amp-pill">1000.2</span>
+        </div>
+        <div class="result-divider"></div>
+        <div class="result-meta">
+          <div class="meta-item">Zones<span>2</span></div>
+          <div class="meta-item">Load<span>8 Ω</span></div>
+          <div class="meta-item">Power<span>125W</span></div>
+          <div class="meta-item">Channels<span>2</span></div>
+        </div>
+      </div>
+      <!-- Combo -->
+      <div class="result-card">
+        <div class="result-eyebrow">Combination</div>
+        <div class="result-amps">
+          <span class="amp-pill">250.4</span>
+          <span class="amp-pill">1000.1</span>
+        </div>
+        <div class="result-divider"></div>
+        <div class="result-meta">
+          <div class="meta-item">Zones<span>4</span></div>
+          <div class="meta-item">Load<span>70V</span></div>
+          <div class="meta-item">Power<span>250W</span></div>
+          <div class="meta-item">Channels<span>5</span></div>
+        </div>
+        <div class="combo-note">Pair with subwoofer channel on 1000.1 for best performance.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Suggested subwoofer -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Suggested Subwoofer <code>.sug-sub</code></div>
+    <div style="max-width:420px;">
+      <div class="sug-sub">
+        <div class="sug-sub-label">Suggested Subwoofer</div>
+        <div class="sug-sub-pills">
+          <button class="sug-sub-pill">10HDR</button>
+          <button class="sug-sub-pill">10BPIG</button>
+          <button class="sug-sub-pill selected">12HDR</button>
+          <button class="sug-sub-pill">12BPIG</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Bottom toolbar -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Bottom Toolbar <code>.tool-btn</code> <code>.add-project-btn</code></div>
+    <div class="card-row">
+      <div class="result-card" style="padding:0;overflow:hidden;">
+        <div style="padding:1rem 1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">Add to Project</div>
+        </div>
+        <div class="bottom-toolbar" style="border-radius:0;">
+          <button class="add-project-btn">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add to Project
+          </button>
+        </div>
+      </div>
+      <div class="result-card" style="padding:0;overflow:hidden;">
+        <div style="padding:1rem 1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">Navigation</div>
+        </div>
+        <div class="bottom-toolbar" style="border-radius:0;">
+          <div class="toolbar-row">
+            <button class="tool-btn">
+              <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <button class="tool-btn disabled">
+              <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.45"/></svg>
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Channel colors -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Channel Colors <code>.wt-dot</code></div>
+    <div class="ch-legend">
+      <div class="ch-dot">
+        <div class="ch-dot-circle" style="background:var(--accent)"></div>
+        Speaker
+      </div>
+      <div class="ch-dot">
+        <div class="ch-dot-circle" style="background:var(--gold)"></div>
+        Subwoofer
+      </div>
+      <div class="ch-dot">
+        <div class="ch-dot-circle" style="background:var(--green)"></div>
+        Height
+      </div>
+      <div class="ch-dot">
+        <div class="ch-dot-circle" style="background:var(--red)"></div>
+        Error
+      </div>
+      <div class="ch-dot">
+        <div class="ch-dot-circle" style="background:var(--muted)"></div>
+        Muted
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Generated CSS -->
+  <div class="gallery-section">
+    <div class="gallery-section-title">Generated CSS <code>:root { … }</code></div>
+    <div id="css-preview"></div>
+  </div>
+
+</main>
+
+<div id="toast">Copied to clipboard</div>
+
+<script>
+// ── Token definitions ──────────────────────────────────────────────────────
+const TOKENS = [
+  { prop: '--bg',           type: 'color', id: 'bg',      def: '#0d0f14' },
+  { prop: '--surface',      type: 'color', id: 'surface',  def: '#16191f' },
+  { prop: '--surface2',     type: 'color', id: 'surface2', def: '#1e2229' },
+  { prop: '--border',       type: 'color', id: 'border',   def: '#2a2e38' },
+  { prop: '--text',         type: 'color', id: 'text',     def: '#f0ede8' },
+  { prop: '--muted',        type: 'color', id: 'muted',    def: '#7a8090' },
+  { prop: '--accent',       type: 'color', id: 'accent',   def: '#4d9ef6' },
+  { prop: '--gold',         type: 'color', id: 'gold',     def: '#f6a020' },
+  { prop: '--green',        type: 'color', id: 'green',    def: '#4db87a' },
+  { prop: '--red',          type: 'color', id: 'red',      def: '#f64d4d' },
+  { prop: '--radius-card',  type: 'range', id: 'card',     def: 16 },
+  { prop: '--radius-btn',   type: 'range', id: 'btn',      def: 8  },
+  { prop: '--radius-pill',  type: 'range', id: 'pill',     def: 10 },
+];
+
+// ── Wire color tokens ──────────────────────────────────────────────────────
+TOKENS.filter(t => t.type === 'color').forEach(({ prop, id, def }) => {
+  const picker = document.getElementById('c-' + id);
+  const text   = document.getElementById('t-' + id);
+
+  function applyColor(hex) {
+    document.documentElement.style.setProperty(prop, hex);
+    updateCssPreview();
+  }
+
+  picker.addEventListener('input', () => {
+    text.value = picker.value.toUpperCase();
+    applyColor(picker.value);
+  });
+
+  text.addEventListener('input', () => {
+    const v = text.value.trim();
+    if (/^#[0-9a-fA-F]{6}$/.test(v)) {
+      picker.value = v;
+      applyColor(v);
+    }
+  });
+
+  text.addEventListener('blur', () => {
+    const v = text.value.trim();
+    if (!/^#[0-9a-fA-F]{6}$/.test(v)) {
+      text.value = picker.value.toUpperCase();
+    }
+  });
+});
+
+// ── Wire range tokens ──────────────────────────────────────────────────────
+TOKENS.filter(t => t.type === 'range').forEach(({ prop, id }) => {
+  const range = document.getElementById('r-' + id);
+  const label = document.getElementById('rv-' + id);
+
+  range.addEventListener('input', () => {
+    const val = range.value + 'px';
+    label.textContent = val;
+    document.documentElement.style.setProperty(prop, val);
+    updateCssPreview();
+  });
+});
+
+// ── CSS preview ────────────────────────────────────────────────────────────
+function currentValues() {
+  const style = getComputedStyle(document.documentElement);
+  return TOKENS.map(t => {
+    if (t.type === 'color') {
+      return { prop: t.prop, val: document.getElementById('c-' + t.id).value };
+    } else {
+      return { prop: t.prop, val: document.getElementById('r-' + t.id).value + 'px' };
+    }
+  });
+}
+
+function updateCssPreview() {
+  const vals = currentValues();
+  const lines = vals.map(({ prop, val }) =>
+    `  <span class="css-key">${prop}</span><span class="css-punct">: </span><span class="css-val">${val}</span><span class="css-punct">;</span>`
+  );
+  document.getElementById('css-preview').innerHTML =
+    `<span class="css-punct">:root {</span>\n` + lines.join('\n') + `\n<span class="css-punct">}</span>`;
+}
+
+// ── Copy CSS ───────────────────────────────────────────────────────────────
+function copyCss() {
+  const vals = currentValues();
+  const lines = vals.map(({ prop, val }) => `  ${prop}: ${val};`);
+  const css = `:root {\n${lines.join('\n')}\n}`;
+  navigator.clipboard.writeText(css).then(showToast);
+}
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1600);
+}
+
+// ── Reset ──────────────────────────────────────────────────────────────────
+function resetDefaults() {
+  TOKENS.forEach(t => {
+    if (t.type === 'color') {
+      document.getElementById('c-' + t.id).value = t.def;
+      document.getElementById('t-' + t.id).value = t.def.toUpperCase();
+      document.documentElement.style.setProperty(t.prop, t.def);
+    } else {
+      document.getElementById('r-' + t.id).value = t.def;
+      document.getElementById('rv-' + t.id).textContent = t.def + 'px';
+      document.documentElement.style.setProperty(t.prop, t.def + 'px');
+    }
+  });
+  updateCssPreview();
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+updateCssPreview();
+</script>
+</body>
+</html>
