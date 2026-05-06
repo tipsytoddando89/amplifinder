@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Sheets — AmpliFINDER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d0f14;
+      --surface:#13161e;
+      --surface2:#1a1e28;
+      --border:rgba(255,255,255,0.07);
+      --text:#e8eaf0;
+      --muted:#7a8090;
+      --accent:#4d9ef6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
+
+    /* Header */
+    .header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface);}
+    .header-logo{height:26px;opacity:0.9;}
+    .back-btn{display:flex;align-items:center;gap:5px;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:6px 0;transition:color 0.15s;}
+    .back-btn:hover{color:var(--accent);}
+    .back-btn svg{width:15px;height:15px;}
+
+    /* Top bar with dropdown */
+    .top-bar{flex-shrink:0;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+    .page-title{font-size:17px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;}
+    .select-wrap{position:relative;flex:1;min-width:200px;max-width:360px;}
+    .select-wrap svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);width:15px;height:15px;}
+    select{width:100%;appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 36px 9px 12px;cursor:pointer;outline:none;transition:border-color 0.15s;}
+    select:focus{border-color:var(--accent);}
+    select option{background:#1a1e28;color:var(--text);}
+    .btn-dl{display:flex;align-items:center;gap:6px;padding:9px 14px;background:none;color:var(--muted);border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.15s;white-space:nowrap;flex-shrink:0;}
+    .btn-dl:hover{border-color:var(--accent);color:var(--accent);}
+    .btn-dl svg{width:13px;height:13px;}
+    .btn-dl{display:none;}
+    .btn-dl.visible{display:flex;}
+
+    /* PDF viewer */
+    .pdf-wrap{flex:1;display:flex;flex-direction:column;min-height:0;}
+    .pdf-placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);}
+    .pdf-placeholder svg{width:40px;height:40px;opacity:0.25;}
+    .pdf-placeholder p{font-size:14px;}
+    #pdf-frame{flex:1;width:100%;border:none;display:none;background:#fff;min-height:0;}
+    #pdf-frame.visible{display:flex;flex-direction:column;}
+    .pdf-fallback{padding:2rem 1.5rem;text-align:center;}
+    .pdf-fallback p{color:var(--muted);font-size:14px;margin-bottom:1rem;}
+    .btn-open{display:inline-flex;align-items:center;gap:6px;padding:11px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;transition:opacity 0.15s;}
+    .btn-open:hover{opacity:0.88;}
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img class="header-logo" src="/assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png" alt="AmpliFINDER">
+    <button class="back-btn" onclick="window.location.href='/'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back
+    </button>
+  </div>
+
+  <div class="top-bar">
+    <div class="page-title">Data Sheets</div>
+    <div class="select-wrap">
+      <select id="prod-select" onchange="onSelect()">
+        <option value="">— Select a product —</option>
+        <option value="12HDR-AW|12HDR-AW-NEW_Datasheet_06-21-23.pdf">12HDR-AW</option>
+        <option value="AMD210|AMD210 data.pdf">AMD210</option>
+        <option value="Amb Marquee / AM650OWA|Amb-Marquee_Official_Datasheet_08-22-25_Rebrand_with-AM650OWA.pdf">Amb Marquee / AM650OWA</option>
+        <option value="Ambisonic 10BPIG|Ambisonic_10BPIG_Startguide_05-03-24.pdf">Ambisonic 10BPIG</option>
+        <option value="Ambisonic 10HDR|Ambisonic_10HDR_START_GUIDES_06-04-24.pdf">Ambisonic 10HDR</option>
+        <option value="Ambisonic 12BPIG|Ambisonic_12BPIG_Startguide_05-03-24.pdf">Ambisonic 12BPIG</option>
+        <option value="Blends|Blends-Speakers_DATASHEET_11-05-25_lowres.pdf">Blends</option>
+        <option value="Blends CSUB10|BlendsCSUB10-Datasheet_10-23-25-2.pdf">Blends CSUB10</option>
+        <option value="Blends SUB800|BLENDSSUB800.pdf">Blends SUB800</option>
+        <option value="CSUBIW10N|OA_CSUBIW10N_Datasheet_NewFonts_03-19-26.pdf">CSUBIW10N</option>
+        <option value="CSUBIW10R EX|OA_CSUBIW10R EX_Datasheet_NewFonts_03-19-26.pdf">CSUBIW10R EX</option>
+        <option value="DSUB6X2|DSUB6X2 Datasheet_01-17-25.pdf">DSUB6X2</option>
+        <option value="Soundbars|ASBR_Ambisonic-Soundbars_Datasheet_10-29-25.pdf">Soundbars</option>
+      </select>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <a class="btn-dl" id="btn-dl" href="#" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download
+    </a>
+  </div>
+
+  <div class="pdf-wrap">
+    <div class="pdf-placeholder" id="placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      <p>Select a product above to view its data sheet</p>
+    </div>
+    <object id="pdf-frame" type="application/pdf" title="Data Sheet">
+      <div class="pdf-fallback" id="pdf-fallback" style="display:none;">
+        <p>Your browser can't display PDFs inline.</p>
+        <a class="btn-open" id="btn-open" href="#" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open Data Sheet
+        </a>
+      </div>
+    </object>
+  </div>
+
+  <script>
+    function onSelect(){
+      var val=document.getElementById('prod-select').value;
+      var frame=document.getElementById('pdf-frame');
+      var placeholder=document.getElementById('placeholder');
+      var dlBtn=document.getElementById('btn-dl');
+      var fallback=document.getElementById('pdf-fallback');
+      var openBtn=document.getElementById('btn-open');
+      if(!val){
+        frame.removeAttribute('data');
+        frame.classList.remove('visible');
+        placeholder.style.display='flex';
+        fallback.style.display='none';
+        dlBtn.classList.remove('visible');
+        return;
+      }
+      var parts=val.split('|');
+      var file=parts[1];
+      var url='/assests/'+encodeURIComponent(file);
+      frame.setAttribute('data',url);
+      frame.classList.add('visible');
+      placeholder.style.display='none';
+      dlBtn.href=url;
+      dlBtn.setAttribute('download',file);
+      dlBtn.classList.add('visible');
+      if(openBtn){openBtn.href=url;}
+      // Show fallback for browsers that can't render PDFs inline (e.g. mobile Safari)
+      frame.onerror=function(){fallback.style.display='block';};
+      setTimeout(function(){
+        if(frame.offsetHeight<10){fallback.style.display='block';}
+      },1500);
+    }
+  </script>
+
+</body>
+</html>

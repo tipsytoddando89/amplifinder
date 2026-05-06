@@ -33,12 +33,21 @@
   .btn-opt{border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:10px 16px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;cursor:pointer;transition:all 0.15s;letter-spacing:0.01em;}
   .btn-opt:hover{border-color:var(--accent);color:var(--accent);}
   .btn-opt.active{background:var(--accent);color:#ffffff;border-color:var(--accent);font-weight:500;}
-  .btn-cat{border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:10px 12px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:400;cursor:pointer;transition:all 0.15s;letter-spacing:0.01em;display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:calc(50% - 4px);}
-  .btn-cat img{width:48px;height:48px;object-fit:contain;opacity:0.85;transition:opacity 0.15s;}
+  .btn-cat{border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:15px 18px;font-size:18px;font-family:'DM Sans',sans-serif;font-weight:400;cursor:pointer;transition:all 0.15s;letter-spacing:0.01em;display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:calc(50% - 4px);}
+  .btn-cat img{width:72px;height:72px;object-fit:contain;opacity:0.85;transition:opacity 0.15s;}
   .btn-cat:hover{border-color:var(--accent);color:var(--accent);}
   .btn-cat:hover img{opacity:1;}
   .btn-cat.active{background:rgba(77,158,246,0.12);color:var(--accent);border-color:var(--accent);font-weight:500;}
   .btn-cat.active img{opacity:1;}
+  .pt-sub-product{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px 10px;margin-bottom:10px;}
+  .pt-sub-product img{height:80px;object-fit:contain;opacity:0.9;}
+  .pt-sub-product span{font-size:13px;font-weight:500;color:var(--text);}
+  .resource-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .resource-btn{flex:1;min-width:0;padding:9px 10px;font-size:11px;font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:0.04em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+  .resource-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-opt-with-img{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;min-width:calc(50% - 4px);flex:1;}
+  .btn-opt-with-img img{width:100%;height:72px;object-fit:contain;opacity:0.85;transition:opacity 0.15s;border-radius:4px;}
+  .btn-opt-with-img:hover img,.btn-opt-with-img.active img{opacity:1;}
   #g-cat{display:flex;flex-wrap:wrap;gap:8px;}
   .result-wrap{padding:0 1.5rem 1rem;}
   .result-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;}
@@ -120,8 +129,8 @@
     .header-sub{font-size:15px;}
     .steps{padding:1.75rem 2.5rem;}
     .result-wrap{padding:0 2.5rem 1.5rem;}
-    .btn-cat{min-width:calc(33.333% - 6px);font-size:14px;padding:14px 12px;}
-    .btn-cat img{width:60px;height:60px;}
+    .btn-cat{min-width:calc(33.333% - 6px);font-size:21px;padding:21px 18px;}
+    .btn-cat img{width:90px;height:90px;}
     .btn-opt{padding:13px 22px;font-size:15px;}
     .amp-pill{font-size:26px;padding:10px 22px;}
     .result-card{padding:2rem;}
@@ -143,13 +152,16 @@
     .project-content,.sub-detail-content{padding:1.75rem 2.5rem;}
     /* Compact wiring panel header on tablet to give more canvas space */
     .wiring-panel .sub-detail-header{padding:0.75rem 1.5rem 0.6rem;}
-    .wiring-panel .sub-detail-back{margin-bottom:5px;}
+    .wiring-panel .sub-detail-back{margin-bottom:5px;font-size:17px;padding:6px 10px 6px 0;}
+    .wiring-panel .sub-detail-back svg{width:20px;height:20px;}
     .wiring-panel .sub-detail-title{font-size:22px;}
     .project-item{padding:1.25rem;}
     .project-item-amp{font-size:24px;}
     .project-item-meta{font-size:14px;}
     .house-btn svg{width:30px;height:30px;}
     .house-btn-label{font-size:10px;}
+    .home-btn svg{width:30px;height:30px;}
+    .home-btn-label{font-size:10px;}
     .house-badge{min-width:20px;height:20px;font-size:11px;}
     .amp-product-img{height:58px;}
     .amp-product-img.amp-narrow{flex:0 0 50%;max-width:50%;}
@@ -162,6 +174,10 @@
     .bottom-toolbar{max-width:860px;}
     .project-panel,.sub-detail-page,.wiring-panel,.dispersion-panel,.height-panel{max-width:100%;left:0;transform:translateX(100vw);}
     .project-panel.open,.sub-detail-page.open,.wiring-panel.open,.dispersion-panel.open,.height-panel.open{transform:translateX(0);}
+    .project-panel{width:100vw;max-width:100vw;left:0;}
+    .project-panel.open{transform:translateX(0);}
+    .project-header{max-width:1100px;margin:0 auto;width:100%;box-sizing:border-box;padding:2.5rem 3rem 1.5rem;}
+    .project-content{max-width:1100px;margin:0 auto;width:100%;box-sizing:border-box;padding:2rem 3rem;}
     .btn-cat{min-width:calc(20% - 7px);}
     .header{padding:3rem 3rem 1.5rem;}
     .steps{padding:2rem 3rem;}
@@ -169,12 +185,26 @@
     .bottom-toolbar{padding:16px 3rem;}
     .project-content,.sub-detail-content{padding:2rem 3rem;}
     .project-header,.sub-detail-header{padding:2rem 3rem 1.5rem;}
+    .wiring-panel .sub-detail-back{font-size:19px;padding:8px 12px 8px 0;}
+    .wiring-panel .sub-detail-back svg{width:24px;height:24px;}
   }
   .fadein{animation:fadeUp 0.25s ease forwards;}
+  .bundles-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;padding-top:12px;border-top:1px solid var(--border);}
+  .cfg-section-label{font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;margin-top:16px;}
+  #cfg-sections>div:first-child .cfg-section-label{margin-top:4px;}
+  .surround-hint{font-size:12px;color:var(--muted);margin-bottom:10px;}
+  .surround-continue-btn{width:100%;padding:11px 16px;border:1px solid rgba(77,158,246,0.35);background:rgba(77,158,246,0.07);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border-radius:10px;cursor:pointer;transition:all 0.15s;margin-top:4px;}
+  .surround-continue-btn:hover{background:rgba(77,158,246,0.14);border-color:var(--accent);}
+  .surround-addition{margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);}
+  .surround-addition-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .surround-addition-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
   .theater-lineup{margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);}
   .theater-lineup-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
   .theater-lineup-items{display:flex;flex-direction:column;gap:5px;}
   .theater-lineup-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);}
+  .theater-lineup-item--tappable{padding:4px 6px;margin:-4px -6px;border-radius:7px;transition:background 0.15s;}
+  .theater-lineup-item--tappable:hover{background:rgba(77,158,246,0.08);}
+  .theater-lineup-info{font-size:11px;color:var(--accent);opacity:0.7;margin-left:2px;}
   .theater-lineup-count{background:rgba(77,158,246,0.12);border:1px solid rgba(77,158,246,0.25);color:var(--accent);font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;min-width:22px;text-align:center;}
   .theater-lineup-model{color:var(--muted);font-weight:400;}
   @keyframes popIn{0%{transform:scale(0.7);opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1);opacity:1;}}
@@ -183,9 +213,13 @@
   .house-btn-label{font-size:9px;font-family:'DM Sans',sans-serif;letter-spacing:0.08em;text-transform:uppercase;line-height:1;}
   .house-btn:hover{color:var(--accent);}
   .house-btn svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .home-btn{position:absolute;top:50%;left:0;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:6px;color:var(--muted);transition:color 0.15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+  .home-btn:hover{color:var(--accent);}
+  .home-btn svg{width:26px;height:26px;}
+  .home-btn-label{font-size:9px;font-family:'DM Sans',sans-serif;letter-spacing:0.08em;text-transform:uppercase;line-height:1;}
   .house-badge{position:absolute;top:-2px;right:-2px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;min-width:17px;height:17px;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px;line-height:1;animation:popIn 0.25s ease;}
-  .project-panel{position:fixed;top:0;left:50%;transform:translateX(100vw);width:100%;max-width:420px;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
-  .project-panel.open{transform:translateX(-50%);}
+  .project-panel{position:fixed;top:0;left:0;right:0;transform:translateX(100vw);width:100%;max-width:100%;bottom:0;background:var(--bg);z-index:200;transition:transform 0.32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+  .project-panel.open{transform:translateX(0);}
   .project-panel::before{content:'';position:absolute;top:-120px;right:-120px;width:380px;height:380px;background:radial-gradient(circle,rgba(77,158,246,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
   .project-header{position:relative;z-index:1;padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
   .project-back{background:none;border:none;color:var(--accent);cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.04em;padding:0;margin-bottom:12px;opacity:0.85;transition:opacity 0.15s;}
@@ -207,16 +241,56 @@
   .project-item-remove svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
   .project-summary{background:rgba(77,158,246,0.06);border:1px solid rgba(77,158,246,0.22);border-radius:12px;padding:1rem 1.1rem;margin-bottom:14px;position:relative;overflow:hidden;}
   .project-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);}
-  .project-summary-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .project-summary-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+  .project-optimize-btn{font-size:11px;letter-spacing:0.03em;text-transform:none;color:var(--accent);background:none;border:1px solid rgba(77,158,246,0.35);padding:3px 10px;border-radius:20px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.15s;white-space:nowrap;}
+  .project-optimize-btn:hover{background:rgba(77,158,246,0.1);border-color:var(--accent);}
+  .project-optimize-btn--active{color:#4db87a;border-color:rgba(77,184,122,0.45);}
+  .project-optimize-btn--active:hover{background:rgba(77,184,122,0.1);border-color:#4db87a;}
   .project-summary-pills{display:flex;flex-wrap:wrap;gap:8px;}
   .project-summary-pill{background:rgba(77,158,246,0.12);border:1px solid rgba(77,158,246,0.3);color:var(--accent);font-family:'DM Serif Display',serif;font-size:20px;padding:5px 15px;border-radius:8px;letter-spacing:0.02em;}
+  .project-summary-pill--optimized{background:rgba(77,184,122,0.12);border-color:rgba(77,184,122,0.4);color:#4db87a;}
   .project-summary-merged-note{font-size:11px;color:var(--muted);margin-top:8px;opacity:0.7;}
+  .project-wiring-btn{font-size:11px;letter-spacing:0.03em;text-transform:none;color:var(--accent);background:none;border:1px solid rgba(77,158,246,0.35);padding:3px 10px;border-radius:20px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:all 0.15s;white-space:nowrap;}
+  .project-wiring-btn:hover{background:rgba(77,158,246,0.1);border-color:var(--accent);}
+  .project-wiring-btn--active{background:rgba(77,158,246,0.1);border-color:var(--accent);}
+  .project-wiring-btn-row{display:flex;justify-content:flex-end;margin-top:8px;}
+  .proj-wiring-panel{margin-top:4px;padding-top:16px;border-top:1px solid var(--border);}
+  .proj-wiring-panel-lbl{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .proj-wiring-zone{margin-bottom:20px;}
+  .proj-wiring-zone-lbl{font-size:11px;font-weight:600;color:var(--text);letter-spacing:0.04em;margin-bottom:8px;padding:0 2px;}
+  .proj-wiring-zone-sub{font-size:10px;color:var(--muted);font-weight:400;margin-left:6px;text-transform:uppercase;letter-spacing:0.08em;}
+  .proj-wiring-na{font-size:12px;color:var(--muted);font-style:italic;padding:8px 2px;}
+  .project-summary-optimized-note{font-size:11px;color:#4db87a;margin-top:8px;opacity:0.85;}
   .project-zones-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:4px;}
 #wiring-root .react-flow__background{fill:var(--bg)!important;}
 #wiring-root .react-flow__attribution{display:none!important;}
 #wiring-root .react-flow__controls{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:8px!important;overflow:hidden!important;box-shadow:none!important;}
 #wiring-root .react-flow__controls-button{background:var(--surface)!important;border-bottom-color:var(--border)!important;fill:var(--muted)!important;}
 #wiring-root .react-flow__controls-button:hover{background:var(--surface2)!important;}
+  /* Wiring table styles */
+  .wt-wrap{padding:16px;display:flex;flex-direction:column;gap:20px;}
+  .wt-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .wt-card-hdr{padding:12px 18px 10px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .wt-name{font-family:'DM Serif Display',serif;font-size:20px;color:var(--text);}
+  .wt-tag{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+  .wt-table{display:flex;overflow-x:auto;}
+  .wt-col{flex:1 1 0;min-width:56px;border-right:1px solid var(--border);display:flex;flex-direction:column;}
+  .wt-col:last-child{border-right:none;}
+  .wt-ch-hdr{padding:8px 4px 7px;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--border);text-align:center;display:flex;align-items:center;justify-content:center;gap:4px;}
+  .wt-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;}
+  .wt-ch-num{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+  .wt-watt{padding:9px 6px;text-align:center;border-bottom:1px solid var(--border);font-size:12px;font-weight:500;color:var(--text);}
+  .wt-watt.dnu{color:rgba(122,128,144,0.3);}
+  .wt-watt.future{color:var(--muted);font-style:italic;}
+  .wt-lbl{padding:9px 6px 14px;text-align:center;font-size:12px;font-weight:500;line-height:1.3;color:var(--accent);}
+  .wt-lbl.dnu{color:rgba(122,128,144,0.2);}
+  .wt-lbl.future{color:rgba(77,158,246,0.35);font-style:italic;}
+  .wt-lbl.sub{color:#f6a020;}
+  .wt-lbl.height{color:#4db87a;}
+  .wt-lbl.surr{color:#c17af6;}
+  .wt-usage-wrap{margin:0 6px 4px;height:5px;border-radius:3px;background:rgba(255,255,255,0.08);overflow:hidden;}
+  .wt-usage-bar{height:100%;border-radius:3px;transition:width 0.3s;}
+  .wt-usage-txt{padding:0 6px 10px;text-align:center;font-size:10px;color:var(--muted);letter-spacing:0.04em;}
 .wiring-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:12px;padding:11px 16px;border:1px solid rgba(77,158,246,0.28);background:rgba(77,158,246,0.05);border-radius:10px;color:var(--accent);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:0.03em;transition:background 0.15s;}
 .wiring-btn:active{background:rgba(77,158,246,0.13);}
 .wiring-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
@@ -262,21 +336,33 @@
 .dispersion-pattern-cell img{width:100%;height:auto;display:block;}
 .dispersion-pattern-label{font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:rgba(168,118,255,0.7);font-family:'DM Sans',sans-serif;padding:6px 0 7px;text-align:center;}
 .dispersion-placeholder{padding:2rem 1rem;text-align:center;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.5;}
-.dispersion-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:8px;padding:11px 16px;border:1px solid rgba(168,118,255,0.28);background:rgba(168,118,255,0.05);border-radius:10px;color:#a876ff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:0.03em;transition:background 0.15s;}
+.result-spk-img{width:100%;max-height:160px;object-fit:contain;object-position:center;border-radius:10px;background:var(--surface2);border:1px solid var(--border);margin-bottom:10px;}
+.dispersion-btn{display:none;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:8px;padding:11px 16px;border:1px solid rgba(168,118,255,0.28);background:rgba(168,118,255,0.05);border-radius:10px;color:#a876ff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:0.03em;transition:background 0.15s;}
 .dispersion-btn:active{background:rgba(168,118,255,0.13);}
 .dispersion-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.pt-skip-btn{display:inline-block;margin-top:12px;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;padding:2px 0;letter-spacing:0.02em;transition:color 0.15s;}
+.pt-skip-btn:hover{color:var(--accent);}
+.pt-step-hint{font-size:11px;color:var(--muted);margin-bottom:10px;opacity:0.7;}
+.pt-subs-dropdown{width:100%;max-width:220px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px 14px;border-radius:8px;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8090' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;transition:border-color 0.15s;}
+.pt-subs-dropdown:focus,.pt-subs-dropdown:hover{border-color:var(--accent);}
+.pt-subs-dropdown option{background:#1e2229;color:var(--text);}
 </style>
 </head>
 <body>
 <div class="phone-wrap">
   <div class="content">
     <div class="header header-wrap">
+      <button class="home-btn" onclick="fullReset()" title="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        <span class="home-btn-label">Home</span>
+      </button>
+
       <button onclick="fullReset()" style="background:none;border:none;cursor:pointer;padding:0;display:block;margin:0 auto 8px;" title="Start over">
         <img src="/assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png" alt="AmpliFinder" style="height:68px;width:auto;display:block;">
       </button>
 
       <button class="house-btn" id="house-btn" onclick="openProject()">
-        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v1H8V3a1 1 0 0 1 1-1z"/><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>
         <span class="house-badge" id="house-badge">0</span>
         <span class="house-btn-label">Projects</span>
       </button>
@@ -287,12 +373,17 @@
         <div class="step-inner">
           <div class="step-header"><span class="step-num" id="n-cat">01 — Category</span></div>
           <div id="g-cat">
-            <button class="btn-cat" data-val="Design Centric"><img src="/assests/logo-design.svg" alt="">Design Centric</button>
-            <button class="btn-cat" data-val="Landscape"><img src="/assests/logo-landscape.svg" alt="">Landscape</button>
-            <button class="btn-cat" data-val="Soundbars"><img src="/assests/logo-soundbars.svg" alt="">Sound Bars</button>
-            <button class="btn-cat" data-val="Performance & Theater"><img src="/assests/logo-performance.svg" alt="">Performance &amp; Theater</button>
-            <button class="btn-cat" data-val="Architectural Speakers"><img src="/assests/logo-architectural.svg" alt="">Architectural</button>
-            <button class="btn-cat" data-val="Commercial"><img src="/assests/logo-architectural.svg" alt="">Commercial</button>
+            <button class="btn-cat" data-val="Design Centric"><img src="/assests/%5BMOS36K%5D%20-Perpendicular-1000623.png" data-orig-src="/assests/%5BMOS36K%5D%20-Perpendicular-1000623.png" alt="">Design Centric</button>
+            <button class="btn-cat" data-val="Landscape"><img src="/assests/LS%20sat.1517_LSH80S.png" data-orig-src="/assests/LS%20sat.1517_LSH80S.png" alt="">Landscape</button>
+            <button class="btn-cat" data-val="Soundbars"><img src="/assests/ASBR.16192.png" data-orig-src="/assests/ASBR.16192.png" alt="">Sound Bars</button>
+            <button class="btn-cat" data-val="Performance & Theater"><img src="/assests/AM5600_LCR_OW_nogrille_old.png" data-orig-src="/assests/AM5600_LCR_OW_nogrille_old.png" alt="">Performance &amp; Theater</button>
+            <button class="btn-cat" data-val="Architectural Speakers"><img src="/assests/%5BD85%5D%2045%20Angle-3272.png" data-orig-src="/assests/%5BD85%5D%2045%20Angle-3272.png" alt="">Architectural</button>
+            <button class="btn-cat" data-val="Professional"><img src="/assests/PP80%20angle.png" data-orig-src="/assests/PP80%20angle.png" alt="">Professional</button>
+          </div>
+          <div class="resource-btns" id="resource-btns">
+            <button class="resource-btn" onclick="window.location.href='/datasheets.html'">Data Sheets</button>
+            <button class="resource-btn" onclick="">DSP Library</button>
+            <button class="resource-btn" onclick="">Installation Guides</button>
           </div>
         </div>
       </div>
@@ -300,6 +391,44 @@
         <div class="step-inner">
           <div class="step-header"><span class="step-num" id="n-prod">02 — Product</span><button class="change-btn" onclick="resetFrom('s-prod')">change</button></div>
           <div class="btn-group" id="g-prod"></div>
+          <div id="bundles-section" style="display:none;">
+            <div class="bundles-label">Bundles</div>
+            <div class="btn-group" id="g-bundles"></div>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="s-config" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header"><span class="step-num" id="n-config">03 — Configuration</span></div>
+          <div id="cfg-sections">
+            <div id="cfg-ohm-section" style="display:none;">
+              <div class="cfg-section-label">70V or 8 Ohm</div>
+              <div class="btn-group" id="cfg-g-ohm"></div>
+            </div>
+            <div id="cfg-spk-section" style="display:none;">
+              <div class="cfg-section-label" id="cfg-spk-lbl">Number of Speakers</div>
+              <div class="btn-group" id="cfg-g-spk"></div>
+            </div>
+            <div id="cfg-surround-section" style="display:none;">
+              <div id="cfg-surround-options">
+                <div class="cfg-section-label">Speaker Options</div>
+                <div class="btn-group" style="margin-bottom:10px;">
+                  <button class="btn-opt" id="cfg-btn-surrounds" onclick="toggleSurround('surrounds')">Add Surrounds</button>
+                  <button class="btn-opt" id="cfg-btn-rear" onclick="toggleSurround('rear')">Add Rear</button>
+                </div>
+              </div>
+              <div class="cfg-section-label">Atmos</div>
+              <div class="btn-group">
+                <button class="btn-opt" id="cfg-btn-atmos2" onclick="toggleAtmos('2')">2 Atmos</button>
+                <button class="btn-opt" id="cfg-btn-atmos4" onclick="toggleAtmos('4')">4 Atmos</button>
+                <button class="btn-opt" id="cfg-btn-atmos6" onclick="toggleAtmos('6')">6 Atmos</button>
+              </div>
+            </div>
+            <div id="cfg-sub-section" style="display:none;">
+              <div class="cfg-section-label">Number of Subs</div>
+              <div class="btn-group" id="cfg-g-sub"></div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="step" id="s-ohm" style="display:none;">
@@ -314,12 +443,124 @@
           <div class="btn-group" id="g-spk"></div>
         </div>
       </div>
+      <div class="step" id="s-surround" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header"><span class="step-num" id="n-surround">— Speaker Options</span><button class="change-btn" id="surround-change-btn" onclick="changeSurround()" style="display:none;">change</button></div>
+          <div id="surround-toggles">
+            <div class="surround-hint">Select all that apply, or continue to skip</div>
+            <div class="btn-group" style="margin-bottom:10px;">
+              <button class="btn-opt" id="btn-surrounds" onclick="toggleSurround('surrounds')">Add Surrounds</button>
+              <button class="btn-opt" id="btn-rear" onclick="toggleSurround('rear')">Add Rear</button>
+            </div>
+            <div class="bundles-label" style="margin-top:6px;margin-bottom:6px;">Atmos</div>
+            <div class="btn-group" style="margin-bottom:10px;">
+              <button class="btn-opt" id="btn-atmos2" onclick="toggleAtmos('2')">2 Atmos</button>
+              <button class="btn-opt" id="btn-atmos4" onclick="toggleAtmos('4')">4 Atmos</button>
+              <button class="btn-opt" id="btn-atmos6" onclick="toggleAtmos('6')">6 Atmos</button>
+            </div>
+            <button class="surround-continue-btn" onclick="proceedFromSurround()">Continue</button>
+          </div>
+        </div>
+      </div>
       <div class="step" id="s-sub" style="display:none;">
         <div class="step-inner">
           <div class="step-header"><span class="step-num" id="n-sub">— Subwoofers</span><button class="change-btn" onclick="resetFrom('s-sub')">change</button></div>
           <div class="btn-group" id="g-sub"></div>
         </div>
       </div>
+
+      <!-- ── P&T Custom Flow Steps ──────────────────────── -->
+      <div class="step" id="s-pt-lrc" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header">
+            <span class="step-num" id="n-pt-lrc">02 — Left / Right / Center</span>
+            <button class="change-btn" id="pt-lrc-change" onclick="ptChange('lrc')" style="display:none;">change</button>
+          </div>
+          <div class="btn-group" id="g-pt-lrc">
+            <button class="btn-opt btn-opt-with-img" data-val="ASM5600" onclick="ptSelect('lrc','ASM5600')"><img src="/assests/AM5600_LCR_OW_nogrille_old.png" alt="ASM5600"><span>ASM5600</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="ASM3600" onclick="ptSelect('lrc','ASM3600')"><img src="/assests/AM3600_Surround_OW_nogrille_new.png" alt="ASM3600"><span>ASM3600</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="s-pt-surround" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header">
+            <span class="step-num" id="n-pt-surround">03 — Surround Channel</span>
+            <button class="change-btn" id="pt-surround-change" onclick="ptChange('surround')" style="display:none;">change</button>
+          </div>
+          <div class="btn-group" id="g-pt-surround">
+            <button class="btn-opt btn-opt-with-img" data-val="ASM5600" onclick="ptSelect('surround','ASM5600')"><img src="/assests/AM5600_LCR_OW_nogrille_old.png" alt="ASM5600"><span>ASM5600</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="ASM3600" onclick="ptSelect('surround','ASM3600')"><img src="/assests/AM3600_Surround_OW_nogrille_new.png" alt="ASM3600"><span>ASM3600</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="AM6500OWA" onclick="ptSelect('surround','AM6500OWA')"><img src="/assests/ASM6500a.png" alt="AM6500OWA"><span>AM6500OWA</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="s-pt-rear" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header">
+            <span class="step-num" id="n-pt-rear">04 — Rear Channel</span>
+            <button class="change-btn" id="pt-rear-change" onclick="ptChange('rear')" style="display:none;">change</button>
+          </div>
+          <div class="btn-group" id="g-pt-rear">
+            <button class="btn-opt btn-opt-with-img" data-val="ASM5600" onclick="ptSelect('rear','ASM5600')"><img src="/assests/AM5600_LCR_OW_nogrille_old.png" alt="ASM5600"><span>ASM5600</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="ASM3600" onclick="ptSelect('rear','ASM3600')"><img src="/assests/AM3600_Surround_OW_nogrille_new.png" alt="ASM3600"><span>ASM3600</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="AM6500OWA" onclick="ptSelect('rear','AM6500OWA')"><img src="/assests/ASM6500a.png" alt="AM6500OWA"><span>AM6500OWA</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="M2500IC" onclick="ptSelect('rear','M2500IC')"><img src="/assests/M2500.404.png" alt="M2500IC"><span>M2500IC</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="s-pt-atmos" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header">
+            <span class="step-num" id="n-pt-atmos">05 — Atmos</span>
+            <button class="change-btn" id="pt-atmos-change" onclick="ptChange('atmos')" style="display:none;">change</button>
+          </div>
+          <div class="btn-group" id="g-pt-atmos">
+            <button class="btn-opt btn-opt-with-img" data-val="D89" onclick="ptSelect('atmos','D89')"><img src="/assests/%5BD89%5D%20Front-2875.png" alt="D89"><span>D89</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="D109" onclick="ptSelect('atmos','D109')"><img src="/assests/%5BD109%5D%20Front-2912.png" alt="D109"><span>D109</span></button>
+            <button class="btn-opt btn-opt-with-img" data-val="M2500IC" onclick="ptSelect('atmos','M2500IC')"><img src="/assests/M2500.404.png" alt="M2500IC"><span>M2500IC</span></button>
+          </div>
+          <div id="pt-atmos-count-wrap" style="display:none;margin-top:14px;">
+            <div class="cfg-section-label">Number of Atmos Speakers</div>
+            <div class="btn-group" id="g-pt-atmos-count">
+              <button class="btn-opt" onclick="ptSelectAtmosCount(2)">2</button>
+              <button class="btn-opt" onclick="ptSelectAtmosCount(4)">4</button>
+              <button class="btn-opt" onclick="ptSelectAtmosCount(6)">6</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="s-pt-subs" style="display:none;">
+        <div class="step-inner">
+          <div class="step-header">
+            <span class="step-num" id="n-pt-subs">06 — Number of Subs</span>
+          </div>
+          <div class="pt-sub-product">
+            <img src="/assests/AMD10OWSUB_ecomm-2.png" alt="AMD210">
+            <span>AMD210</span>
+          </div>
+          <select id="pt-subs-select" class="pt-subs-dropdown" onchange="ptSelectSubs(parseInt(this.value))">
+            <option value="0">0 — None</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+        </div>
+      </div>
+      <!-- ── End P&T Custom Steps ──────────────────────── -->
     </div>
     <div class="result-wrap" id="result-area"></div>
   </div>
@@ -359,7 +600,7 @@
       <div class="sub-detail-title" id="wiring-panel-title"></div>
     </div>
     <div class="sub-detail-divider"></div>
-    <div id="wiring-root" style="flex:1;width:100%;height:100%;min-height:0;position:relative;overflow:hidden;"></div>
+    <div id="wiring-root" style="flex:1;width:100%;min-height:0;position:relative;overflow-y:auto;"></div>
   </div>
   <div class="dispersion-panel" id="dispersion-panel">
     <div class="dispersion-header">
@@ -427,9 +668,9 @@
 const NO_SUB_PRODS=['ALSB64','ALSB85','ALSB106'];
 const SINGLE_OHM={'ASM63':'8ohm','SBR4':'8ohm','ASBR4':'8ohm','ASBR5':'8ohm','ASBR6':'8ohm','ASM5600':'8ohm','ASM3600':'8ohm'};
 const THEATER_PACKAGES={
-  '3.2':{res:'1000.4',speakers:[{count:3,model:'ASM5600'},{count:2,model:'AMD210'}]},
-  '5.1.4':{res:'1000.4+1000.1',speakers:[{count:3,model:'ASM5600'},{count:2,model:'ASM3600'},{count:2,model:'AMD210'}]},
-  '7.2.6':{res:'1000.4+1000.2+250.4',speakers:[{count:3,model:'ASM5600'},{count:2,model:'ASM3600'},{count:2,model:'AMD210'},{count:6,model:'M2500'}]},
+  'Media Room 3.2':{res:'1000.4',speakers:[{count:3,model:'ASM5600'},{count:2,model:'AMD210'}]},
+  'Performance Theater 5.1.4':{res:'1000.4+1000.1',speakers:[{count:3,model:'ASM5600'},{count:2,model:'ASM3600'},{count:2,model:'AMD210'}]},
+  'Advanced Theater 7.2.6':{res:'1000.4+1000.2+250.4',speakers:[{count:3,model:'ASM5600'},{count:2,model:'ASM3600'},{count:2,model:'AMD210'},{count:6,model:'M2500'}]},
 };
 const SPK_ORDER={"Mono":0,"LCR":1,"L&R":2};
 const raw=[
@@ -477,6 +718,76 @@ const raw=[
   {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"8",sub:0,res:"250.4"},
   {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
   {cat:"Design Centric",prod:"Blends 803",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"4",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"5",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"5",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"8",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"8",sub:4,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"10",sub:4,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"12",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"12",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH40",ohm:"70v",spk:"12",sub:6,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"6",sub:1,res:"250.4+1000.1"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH40",ohm:"8ohm",spk:"8",sub:2,res:"250.4+1000.1"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"4",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"5",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"5",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"8",sub:4,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"10",sub:4,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"12",sub:4,res:"1200.2"},
+  {cat:"Landscape",prod:"LSH60",ohm:"70v",spk:"12",sub:6,res:"1200.4"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"6",sub:1,res:"250.4+1000.1"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH60",ohm:"8ohm",spk:"8",sub:2,res:"250.4+1000.1"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"4",sub:0,res:"1000.1"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"4",sub:0,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"4",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"4",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"5",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"5",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"8",sub:1,res:"1200.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"8",sub:2,res:"1200.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"8",sub:4,res:"1200.4"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"10",sub:2,res:"1200.2"},
+  {cat:"Landscape",prod:"LSH80",ohm:"70v",spk:"10",sub:4,res:"1200.4"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"6",sub:1,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
+  {cat:"Landscape",prod:"LSH80",ohm:"8ohm",spk:"8",sub:2,res:"1000.2+1000.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
@@ -493,12 +804,12 @@ const raw=[
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"8",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"8",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"8",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"10",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"10",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"12",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"12",sub:4,res:"1000.2"},
-  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"12",sub:6,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR40",ohm:"70v",spk:"12",sub:6,res:"1000.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"6",sub:1,res:"250.4+1000.1"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR40",ohm:"8ohm",spk:"8",sub:2,res:"250.4+1000.1"},
@@ -517,11 +828,11 @@ const raw=[
   {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"8",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"8",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"10",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"10",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"12",sub:4,res:"1200.2"},
-  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"12",sub:6,res:"1200.2"},
+  {cat:"Landscape",prod:"LSR60",ohm:"70v",spk:"12",sub:6,res:"1200.4"},
   {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"6",sub:1,res:"250.4+1000.1"},
   {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR60",ohm:"8ohm",spk:"8",sub:2,res:"250.4+1000.1"},
@@ -541,9 +852,9 @@ const raw=[
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"8",sub:1,res:"1200.2"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"8",sub:2,res:"1200.2"},
-  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"8",sub:4,res:"1200.2"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"8",sub:4,res:"1200.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"10",sub:2,res:"1200.2"},
-  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"10",sub:4,res:"1200.2"},
+  {cat:"Landscape",prod:"LSR80",ohm:"70v",spk:"10",sub:4,res:"1200.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"6",sub:1,res:"1000.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LSR80",ohm:"8ohm",spk:"8",sub:2,res:"1000.2+1000.4"},
@@ -581,18 +892,18 @@ const raw=[
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"8",sub:2,res:"250.4+1000.1"},
-  {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"10",sub:2,res:"250.4+1000.1"},
+  {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"10",sub:2,res:"250.4+1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"8",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"8",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"8",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"10",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"10",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"10",sub:6,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"12",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"12",sub:4,res:"1000.2"},
-  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"12",sub:6,res:"1000.2"},
+  {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"12",sub:6,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
@@ -605,18 +916,18 @@ const raw=[
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"6",sub:2,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"8",sub:2,res:"250.4+1000.1"},
-  {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"10",sub:2,res:"250.4+1000.1"},
+  {cat:"Landscape",prod:"LS64",ohm:"8ohm",spk:"10",sub:2,res:"250.4+1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"6",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"8",sub:1,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"8",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"8",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
-  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"10",sub:4,res:"1000.2"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"10",sub:4,res:"1000.4"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"10",sub:6,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"12",sub:2,res:"1000.2"},
   {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"12",sub:4,res:"1000.2"},
-  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"12",sub:6,res:"1000.2"},
+  {cat:"Landscape",prod:"LS64",ohm:"70v",spk:"12",sub:6,res:"1000.4"},
   {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"2",sub:1,res:"250.2"},
   {cat:"Landscape",prod:"ASM63",ohm:"8ohm",spk:"2",sub:2,res:"250.4"},
@@ -677,54 +988,54 @@ const raw=[
   {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"3",sub:2,res:"1000.4"},
   {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"4",sub:2,res:"1000.4"},
   {cat:"Performance & Theater",prod:"ASM3600",ohm:"8ohm",spk:"5",sub:2,res:"1000.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"2",sub:0,res:"125.1"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"2",sub:1,res:"250.2"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"4",sub:0,res:"125.2"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"4",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"4",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"6",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"6",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"6",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"8",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"8",sub:1,res:"250.1+125.4"},
-  {cat:"Architectural Speakers",prod:"D50",ohm:null,spk:"8",sub:2,res:"250.2+125.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"2",sub:0,res:"250.1"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"2",sub:1,res:"250.2"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"4",sub:0,res:"250.2"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"4",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"4",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"6",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"6",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"6",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"8",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
-  {cat:"Architectural Speakers",prod:"D60",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"2",sub:0,res:"250.1"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"2",sub:1,res:"250.2"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"4",sub:0,res:"250.2"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"4",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"4",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"6",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"6",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"6",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"8",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
-  {cat:"Architectural Speakers",prod:"D80",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"2",sub:0,res:"250.1"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"2",sub:1,res:"250.2"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"4",sub:0,res:"250.2"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"4",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"4",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"6",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"6",sub:1,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"6",sub:2,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"8",sub:0,res:"250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
-  {cat:"Architectural Speakers",prod:"D100",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"2",sub:0,res:"125.1"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"4",sub:0,res:"125.2"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"6",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"8",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"8",sub:1,res:"250.1+125.4"},
+  {cat:"Architectural Speakers",prod:"Director 5",ohm:null,spk:"8",sub:2,res:"250.2+125.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"2",sub:0,res:"250.1"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"4",sub:0,res:"250.2"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"6",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"8",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
+  {cat:"Architectural Speakers",prod:"Director 6",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"2",sub:0,res:"250.1"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"4",sub:0,res:"250.2"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"6",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"8",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
+  {cat:"Architectural Speakers",prod:"Director 8",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"2",sub:0,res:"250.1"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"2",sub:1,res:"250.2"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"4",sub:0,res:"250.2"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"4",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"4",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"6",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"6",sub:1,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"6",sub:2,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"8",sub:0,res:"250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
+  {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
 ];
-function getSugSub(m){if(!m||!m.sub)return null;const c=m.cat,p=m.prod,sub=m.sub,ohm=m.ohm,spk=m.spk;let cov=[],perf=[];if(c==='Design Centric'){if(p==='MOS'){cov=['MOS SUB'];perf=['CSUB10IW','CSUB10R'];}else{cov=['BLENDSSUB800'];perf=['BLENDS CSUB10'];}}else if(c==='Landscape'){if(p==='LSR40'||p==='LSR60'||p==='LSR80'){cov=['10HDR','10BPIG','S11BP'];perf=['12HDR','12BPIG'];}else if(p==='LS44'||p==='LS64'||p==='ASM63'){cov=['OSUB10','OSUB12'];perf=['12HDR','12BPIG'];}}else if(c==='Soundbars'){cov=['CSUB10IW','CSUB10R'];if(p==='ASBR6')perf=['AMD210'];}else if(c==='Performance & Theater'){cov=['AMD210'];}else if(c==='Architectural Speakers'){cov=['CSUB10IW','CSUB10R','DSUB6x2','DSUB6F5K'];}if(!cov.length&&!perf.length)return null;return{cov,perf};}
-const catProds={"Design Centric":["MOS","Blends 602","Blends 802","Blends 803"],"Landscape":["LSR40","LSR60","LSR80","ALSB64","ALSB85","ALSB106","LS44","LS64","ASM63"],"Soundbars":["SBR4","ASBR4","ASBR5","ASBR6"],"Performance & Theater":["ASM5600","ASM3600","3.2","5.1.4","7.2.6"],"Architectural Speakers":["D50","D60","D80","D100"],"Commercial":[]};
-let sel={cat:null,prod:null,ohm:null,spk:null,sub:null};
+function getSugSub(m){if(!m||!m.sub)return null;const c=m.cat,p=m.prod,sub=m.sub,ohm=m.ohm,spk=m.spk;let cov=[],perf=[];if(c==='Design Centric'){if(p==='MOS'){cov=['MOS SUB'];perf=['CSUB10IW','CSUB10R'];}else{cov=['BLENDSSUB800'];perf=['BLENDS CSUB10'];}}else if(c==='Landscape'){if(p==='LSH40'||p==='LSH60'||p==='LSH80'||p==='LSR40'||p==='LSR60'||p==='LSR80'){cov=['10HDR','10BPIG','S11BP'];perf=['12HDR','12BPIG'];}else if(p==='LS44'||p==='LS64'||p==='ASM63'){cov=['OSUB10','OSUB12'];perf=['12HDR','12BPIG'];}}else if(c==='Soundbars'){cov=['CSUB10IW','CSUB10R'];if(p==='ASBR6')perf=['AMD210'];}else if(c==='Performance & Theater'){cov=['AMD210'];}else if(c==='Architectural Speakers'){cov=['CSUB10IW','CSUB10R','DSUB6x2','DSUB6F5K'];}if(!cov.length&&!perf.length)return null;return{cov,perf};}
+const catProds={"Design Centric":["MOS","Blends 602","Blends 802","Blends 803"],"Landscape":["LSH40","LSH60","LSH80","LSR40","LSR60","LSR80","ALSB64","ALSB85","ALSB106","LS44","LS64","ASM63"],"Soundbars":["SBR4","ASBR4","ASBR5","ASBR6"],"Performance & Theater":["ASM5600","ASM3600"],"Architectural Speakers":["Director 5","Director 6","Director 8","Director 10"],"Professional":[]};
+let sel={cat:null,prod:null,ohm:null,spk:null,sub:null};window._surroundSel=[];window._atmosSel=null;
 const stepOrder=['s-cat','s-prod','s-ohm','s-spk','s-sub'];
 let history=[];
 function noSub(){return sel.prod&&NO_SUB_PRODS.includes(sel.prod);}
@@ -741,21 +1052,34 @@ function updateToolbar(){document.getElementById('back-btn').disabled=history.le
 function showStep(sid){const el=document.getElementById(sid);el.style.display='';el.classList.add('fadein');setTimeout(()=>el.classList.remove('fadein'),400);}
 function collapse(gid){document.querySelectorAll('#'+gid+' button').forEach(b=>{b.style.display=b.classList.contains('active')?'':'none';});}
 function uncollapse(gid){document.querySelectorAll('#'+gid+' button').forEach(b=>{b.style.display='';});}
-function rebuildGroup(gid,vals){const g=document.getElementById(gid);g.innerHTML='';vals.forEach(v=>{const b=document.createElement('button');b.className='btn-opt';b.dataset.val=String(v);b.textContent=String(v);g.appendChild(b);});}
-function clearStepFrom(sid){const idx=stepOrder.indexOf(sid);const keys=['cat','prod','ohm','spk','sub'];const gids=['g-cat','g-prod','g-ohm','g-spk','g-sub'];stepOrder.slice(idx).forEach((s,i)=>{sel[keys[idx+i]]=null;const g=document.getElementById(gids[idx+i]);if(g){g.querySelectorAll('button').forEach(b=>{b.style.display='';b.classList.remove('active');});}const numEl=document.getElementById('n-'+keys[idx+i]);if(numEl)numEl.classList.remove('done');if(idx+i>0)document.getElementById(s).style.display='none';});document.getElementById('result-area').innerHTML='';}
+function updateCatBtnImg(prodVal){const activeCat=document.querySelector('#g-cat button.active');if(!activeCat)return;const img=activeCat.querySelector('img');if(!img)return;const prodSrc=prodVal?SPK_IMGS[String(prodVal)]||null:null;if(prodSrc){img.src=prodSrc;}else{const orig=img.getAttribute('data-orig-src');if(orig)img.src=orig;}}
+function rebuildGroup(gid,vals){const g=document.getElementById(gid);g.innerHTML='';vals.forEach(v=>{const b=document.createElement('button');const imgSrc=SPK_IMGS[String(v)]||null;if(imgSrc){b.className='btn-opt btn-opt-with-img';b.dataset.val=String(v);b.innerHTML='<img src="'+imgSrc+'" alt="'+String(v)+'"><span>'+String(v)+'</span>';}else{b.className='btn-opt';b.dataset.val=String(v);b.textContent=String(v);}g.appendChild(b);});}
+function clearStepFrom(sid){const idx=stepOrder.indexOf(sid);if(idx<=stepOrder.indexOf('s-prod')){updateCatBtnImg(null);}if(idx===0){const rb=document.getElementById('resource-btns');if(rb)rb.style.display='flex';}const keys=['cat','prod','ohm','spk','sub'];const gids=['g-cat','g-prod','g-ohm','g-spk','g-sub'];stepOrder.slice(idx).forEach((s,i)=>{sel[keys[idx+i]]=null;const g=document.getElementById(gids[idx+i]);if(g){g.querySelectorAll('button').forEach(b=>{b.style.display='';b.classList.remove('active');});}const numEl=document.getElementById('n-'+keys[idx+i]);if(numEl)numEl.classList.remove('done');if(idx+i>0)document.getElementById(s).style.display='none';});document.getElementById('result-area').innerHTML='';const prodIdx=stepOrder.indexOf('s-prod');if(idx<=prodIdx){document.getElementById('s-config').style.display='none';document.getElementById('n-config').classList.remove('done');}const spkIdx=stepOrder.indexOf('s-spk');if(idx<=spkIdx){window._surroundSel=[];window._atmosSel=null;document.getElementById('s-surround').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('surround-change-btn').style.display='none';document.getElementById('surround-toggles').style.display='';['btn-surrounds','btn-rear','cfg-btn-surrounds','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.remove('active');});});}}
 function resetFrom(sid){const idx=stepOrder.indexOf(sid);history=history.filter(h=>stepOrder.indexOf(h)<idx);clearStepFrom(sid);updateProgress();updateToolbar();}
-function fullReset(){history=[];clearStepFrom('s-cat');updateProgress();updateToolbar();setAddProjectBtn(false);setHeightBtn(false);closeWiring();window._wiringData=null;}
+function fullReset(){history=[];clearStepFrom('s-cat');updateProgress();updateToolbar();setAddProjectBtn(false);setHeightBtn(false);closeWiring();window._wiringData=null;window._selectedSub=null;window._surroundSel=[];window._atmosSel=null;ptResetAll();document.getElementById('s-surround').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('surround-change-btn').style.display='none';document.getElementById('surround-toggles').style.display='';['btn-surrounds','btn-rear','cfg-btn-surrounds','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.remove('active');});});}
 function goBack(){if(history.length===0)return;const lastCompleted=history[history.length-1];resetFrom(lastCompleted);uncollapse(lastCompleted.replace('s-','g-'));document.getElementById(lastCompleted).style.display='';}
 function setAddProjectBtn(visible){const btn=document.getElementById('add-project-btn');btn.style.display=visible?'flex':'none';}
-function setHeightBtn(visible){const HEIGHT_CATS=['Performance & Theater','Soundbars'];const hBtn=document.getElementById('add-height-btn');hBtn.style.display=(visible&&HEIGHT_CATS.includes(sel.cat))?'flex':'none';}
+function setHeightBtn(visible){const HEIGHT_CATS=[];const hBtn=document.getElementById('add-height-btn');hBtn.style.display=(visible&&HEIGHT_CATS.includes(sel.cat))?'flex':'none';}
 const ADD_BTN_HTML='<svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add to Project';
 let projectItems=JSON.parse(localStorage.getItem('af_project')||'[]');
 function saveProject(){localStorage.setItem('af_project',JSON.stringify(projectItems));}
 function addToProject(){
   const parts=document.querySelector('.amp-pill')?[...document.querySelectorAll('.amp-pill')].map(p=>p.textContent.trim()):[];
   if(!parts.length)return;
-  const item={id:Date.now(),amps:parts.join(' + '),cat:sel.cat,prod:sel.prod,ohm:sel.ohm,spk:sel.spk,sub:sel.sub};
+  let item;
+  if(_ptActive&&sel.cat==='Performance & Theater'){
+    const p=window._ptSel;
+    const cfgParts=[];
+    if(p.lrc)cfgParts.push('3× '+p.lrc+' LCR');
+    if(p.surround)cfgParts.push('2× '+p.surround+' Surr');
+    if(p.rear)cfgParts.push('2× '+p.rear+' Rear');
+    if(p.atmos&&p.atmosCount)cfgParts.push(p.atmosCount+'× '+p.atmos+' Atmos');
+    item={id:Date.now(),amps:parts.join(' + '),cat:sel.cat,prod:cfgParts.join(', ')||'Custom',ohm:null,spk:null,sub:p.subs||0,wiringData:window._wiringData?Object.assign({},window._wiringData):null};
+  } else {
+    item={id:Date.now(),amps:parts.join(' + '),cat:sel.cat,prod:sel.prod,ohm:sel.ohm,spk:sel.spk,sub:sel.sub,wiringData:window._wiringData?Object.assign({},window._wiringData):null};
+  }
   projectItems.push(item);
+  window._optimizedAmps=null;
   saveProject();
   updateHouseBadge();
   const btn=document.getElementById('add-project-btn');
@@ -826,7 +1150,8 @@ function heightAddToProject(){
   var addBtn=document.getElementById('height-add-btn');
   var match=raw.find(function(d){return d.cat==='Architectural Speakers'&&d.prod===hSel.prod&&d.spk===hSel.spk&&d.sub===0;});
   if(!match)return;
-  var item={id:Date.now(),amps:String(match.res),cat:'Height Channels',prod:hSel.prod,ohm:null,spk:hSel.spk,sub:0};
+  var hWd={ampStr:String(match.res).replace(/\s+/g,''),spkVal:hSel.spk,ohm:'8ohm',cat:'Architectural Speakers',subCount:0,prod:hSel.prod};
+  var item={id:Date.now(),amps:String(match.res),cat:'Height Channels',prod:hSel.prod,ohm:null,spk:hSel.spk,sub:0,wiringData:hWd};
   projectItems.push(item);
   saveProject();
   updateHouseBadge();
@@ -837,7 +1162,7 @@ function heightAddToProject(){
 function addHeightChannels(){
   var parts=document.querySelector('.amp-pill')?[...document.querySelectorAll('.amp-pill')].map(function(p){return p.textContent.trim();}):[];
   if(!parts.length)return;
-  var item={id:Date.now(),amps:parts.join(' + '),cat:sel.cat,prod:sel.prod,ohm:sel.ohm,spk:sel.spk,sub:sel.sub};
+  var item={id:Date.now(),amps:parts.join(' + '),cat:sel.cat,prod:sel.prod,ohm:sel.ohm,spk:sel.spk,sub:sel.sub,wiringData:window._wiringData?Object.assign({},window._wiringData):null};
   projectItems.push(item);
   saveProject();
   updateHouseBadge();
@@ -881,19 +1206,101 @@ function mergeAmps(list){
 }
 function openProject(){renderProjectPanel();document.getElementById('project-panel').classList.add('open');}
 function closeProject(){document.getElementById('project-panel').classList.remove('open');}
-function removeProjectItem(id){projectItems=projectItems.filter(i=>i.id!==id);saveProject();updateHouseBadge();renderProjectPanel();}
-function clearProject(){projectItems=[];saveProject();updateHouseBadge();renderProjectPanel();}
+function removeProjectItem(id){projectItems=projectItems.filter(i=>i.id!==id);window._optimizedAmps=null;saveProject();updateHouseBadge();renderProjectPanel();}
+function clearProject(){projectItems=[];window._optimizedAmps=null;window._projectWiringOpen=false;saveProject();updateHouseBadge();renderProjectPanel();}
+function toggleProjectWiring(){
+  window._projectWiringOpen=!window._projectWiringOpen;
+  var panel=document.getElementById('proj-wiring-panel');
+  var btn=document.getElementById('proj-wiring-btn');
+  if(!panel||!btn){renderProjectPanel();return;}
+  var open=window._projectWiringOpen;
+  panel.style.display=open?'block':'none';
+  btn.classList.toggle('project-wiring-btn--active',open);
+  btn.textContent=open?'Hide Wiring Diagram':'View Wiring Diagram';
+  // Mount diagrams when first opening
+  if(open){
+    projectItems.forEach(function(item){
+      var mountEl=document.getElementById('pwt-'+item.id);
+      if(!mountEl||!window._mountWiringDiagram||mountEl.children.length>0)return;
+      var wd=item.wiringData;
+      if(!wd){
+        if(item.cat==='Performance & Theater'){mountEl.innerHTML='<div class="proj-wiring-na">Re-add this zone to see its wiring diagram.</div>';return;}
+        wd={ampStr:(item.amps||'').replace(/\s+/g,''),spkVal:item.spk||'2',ohm:item.ohm||'8ohm',cat:item.cat||'',subCount:parseInt(item.sub)||0,prod:item.prod||''};
+      }
+      window._mountWiringDiagram(mountEl,wd);
+    });
+  }
+}
+function optimizeRack(){
+  // Toggle: if already optimized, reset
+  if(window._optimizedAmps){window._optimizedAmps=null;renderProjectPanel();return;}
+  // Helper: physical channel capacity of an amp model
+  function chCap(m){return /\.4$/.test(m)?8:/\.2$/.test(m)?4:2;}
+  // Helper: wattage family (e.g. "1000" from "1000.4")
+  function ampFam(m){var x=m.match(/^(\d+)\.(1|2|4)$/);return x?x[1]:null;}
+
+  // Sum actual channel capacity per wattage family from routing-assigned amps.
+  // Using amp channel counts (not speaker counts) is correct because the routing
+  // already selected the minimum amp for each zone's needs — trusting it prevents
+  // under-allocation that can occur when speaker counts are lower than channels used.
+  var famChans={};
+  var passthrough=[];
+  projectItems.forEach(function(item){
+    item.amps.split(/\s*\+\s*/).map(function(a){return a.trim();}).filter(Boolean).forEach(function(a){
+      var f=ampFam(a);
+      if(f){famChans[f]=(famChans[f]||0)+chCap(a);}
+      else{passthrough.push(a);}
+    });
+  });
+
+  // Pack each family's total channels into the minimum number of amps
+  var optimized=[];
+  Object.keys(famChans).sort(function(a,b){return parseInt(a)-parseInt(b);}).forEach(function(fam){
+    var total=famChans[fam];
+    if(total<=0)return;
+    var n4=Math.floor(total/8);
+    var rem=total-n4*8;
+    var n2=0,n1=0;
+    if(rem===0){}
+    else if(rem>4){n4++;}        // 5–7 → another .4
+    else if(rem>2){n2=1;}        // 3–4 → .2
+    else{n1=1;}                  // 1–2 → .1
+    for(var i=0;i<n4;i++)optimized.push(fam+'.4');
+    for(var i=0;i<n2;i++)optimized.push(fam+'.2');
+    for(var i=0;i<n1;i++)optimized.push(fam+'.1');
+  });
+
+  // Add any pass-through amps (deduplicated)
+  var seen={};
+  passthrough.forEach(function(a){if(!seen[a]){seen[a]=true;optimized.push(a);}});
+
+  if(!optimized.length)return;
+  window._optimizedAmps=optimized;
+  renderProjectPanel();
+}
 function renderProjectPanel(){
   const el=document.getElementById('project-content');
   if(!projectItems.length){
-    el.innerHTML='<div class="project-empty"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg><div>No amplifiers added yet.</div><div>Select a configuration and tap<br><strong>Add to Project</strong>.</div></div>';
+    el.innerHTML='<div class="project-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v1H8V3a1 1 0 0 1 1-1z"/><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg><div>No amplifiers added yet.</div><div>Select a configuration and tap<br><strong>Add to Project</strong>.</div></div>';
     return;
   }
   const allAmps=projectItems.flatMap(item=>item.amps.split('+').map(a=>a.trim()));
   const merged=mergeAmps(allAmps);
   const origCount=allAmps.length;const mergedCount=merged.length;
   const wasMerged=mergedCount<origCount;
-  const summaryHtml='<div class="project-summary"><div class="project-summary-label">Total Equipment</div><div class="project-summary-pills">'+merged.map(a=>'<span class="project-summary-pill">'+a+'</span>').join('')+'</div>'+(wasMerged?'<div class="project-summary-merged-note">Amplifiers combined where possible.</div>':'')+'</div>';
+  const isOptimized=!!(window._optimizedAmps&&window._optimizedAmps.length);
+  const displayAmps=isOptimized?window._optimizedAmps:merged;
+  const optBtnLabel=isOptimized?'↩ Reset':'Optimize to One Rack';
+  let optimizeNote='';
+  if(isOptimized){
+    const savedCount=merged.length-window._optimizedAmps.length;
+    if(savedCount>0){optimizeNote='<div class="project-summary-optimized-note">Optimized: '+merged.length+' amp'+(merged.length!==1?'s':'')+'→ '+window._optimizedAmps.length+' amp'+(window._optimizedAmps.length!==1?'s':'')+' ('+savedCount+' saved)</div>';}
+    else{optimizeNote='<div class="project-summary-optimized-note">Already at minimum — no further consolidation possible.</div>';}
+  }else if(wasMerged){optimizeNote='<div class="project-summary-merged-note">Amplifiers combined where possible.</div>';}
+  const showOptBtn=projectItems.length>1;
+  const isWiringOpen=!!(window._projectWiringOpen);
+  const wiringBtnHtml='<div class="project-wiring-btn-row"><button class="project-wiring-btn'+(isWiringOpen?' project-wiring-btn--active':'')+'" id="proj-wiring-btn" onclick="toggleProjectWiring()">'+(isWiringOpen?'Hide Wiring Diagram':'View Wiring Diagram')+'</button></div>';
+  const summaryHtml='<div class="project-summary"><div class="project-summary-label"><span>Total Equipment</span>'+(showOptBtn?'<button class="project-optimize-btn'+(isOptimized?' project-optimize-btn--active':'')+'" onclick="optimizeRack()">'+optBtnLabel+'</button>':'')+'</div><div class="project-summary-pills">'+displayAmps.map(a=>'<span class="project-summary-pill'+(isOptimized?' project-summary-pill--optimized':'')+'">'+a+'</span>').join('')+'</div>'+optimizeNote+wiringBtnHtml+'</div>';
   const zonesHtml='<div class="project-zones-label">Zones &amp; Configurations</div>';
   const itemsHtml=projectItems.map(item=>{
     const spkLabel=item.cat==='Soundbars'?'Config':'Speakers';
@@ -908,17 +1315,202 @@ function renderProjectPanel(){
     ].join('');
     return '<div class="project-item fadein"><button class="project-item-remove" onclick="removeProjectItem('+item.id+')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="project-item-amp">'+item.amps+'</div>'+metaParts+'</div>';
   }).join('');
-  el.innerHTML=summaryHtml+zonesHtml+itemsHtml;
+  // Build togglable wiring panel (shown/hidden via button)
+  var wiringZonesHtml='';
+  projectItems.forEach(function(item,idx){
+    var zoneTitle='Zone '+(idx+1);
+    var zoneSub=item.prod?item.prod:'';
+    if(item.ohm)zoneSub+=(zoneSub?' \xb7 ':'')+item.ohm;
+    wiringZonesHtml+='<div class="proj-wiring-zone"><div class="proj-wiring-zone-lbl">'+zoneTitle+(zoneSub?'<span class="proj-wiring-zone-sub">'+zoneSub+'</span>':'')+'</div><div id="pwt-'+item.id+'"></div></div>';
+  });
+  var wiringPanelHtml='<div class="proj-wiring-panel" id="proj-wiring-panel" style="display:'+(isWiringOpen?'block':'none')+'"><div class="proj-wiring-panel-lbl">Zone Wiring Diagrams</div>'+wiringZonesHtml+'</div>';
+
+  el.innerHTML=summaryHtml+wiringPanelHtml+zonesHtml+itemsHtml;
+
+  // Mount wiring diagrams if panel is open
+  if(isWiringOpen){
+    projectItems.forEach(function(item){
+      var mountEl=document.getElementById('pwt-'+item.id);
+      if(!mountEl||!window._mountWiringDiagram)return;
+      var wd=item.wiringData;
+      if(!wd){
+        if(item.cat==='Performance & Theater'){mountEl.innerHTML='<div class="proj-wiring-na">Re-add this zone to see its wiring diagram.</div>';return;}
+        wd={ampStr:(item.amps||'').replace(/\s+/g,''),spkVal:item.spk||'2',ohm:item.ohm||'8ohm',cat:item.cat||'',subCount:parseInt(item.sub)||0,prod:item.prod||''};
+      }
+      window._mountWiringDiagram(mountEl,wd);
+    });
+  }
 }
+const SPK_IMGS={
+  // Landscape
+  'LSH40':'/assests/LSH40.png','LSH60':'/assests/LSH60.png','LSH80':'/assests/LSH80.png',
+  'LSR40':'/assests/%5BLSR40%5D%20Quarter%20Right-0605.png','LSR60':'/assests/%5BLSR60%5D%20Quarter%20Right-0687.png','LSR80':'/assests/%5BLSR80%5D%20Quarter%20Right-0729.png',
+  'ALSB64':'/assests/ALSB64.png','ALSB85':'/assests/ALSB85.png','ALSB106':'/assests/ALSB106.png',
+  'LS44':'/assests/LS44_SAT_FRONT.png','LS64':'/assests/LS64_AnglePhoto_1.png','ASM63':'/assests/ASM63.png',
+  // Design Centric
+  'MOS':'/assests/%5BMOS36K%5D%20-Perpendicular-1000623.png',
+  'Blends 602':'/assests/Blends%20602%2C%20802%20and%20803.png',
+  'Blends 802':'/assests/Blends%20602%2C%20802%20and%20803.png',
+  'Blends 803':'/assests/Blends%20602%2C%20802%20and%20803.png',
+  // Performance & Theater
+  'ASM5600':'/assests/AM5600_LCR_OW_nogrille_old.png',
+  'ASM3600':'/assests/AM3600_Surround_OW_nogrille_new.png',
+  'AM6500OWA':'/assests/ASM6500a.png',
+  'M2500IC':'/assests/M2500.404.png',
+  'D89':'/assests/%5BD89%5D%20Front-2875.png',
+  'D109':'/assests/%5BD109%5D%20Front-2912.png',
+  'AMD210':'/assests/AMD10OWSUB_ecomm-2.png',
+  // Soundbars
+  'SBR4':'/assests/SBR4.png',
+  'ASBR4':'/assests/SBR4_Black_Netsuite_02-23-26.png',
+  'ASBR5':'/assests/ASBR5.1506%201.png',
+  'ASBR6':'/assests/ASBR6.1509%201.png',
+};
 function renderResult(){const area=document.getElementById('result-area');
 // ── Theater packages: fixed config, skip normal flow ──
-if(THEATER_PACKAGES[sel.prod]){const pkg=THEATER_PACKAGES[sel.prod];const parts=pkg.res.split('+');const isCombo=parts.length>1;const IMGS={'250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','125.4':'/assests/%5BProA125.4%5D%20Origin%20Pro%20Amp-Front.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.1':'/assests/%5BProA%201200.1%5D%20Origin-Pro-Amp-0091.png','1200.2':'/assests/%5BProA%201200.2%5D%20Origin-Pro-Amp-0088.png','1200.4':'/assests/ProA1200.4.png'};const NARROW=['125.1','125.2','250.1','250.2'];const comboImgs=parts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img${NARROW.includes(parts[0].trim())?' amp-narrow':''}" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const lineupHtml='<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">'+pkg.speakers.map(s=>`<div class="theater-lineup-item"><span class="theater-lineup-count">${s.count}×</span><span class="theater-lineup-model">${s.model}</span></div>`).join('')+'</div></div>';setAddProjectBtn(true);setHeightBtn(sel.prod==='3.2');window._wiringData=null;area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Configuration<span>${sel.prod}</span></div></div>${isCombo?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}</div>`;return;}
-const effOhm=singleOhm()||sel.ohm;const skipSub=noSub();const complete=sel.cat&&sel.prod&&(!needsOhmStep()||sel.ohm)&&sel.spk!==null&&(skipSub||sel.sub!==null);if(!complete){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const match=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&(skipSub||d.sub===sel.sub));if(!match||String(match.res).toUpperCase()==='N/A'){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const parts=String(match.res).split('+');const isCombo=parts.length>1;const spkLabel=sel.cat==='Soundbars'?'Configuration':'Speakers';const IMGS={'250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','125.4':'/assests/%5BProA125.4%5D%20Origin%20Pro%20Amp-Front.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.1':'/assests/%5BProA%201200.1%5D%20Origin-Pro-Amp-0091.png','1200.2':'/assests/%5BProA%201200.2%5D%20Origin-Pro-Amp-0088.png','1200.4':'/assests/ProA1200.4.png'};const NARROW_MODELS=['125.1','125.2','250.1','250.2'];const comboImgs=parts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img${NARROW_MODELS.includes(parts[0].trim())?' amp-narrow':''}" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const sugSub=getSugSub(match);const pills=arr=>arr.map(v=>`<button class="sug-sub-pill${window._selectedSub===v?' selected':''}" data-model="${v}" onclick="openSubMenu('${v}')">${v}</button>`).join('');const sugSubHtml=sugSub?(sugSub.perf.length?`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-options"><div class="sug-sub-option"><div class="sug-sub-option-label">Coverage</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div><div class="sug-sub-option"><div class="sug-sub-option-label">Performance</div><div class="sug-sub-pills">${pills(sugSub.perf)}</div></div></div></div>`:`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div>`):'';setAddProjectBtn(true);setHeightBtn(true);window._wiringData={ampStr:match.res,spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||''};area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">${spkLabel}<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${isCombo?'<div class="combo-note">This configuration requires two amplifier models.</div>':''}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;refreshWiringBtn();}
+if(THEATER_PACKAGES[sel.prod]){const pkg=THEATER_PACKAGES[sel.prod];const parts=pkg.res.split('+');const isCombo=parts.length>1;const IMGS={'250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','125.4':'/assests/%5BProA125.4%5D%20Origin%20Pro%20Amp-Front.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.1':'/assests/%5BProA%201200.1%5D%20Origin-Pro-Amp-0091.png','1200.2':'/assests/%5BProA%201200.2%5D%20Origin-Pro-Amp-0088.png','1200.4':'/assests/ProA1200.4.png'};const NARROW=['125.1','125.2','250.1','250.2'];const comboImgs=parts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img${NARROW.includes(parts[0].trim())?' amp-narrow':''}" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const lineupHtml='<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">'+pkg.speakers.map(s=>`<div class="theater-lineup-item${SUB_DATA[s.model]?' theater-lineup-item--tappable':''}" ${SUB_DATA[s.model]?`onclick="openSubDetail('${s.model}')" style="cursor:pointer"`:''}><span class="theater-lineup-count">${s.count}×</span><span class="theater-lineup-model">${s.model}</span>${SUB_DATA[s.model]?'<span class="theater-lineup-info">ⓘ</span>':''}</div>`).join('')+'</div></div>';setAddProjectBtn(true);setHeightBtn(sel.prod==='Media Room 3.2');window._wiringData=null;area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Configuration<span>${sel.prod}</span></div></div>${isCombo?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}</div>`;return;}
+const effOhm=singleOhm()||sel.ohm;const skipSub=noSub();const complete=sel.cat&&sel.prod&&(!needsOhmStep()||sel.ohm)&&sel.spk!==null&&(skipSub||sel.sub!==null);if(!complete){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const match=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&(skipSub||d.sub===sel.sub));if(!match||String(match.res).toUpperCase()==='N/A'){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const parts=mergeAmps(String(match.res).split('+').map(p=>p.trim()));const isCombo=parts.length>1;const spkLabel=sel.cat==='Soundbars'?'Configuration':'Speakers';const IMGS={'250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','125.4':'/assests/%5BProA125.4%5D%20Origin%20Pro%20Amp-Front.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.1':'/assests/%5BProA%201200.1%5D%20Origin-Pro-Amp-0091.png','1200.2':'/assests/%5BProA%201200.2%5D%20Origin-Pro-Amp-0088.png','1200.4':'/assests/ProA1200.4.png'};const NARROW_MODELS=['125.1','125.2','250.1','250.2'];const comboImgs=parts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img${NARROW_MODELS.includes(parts[0].trim())?' amp-narrow':''}" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const sugSub=getSugSub(match);const pills=arr=>arr.map(v=>`<button class="sug-sub-pill${window._selectedSub===v?' selected':''}" data-model="${v}" onclick="openSubMenu('${v}')">${v}</button>`).join('');const sugSubHtml=sugSub?(sugSub.perf.length?`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-options"><div class="sug-sub-option"><div class="sug-sub-option-label">Coverage</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div><div class="sug-sub-option"><div class="sug-sub-option-label">Performance</div><div class="sug-sub-pills">${pills(sugSub.perf)}</div></div></div></div>`:`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div>`):'';setAddProjectBtn(true);setHeightBtn(true);window._wiringData={ampStr:parts.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||''};if(sel.cat==='Performance & Theater'){const sSel=window._surroundSel||[];const atrSel=window._atmosSel||null;const hasSurrounds=sSel.includes('surrounds');const hasRear=sSel.includes('rear');const ATMOS_AMP={'2':'250.1','4':'250.2','6':'250.4'};const allParts=[...parts];let sAmp=null,sSpkCount=0,sLabels=[];if(sSel.length>0){sAmp=(hasSurrounds&&hasRear)?'1000.2':'1000.1';sSpkCount=(hasSurrounds&&hasRear)?4:2;if(hasSurrounds)sLabels.push('Surrounds');if(hasRear)sLabels.push('Rear');allParts.push(sAmp);}let aAmp=null;if(atrSel){aAmp=ATMOS_AMP[atrSel];allParts.push(aAmp);}const allPartsMerged=mergeAmps(allParts);const allPills=allPartsMerged.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('');const allImgHtml=allPartsMerged.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const comboProdImg=allImgHtml?`<div class="amp-combo-imgs">${allImgHtml}</div>`:'';const lineupRows=[];lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sel.spk}×</span><span class="theater-lineup-model">${sel.prod}</span></div>`);if(sLabels.length>0)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sSpkCount}×</span><span class="theater-lineup-model">ASM3600 <span style="color:var(--muted);font-size:11px">(${sLabels.join(' + ')})</span></span></div>`);if(atrSel)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${atrSel}</span><span class="theater-lineup-model">Atmos Channels</span></div>`);const lineupHtml=`<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">${lineupRows.join('')}</div></div>`;const totalAmps=allPartsMerged.length;const _ptEG=[];if(sSel.length>0){const _ptSL=[];if(hasSurrounds){_ptSL.push('Surr 1');_ptSL.push('Surr 2');}if(hasRear){_ptSL.push('Rear 1');_ptSL.push('Rear 2');}_ptEG.push({prod:'ASM3600',spkCount:sSpkCount,labels:_ptSL});}if(atrSel){const _na=parseInt(atrSel);const _al=[];for(let _i=0;_i<_na;_i++)_al.push('Ht '+(_i+1));_ptEG.push({prod:'height',spkCount:_na,labels:_al});}window._wiringData={ampStr:allPartsMerged.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||'',extraGroups:_ptEG.length?_ptEG:null};area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${totalAmps>1?'s':''}</div><div class="result-amps">${allPills}${comboProdImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">Speakers<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${totalAmps>1?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}else if(sel.cat==='Soundbars'){const atrSel=window._atmosSel||null;const ATMOS_AMP={'2':'250.1','4':'250.2','6':'250.4'};const allParts=[...parts];if(atrSel){allParts.push(ATMOS_AMP[atrSel]);}const allPills=allParts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('');const allImgHtml=allParts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const finalProdImg=atrSel?(allImgHtml?`<div class="amp-combo-imgs">${allImgHtml}</div>`:''):prodImg;const totalAmps=allParts.length;const _sbEG=[];if(atrSel){const _naSb=parseInt(atrSel);const _alSb=[];for(let _i=0;_i<_naSb;_i++)_alSb.push('Ht '+(_i+1));_sbEG.push({prod:'height',spkCount:_naSb,labels:_alSb});}window._wiringData={ampStr:allParts.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||'',extraGroups:_sbEG.length?_sbEG:null};let lineupHtml='';if(atrSel){const lineupRows=[];lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sel.spk}</span><span class="theater-lineup-model">${sel.prod}</span></div>`);lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${atrSel}</span><span class="theater-lineup-model">Height Channels</span></div>`);lineupHtml=`<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">${lineupRows.join('')}</div></div>`;}area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${totalAmps>1?'s':''}</div><div class="result-amps">${allPills}${finalProdImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">Configuration<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${totalAmps>1?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}else{const spkImg=SPK_IMGS[sel.prod]||null;area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div>${spkImg?`<img class="result-spk-img" src="${spkImg}" alt="${sel.prod}">`:''}<div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">${spkLabel}<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${isCombo?'<div class="combo-note">This configuration requires two amplifier models.</div>':''}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}refreshWiringBtn();}
 function goToSpeakers(){const filtered=getFiltered('ohm');const spks=uniqueSpk(filtered);rebuildGroup('g-spk',spks);const stepN=needsOhmStep()?4:3;const label=sel.cat==='Soundbars'?'Speaker configuration':'Number of speakers';document.getElementById('n-spk').textContent=`0${stepN} — ${label}`;showStep('s-spk');}
-function afterProduct(){if(THEATER_PACKAGES[sel.prod]){sel.ohm=null;sel.spk=null;sel.sub=null;['s-ohm','s-spk','s-sub'].forEach(id=>{document.getElementById(id).style.display='none';});renderResult();setAddProjectBtn(true);updateProgress();updateToolbar();return;}const so=singleOhm();const ohmOpts=getOhmOptions();if(ohmOpts.length===0){sel.ohm=null;document.getElementById('s-ohm').style.display='none';goToSpeakers();}else if(so||ohmOpts.length===1){sel.ohm=so||ohmOpts[0];document.getElementById('s-ohm').style.display='none';goToSpeakers();}else{rebuildGroup('g-ohm',ohmOpts);document.getElementById('n-ohm').textContent='03 — Connection type';showStep('s-ohm');}updateProgress();updateToolbar();}
-function afterSpeakers(){if(noSub()){sel.sub=null;document.getElementById('s-sub').style.display='none';updateProgress();updateToolbar();renderResult();}else{const effOhm=singleOhm()||sel.ohm;const validSubs=uniqueSub(getFiltered('spk')).filter(sv=>{const m=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&d.sub===sv);return m&&String(m.res).toUpperCase()!=='N/A';});rebuildGroup('g-sub',validSubs);const stepN=needsOhmStep()?5:4;document.getElementById('n-sub').textContent=`0${stepN} — Subwoofers`;showStep('s-sub');updateProgress();updateToolbar();}}
-document.getElementById('g-cat').addEventListener('click',e=>{const btn=e.target.closest('.btn-cat');if(!btn)return;resetFrom('s-cat');sel.cat=btn.dataset.val;btn.classList.add('active');collapse('g-cat');document.getElementById('n-cat').classList.add('done');history.push('s-cat');rebuildGroup('g-prod',catProds[sel.cat]);showStep('s-prod');updateProgress();updateToolbar();});
-document.getElementById('g-prod').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-prod');sel.prod=e.target.dataset.val;e.target.classList.add('active');collapse('g-prod');document.getElementById('n-prod').classList.add('done');history.push('s-prod');afterProduct();});
+function showConfigStep(){sel.ohm=null;sel.spk=null;sel.sub=null;const ohmOpts=getOhmOptions();const so=singleOhm();const cfgOhmSec=document.getElementById('cfg-ohm-section');if(!needsOhmStep()){sel.ohm=so||ohmOpts[0]||null;cfgOhmSec.style.display='none';}else{rebuildGroup('cfg-g-ohm',ohmOpts);document.querySelectorAll('#cfg-g-ohm button').forEach(b=>b.classList.remove('active'));cfgOhmSec.style.display='';}const spks=uniqueSpk(getFiltered(needsOhmStep()?'prod':'ohm'));const spkLabel=sel.cat==='Soundbars'?'Speaker Configuration':'Number of Speakers';document.getElementById('cfg-spk-lbl').textContent=spkLabel;rebuildGroup('cfg-g-spk',spks);document.querySelectorAll('#cfg-g-spk button').forEach(b=>b.classList.remove('active'));document.getElementById('cfg-spk-section').style.display='';const cfgSurroundSec=document.getElementById('cfg-surround-section');if(sel.cat==='Performance & Theater'||sel.cat==='Soundbars'){window._surroundSel=[];window._atmosSel=null;['cfg-btn-surrounds','cfg-btn-rear','cfg-btn-atmos2','cfg-btn-atmos4','cfg-btn-atmos6'].forEach(id=>document.getElementById(id).classList.remove('active'));cfgSurroundSec.style.display='';const cfgSurrOpts=document.getElementById('cfg-surround-options');if(cfgSurrOpts)cfgSurrOpts.style.display=sel.cat==='Soundbars'?'none':'';}else{cfgSurroundSec.style.display='none';}const cfgSubSec=document.getElementById('cfg-sub-section');if(!noSub()){const allSubs=uniqueSub(getFiltered('prod'));rebuildGroup('cfg-g-sub',allSubs);document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));cfgSubSec.style.display='';}else{cfgSubSec.style.display='none';}document.getElementById('n-config').textContent='03 — Configuration';document.getElementById('n-config').classList.remove('done');showStep('s-config');}
+function afterProduct(){if(THEATER_PACKAGES[sel.prod]){sel.ohm=null;sel.spk=null;sel.sub=null;['s-ohm','s-spk','s-sub'].forEach(id=>{document.getElementById(id).style.display='none';});renderResult();setAddProjectBtn(true);updateProgress();updateToolbar();return;}showConfigStep();updateProgress();updateToolbar();}
+document.getElementById('cfg-g-ohm').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;document.querySelectorAll('#cfg-g-ohm button').forEach(b=>b.classList.remove('active'));e.target.classList.add('active');sel.ohm=e.target.dataset.val;sel.spk=null;sel.sub=null;document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));rebuildGroup('cfg-g-spk',uniqueSpk(getFiltered('ohm')));document.querySelectorAll('#cfg-g-spk button').forEach(b=>b.classList.remove('active'));renderResult();updateProgress();updateToolbar();});
+document.getElementById('cfg-g-spk').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;document.querySelectorAll('#cfg-g-spk button').forEach(b=>b.classList.remove('active'));e.target.classList.add('active');sel.spk=e.target.dataset.val;sel.sub=null;document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));if(!noSub()){const effOhm=singleOhm()||sel.ohm;const validSubs=uniqueSub(getFiltered('spk')).filter(sv=>{const m=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&d.sub===sv);return m&&String(m.res).toUpperCase()!=='N/A';});rebuildGroup('cfg-g-sub',validSubs);}document.getElementById('n-config').classList.add('done');if(!history.includes('s-config'))history.push('s-config');renderResult();updateProgress();updateToolbar();});
+document.getElementById('cfg-g-sub').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));e.target.classList.add('active');sel.sub=parseInt(e.target.dataset.val);renderResult();updateProgress();updateToolbar();});
+function afterSpeakers(){if(sel.cat==='Performance & Theater'){window._surroundSel=[];document.getElementById('btn-surrounds').classList.remove('active');document.getElementById('btn-rear').classList.remove('active');document.getElementById('surround-toggles').style.display='';document.getElementById('surround-change-btn').style.display='none';document.getElementById('n-surround').classList.remove('done');showStep('s-surround');updateProgress();updateToolbar();}else{proceedToSub();}}
+function proceedToSub(){if(noSub()){sel.sub=null;document.getElementById('s-sub').style.display='none';updateProgress();updateToolbar();renderResult();}else{const effOhm=singleOhm()||sel.ohm;const validSubs=uniqueSub(getFiltered('spk')).filter(sv=>{const m=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&d.sub===sv);return m&&String(m.res).toUpperCase()!=='N/A';});rebuildGroup('g-sub',validSubs);const stepN=needsOhmStep()?5:4;document.getElementById('n-sub').textContent=`0${stepN} — Subwoofers`;showStep('s-sub');updateProgress();updateToolbar();}}
+function toggleSurround(opt){if(!window._surroundSel)window._surroundSel=[];const idx=window._surroundSel.indexOf(opt);if(idx===-1){window._surroundSel.push(opt);}else{window._surroundSel.splice(idx,1);}const hasSurr=window._surroundSel.includes('surrounds');const hasRear=window._surroundSel.includes('rear');['btn-surrounds','cfg-btn-surrounds'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',hasSurr);});['btn-rear','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',hasRear);});renderResult();}
+function toggleAtmos(count){window._atmosSel=(window._atmosSel===count)?null:count;['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.toggle('active',window._atmosSel===n);});});renderResult();}
+function proceedFromSurround(){document.getElementById('surround-toggles').style.display='none';document.getElementById('surround-change-btn').style.display='';document.getElementById('n-surround').classList.add('done');history.push('s-surround');proceedToSub();}
+function changeSurround(){window._surroundSel=[];window._atmosSel=null;document.getElementById('btn-surrounds').classList.remove('active');document.getElementById('btn-rear').classList.remove('active');['2','4','6'].forEach(n=>document.getElementById('btn-atmos'+n).classList.remove('active'));document.getElementById('surround-toggles').style.display='';document.getElementById('surround-change-btn').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('s-sub').style.display='none';sel.sub=null;document.getElementById('result-area').innerHTML='';setAddProjectBtn(false);setHeightBtn(false);history=history.filter(h=>h!=='s-surround');}
+// ── P&T Custom Flow ───────────────────────────────────────────────────
+var _ptActive=false;
+var _PT_STEPS=['lrc','surround','rear','atmos','subs'];
+window._ptSel={lrc:null,surround:null,rear:null,atmos:null,atmosCount:null,subs:null};
+
+function initPtFlow(){
+  _ptActive=true;
+  window._ptSel={lrc:null,surround:null,rear:null,atmos:null,atmosCount:null,subs:0};
+  _PT_STEPS.forEach(function(s){
+    var el=document.getElementById('s-pt-'+s);if(el)el.style.display='none';
+    var numEl=document.getElementById('n-pt-'+s);if(numEl)numEl.classList.remove('done');
+    var chBtn=document.getElementById('pt-'+s+'-change');if(chBtn)chBtn.style.display='none';
+    var g=document.getElementById('g-pt-'+s);if(g)g.querySelectorAll('button').forEach(function(b){b.classList.remove('active');});
+  });
+  // Reset subs dropdown
+  var subSel=document.getElementById('pt-subs-select');if(subSel)subSel.value='0';
+  document.getElementById('pt-atmos-count-wrap').style.display='none';
+  document.querySelectorAll('#g-pt-atmos-count button').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('result-area').innerHTML='';
+  setAddProjectBtn(false);
+  // Show ALL steps at once
+  _PT_STEPS.forEach(function(s){showStep('s-pt-'+s);});
+  updateProgress();updateToolbar();
+}
+
+function ptSelect(step,val){
+  window._ptSel[step]=val;
+  var g=document.getElementById('g-pt-'+step);
+  g.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b.dataset.val===val);});
+  document.getElementById('n-pt-'+step).classList.add('done');
+  document.getElementById('pt-'+step+'-change').style.display='';
+  if(step==='atmos'){document.getElementById('pt-atmos-count-wrap').style.display='';}
+  renderPtResult();
+}
+
+function ptSelectAtmosCount(n){
+  window._ptSel.atmosCount=n;
+  document.querySelectorAll('#g-pt-atmos-count button').forEach(function(b){b.classList.toggle('active',parseInt(b.textContent)===n);});
+  renderPtResult();
+}
+
+function ptSelectSubs(n){
+  window._ptSel.subs=n;
+  renderPtResult();
+}
+
+
+function ptChange(step){
+  window._ptSel[step]=null;
+  if(step==='atmos'){window._ptSel.atmosCount=null;document.getElementById('pt-atmos-count-wrap').style.display='none';}
+  document.getElementById('n-pt-'+step).classList.remove('done');
+  document.getElementById('pt-'+step+'-change').style.display='none';
+  document.getElementById('g-pt-'+step).querySelectorAll('button').forEach(function(b){b.classList.remove('active');});
+  renderPtResult();
+}
+
+function ptResetAll(){
+  _ptActive=false;
+  _PT_STEPS.forEach(function(s){
+    var el=document.getElementById('s-pt-'+s);if(el)el.style.display='none';
+    var numEl=document.getElementById('n-pt-'+s);if(numEl)numEl.classList.remove('done');
+  });
+  document.getElementById('pt-atmos-count-wrap').style.display='none';
+  var subSel=document.getElementById('pt-subs-select');if(subSel)subSel.value='0';
+  window._ptSel={lrc:null,surround:null,rear:null,atmos:null,atmosCount:null,subs:0};
+}
+
+function calcPtAmps(){
+  var p=window._ptSel;
+  var dem1000=0,dem250=0;
+  if(p.lrc==='ASM5600')dem1000+=6;
+  else if(p.lrc==='ASM3600')dem1000+=3;
+  if(p.surround==='ASM5600')dem1000+=4;
+  else if(p.surround)dem1000+=2;
+  if(p.rear==='ASM5600')dem1000+=4;
+  else if(p.rear)dem1000+=2;
+  if(p.subs)dem1000+=p.subs;
+  if(p.atmos&&p.atmosCount)dem250=p.atmosCount;
+  var amps=[];
+  if(dem1000>0){
+    var n4=Math.floor(dem1000/8),rem=dem1000-n4*8;
+    if(rem===0){}else if(rem>4){n4++;}else if(rem>2){amps.push('1000.2');}else{amps.push('1000.1');}
+    for(var i=0;i<n4;i++)amps.push('1000.4');
+  }
+  if(dem250>0){
+    if(dem250>4)amps.push('250.4');
+    else if(dem250>2)amps.push('250.2');
+    else amps.push('250.1');
+  }
+  amps.sort(function(a,b){return parseFloat(a)-parseFloat(b);});
+  return amps;
+}
+
+function renderPtResult(){
+  var p=window._ptSel;
+  var amps=calcPtAmps();
+  var area=document.getElementById('result-area');
+  if(!amps.length){area.innerHTML='';setAddProjectBtn(false);return;}
+  var IMGS={'250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png'};
+  var NARROW=['250.1','250.2'];
+  var imgHtml=amps.map(function(m){return IMGS[m]?'<img class="amp-product-img-sm'+(NARROW.indexOf(m)>-1?' amp-narrow':'')+'" src="'+IMGS[m]+'" alt="ProA'+m+'">':''}).join('');
+  var prodImg=amps.length===1?(IMGS[amps[0]]?'<img class="amp-product-img'+(NARROW.indexOf(amps[0])>-1?' amp-narrow':'')+'" src="'+IMGS[amps[0]]+'" alt="ProA'+amps[0]+'">':""):'<div class="amp-combo-imgs">'+imgHtml+'</div>';
+  var pills=amps.map(function(a){return '<span class="amp-pill">'+a+'</span>';}).join('');
+  var isCombo=amps.length>1;
+  // Lineup
+  var rows=[];
+  if(p.lrc)rows.push('<div class="theater-lineup-item"><span class="theater-lineup-count">3×</span><span class="theater-lineup-model">'+p.lrc+' <span style="color:var(--muted);font-size:11px">(L / C / R)</span></span></div>');
+  if(p.surround)rows.push('<div class="theater-lineup-item"><span class="theater-lineup-count">2×</span><span class="theater-lineup-model">'+p.surround+' <span style="color:var(--muted);font-size:11px">(Surrounds)</span></span></div>');
+  if(p.rear)rows.push('<div class="theater-lineup-item"><span class="theater-lineup-count">2×</span><span class="theater-lineup-model">'+p.rear+' <span style="color:var(--muted);font-size:11px">(Rear)</span></span></div>');
+  if(p.atmos&&p.atmosCount)rows.push('<div class="theater-lineup-item"><span class="theater-lineup-count">'+p.atmosCount+'×</span><span class="theater-lineup-model">'+p.atmos+' <span style="color:var(--muted);font-size:11px">(Atmos)</span></span></div>');
+  if(p.subs)rows.push('<div class="theater-lineup-item"><span class="theater-lineup-count">'+p.subs+'×</span><span class="theater-lineup-model">Subwoofer</span></div>');
+  var lineupHtml=rows.length?'<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">'+rows.join('')+'</div></div>':'';
+  // Build _wiringData
+  var extraGroups=[];
+  if(p.lrc)extraGroups.push({prod:p.lrc,spkCount:3,labels:['L','C','R']});
+  if(p.surround)extraGroups.push({prod:p.surround,spkCount:2,labels:['Surr L','Surr R']});
+  if(p.rear)extraGroups.push({prod:p.rear,spkCount:2,labels:['Rear L','Rear R']});
+  if(p.atmos&&p.atmosCount){var hl=[];for(var _i=0;_i<p.atmosCount;_i++)hl.push('Ht '+(_i+1));extraGroups.push({prod:'height',spkCount:p.atmosCount,labels:hl});}
+  window._wiringData={ampStr:amps.join('+'),spkVal:'0',ohm:'8ohm',cat:'Performance & Theater',subCount:p.subs||0,prod:p.lrc||'',extraGroups:extraGroups.length?extraGroups:null};
+  setAddProjectBtn(true);
+  area.innerHTML='<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier'+(isCombo?'s':'')+'</div><div class="result-amps">'+pills+prodImg+'</div><div class="result-divider"></div>'+lineupHtml+'<div id="wiring-btn-wrap"></div></div>';
+  refreshWiringBtn();
+  updateProgress();updateToolbar();
+}
+// ── End P&T Custom Flow ───────────────────────────────────────────────
+
+document.getElementById('g-cat').addEventListener('click',e=>{const btn=e.target.closest('.btn-cat');if(!btn)return;resetFrom('s-cat');ptResetAll();sel.cat=btn.dataset.val;btn.classList.add('active');collapse('g-cat');document.getElementById('resource-btns').style.display='none';document.getElementById('n-cat').classList.add('done');history.push('s-cat');if(sel.cat==='Performance & Theater'){initPtFlow();return;}rebuildGroup('g-prod',catProds[sel.cat]);const bSec=document.getElementById('bundles-section');bSec.style.display='none';showStep('s-prod');updateProgress();updateToolbar();});
+document.getElementById('g-prod').addEventListener('click',e=>{const btn=e.target.closest('.btn-opt');if(!btn)return;resetFrom('s-prod');sel.prod=btn.dataset.val;btn.classList.add('active');collapse('g-prod');document.getElementById('bundles-section').style.display='none';document.getElementById('n-prod').classList.add('done');history.push('s-prod');updateCatBtnImg(sel.prod);afterProduct();});
+document.getElementById('g-bundles').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-prod');sel.prod=e.target.dataset.val;e.target.classList.add('active');document.querySelectorAll('#g-prod button').forEach(b=>b.style.display='none');collapse('g-bundles');document.getElementById('n-prod').classList.add('done');history.push('s-prod');afterProduct();});
 document.getElementById('g-ohm').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-ohm');sel.ohm=e.target.dataset.val;e.target.classList.add('active');collapse('g-ohm');document.getElementById('n-ohm').classList.add('done');history.push('s-ohm');goToSpeakers();updateProgress();updateToolbar();});
 document.getElementById('g-spk').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-spk');sel.spk=e.target.dataset.val;e.target.classList.add('active');collapse('g-spk');document.getElementById('n-spk').classList.add('done');history.push('s-spk');afterSpeakers();});
 document.getElementById('g-sub').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-sub');sel.sub=parseInt(e.target.dataset.val);e.target.classList.add('active');collapse('g-sub');document.getElementById('n-sub').classList.add('done');history.push('s-sub');updateProgress();updateToolbar();renderResult();});
@@ -1141,6 +1733,25 @@ const SUB_DATA={
     ],
     contact:{phone:'(844) 674-4461',email:'sales@originacoustics.com',web:'ambisonicsystems.com',hours:'Mon–Fri, 8am–5pm PT'},
   },
+  'AMD210':{
+    variants:'AMD10OWSUB (On-Wall) | AMD10IWSUB (In-Wall)',
+    specs:[
+      ['System Type','Dual 10" dedicated home theater subwoofer'],
+      ['Driver','2 × 10" Aluminum Cone Woofers'],
+      ['Frequency Response','22Hz – 200Hz (−10dB)\n29Hz – 200Hz (−3dB)'],
+      ['Max SPL','116dB Continuous Program / 122dB Peak'],
+      ['System Coverage','100° Horizontal, 60° Vertical'],
+      ['Sensitivity','90dB @ 2.83V / 1m'],
+      ['Recommended Amp','Origin Pro Amplifiers'],
+      ['Rated Impedance','4 ohms'],
+      ['OW Dimensions','34 5/8"H × 13"W × 4 11/16"D\n(800mm H × 330mm W × 119mm D)'],
+      ['IW Dimensions','34 5/8"H × 13"W × 3 7/16"D\n(88mm Cabinet / 20mm Wall Faceplate)'],
+    ],
+    wiring:[
+      ['General','Connect amp output directly to speaker terminals. Pairs with Origin ProA amplifier with dedicated DSP profile for optimal performance.'],
+    ],
+    contact:{phone:'(844) 674-4461',email:'sales@originacoustics.com',web:'ambisonicsystems.com',hours:'Mon–Fri, 8am–5pm PT'},
+  },
 };
 var SUB_REQUIRED_PRODS=['Blends 602','Blends 802','Blends 803'];
 function wiringBtnHtml(){
@@ -1207,13 +1818,14 @@ function openWiring(){
   const el=document.getElementById('wiring-root');
   // Delay so the panel transition is well underway before React Flow measures container
   setTimeout(function(){
-    var dWithSub=Object.assign({},d,{selectedSub:window._selectedSub||''});
+    var dWithSub=Object.assign({},d,{selectedSub:(d.cat==='Performance & Theater')?'':(window._selectedSub||'')});
     if(window._mountWiringDiagram){window._mountWiringDiagram(el,dWithSub);}
     else{el.innerHTML='<div style="color:#7a8090;text-align:center;padding:3rem 2rem;font-size:13px;font-family:DM Sans,sans-serif">Loading diagram…</div>';window._pendingWiringMount={el,d:dWithSub};}
   },160);
 }
 function closeWiring(){document.getElementById('wiring-panel').classList.remove('open');}
 var DISPERSION_IMGS={
+  'LSH80':{nosub:'/assests/lsr80-disp.png'},
   'LSR80':{nosub:'/assests/lsr80-disp.png'}
 };
 var SUB_DISP_IMGS={
@@ -1398,6 +2010,9 @@ function closeDispersion(){
   };
   // Per-speaker 70v watt draw (tap wattage). Add ALSB values when available.
   var SPEAKER_70V_WATTS={
+    'LSH40':50,
+    'LSH60':75,
+    'LSH80':100,
     'LSR40':50,
     'LSR60':75,
     'LSR80':100,
@@ -1407,6 +2022,9 @@ function closeDispersion(){
   };
   // Per-product sub 70v watt draw. Add other product subs as data is confirmed.
   var SUB_70V_WATTS={
+    'LSH40':300,
+    'LSH60':300,
+    'LSH80':300,
     'LSR40':300,
     'LSR60':300,
     'LSR80':300,
@@ -1515,20 +2133,21 @@ function closeDispersion(){
     );
   }
   var nodeTypes={ampNode:AmpNode,speakerNode:SpeakerNode,subNode:SubNode};
-  function buildGraph(ampStr,spkVal,ohm,cat,subCount,prod,containerW,selectedSub){
+  function buildGraph(ampStr,spkVal,ohm,cat,subCount,prod,containerW,selectedSub,extraGroups){
     var parts=ampStr.split('+').map(function(s){return s.trim();});
     var isBar=cat==='Soundbars';
     var spkItems;
     if(isBar){spkItems=spkVal==='LCR'?[{l:'Left',t:'L'},{l:'Center',t:'C'},{l:'Right',t:'R'}]:spkVal==='L&R'?[{l:'Left',t:'L'},{l:'Right',t:'R'}]:[{l:'Soundbar',t:''}];}
-    else{var ns=parseInt(spkVal)||2;spkItems=[];for(var si2=0;si2<ns;si2++)spkItems.push({l:'Spk '+(si2+1),t:'',nodeType:'speakerNode'});}
+    else{spkItems=[];if(!(extraGroups&&extraGroups.length)){var ns=parseInt(spkVal)||2;for(var si2=0;si2<ns;si2++)spkItems.push({l:(prod||'Speaker')+' '+(si2+1),t:'',nodeType:'speakerNode'});}}
+    if(extraGroups&&extraGroups.length){extraGroups.forEach(function(grp){var _gl=grp.labels||[];for(var _gi=0;_gi<grp.spkCount;_gi++){spkItems.push({l:_gl[_gi]||('Ext '+(spkItems.length+1)),t:'',nodeType:'speakerNode',extProd:grp.prod||''});}});}
     var numSubs=parseInt(subCount)||0;
     var isBSub800=selectedSub==='BLENDSSUB800';
     var subItems=[];
     if(isBSub800){
       // BLENDSSUB800 = 1 box with 2 drivers; each driver needs its own channel at 125w
-      for(var sb=0;sb<numSubs*2;sb++)subItems.push({l:'Sub '+(sb+1),t:'',nodeType:'subNode'});
+      for(var sb=0;sb<numSubs;sb++){subItems.push({l:'Left '+(selectedSub||'Sub')+' '+(sb+1),t:'',nodeType:'subNode'});subItems.push({l:'Right '+(selectedSub||'Sub')+' '+(sb+1),t:'',nodeType:'subNode'});}
     }else{
-      for(var sb=0;sb<numSubs;sb++)subItems.push({l:'Sub '+(sb+1),t:'',nodeType:'subNode'});
+      for(var sb=0;sb<numSubs;sb++)subItems.push({l:(selectedSub||'Sub')+' '+(sb+1),t:'',nodeType:'subNode'});
     }
     // Combined output list: speakers first, then subs
     var allOutputs=[];
@@ -1537,6 +2156,7 @@ function closeDispersion(){
     // Phase 1: build channels and allActive (with chRef) — do NOT push amp nodes yet
     var allActive=[],ampData=[],nodes=[],CW=Math.max(320,Math.min((containerW||320)-20,1100));
     var SLOT=numSubs>0?300:220; // extra vertical room when subs are present
+    var is70v=ohm==='70v';
     parts.forEach(function(model,ai){
       var spec=AMP_SPECS[model],chCount=spec?spec.ch:2;
       var chSpecs=getChSpecs(model,ohm);
@@ -1544,13 +2164,13 @@ function closeDispersion(){
       for(var ci=0;ci<chCount;ci++){
         var watt=chSpecs[ci];
         var active=watt!==null&&watt!==undefined&&watt!=='DNU';
-        var ch={id:'ch-'+ai+'-'+ci,watt:watt||'—',active:active,color:CH_COLORS[allActive.length%CH_COLORS.length]};
+        var isBridgedPartner=is70v&&(watt===null||watt===undefined);
+        var ch={id:'ch-'+ai+'-'+ci,watt:watt==='DNU'?'DNU':(watt||'Future'),active:active,isBridgedPartner:isBridgedPartner,color:CH_COLORS[allActive.length%CH_COLORS.length]};
         if(active)allActive.push({id:ch.id,color:ch.color,ampId:'amp-'+ai,model:model,chRef:ch});
         channels.push(ch);
       }
       ampData.push({model:model,channels:channels,ai:ai});
     });
-    var is70v=ohm==='70v';
     // Tall amps (1000.x, 1200.x) always use side layout: amp left, speakers stacked right
     var useSideLayout=true; // all diagrams: amp left, speakers/subs right
     var spkW=64,spkGap=10,edges=[];
@@ -1560,32 +2180,75 @@ function closeDispersion(){
     var pool=allActive.slice(),ptr=0;
     // For 70v with subs: speakers always on CH1 (first active channel),
     // subs always on CH3 (second active channel). Never shared.
-    var spkPool70=null,subPool70=null,spkPtr70=0,subPtr70=0;
+    var spkPool70=null,subPool70=null,subMaxPerCh70=1,spkPtr70=0,subPtr70=0;
     if(is70v&&numSubs>0&&pool.length>0){
       spkPool70=[pool[0]]; // CH1 — all speakers
-      subPool70=pool.length>1?[pool[1]]:[pool[0]]; // CH3 — all subs (fallback CH1 if only 1 channel)
+      // Compute how many subs fit per 70v channel before hitting the 80% limit
+      var _subChW=(pool.length>1&&pool[1].chRef)?parseInt(pool[1].chRef.watt)||0:0;
+      var _subMaxW=_subChW>0?Math.round(_subChW*0.8):800;
+      var _subTap=SUB_70V_WATTS[prod]||0;
+      subMaxPerCh70=(_subTap>0)?Math.max(1,Math.floor(_subMaxW/_subTap)):numSubs;
+      var _numSubChs=Math.ceil(numSubs/subMaxPerCh70);
+      subPool70=[];
+      for(var _sci=1;_sci<pool.length&&subPool70.length<_numSubChs;_sci++)subPool70.push(pool[_sci]);
+      if(subPool70.length===0)subPool70=[pool[0]]; // fallback: only 1 active channel
     }
+    // Mixed 250.x + 1000.x: heights→250.x, subs→1000.x, mains→1000.x
+    var hasMixed250_1000=!is70v&&parts.some(function(m){return /^250\./.test(m);})&&parts.some(function(m){return /^1000\./.test(m);});
+    var _mUsed={};
+    var _m1000=allActive.filter(function(c){return /^1000\./.test(c.model);});
+    var _m250=allActive.filter(function(c){return /^250\./.test(c.model);});
+    var _p1000=0,_p250=0;
+    function _pick1000(){for(var _i=0;_i<_m1000.length;_i++){var _c=_m1000[(_p1000+_i)%_m1000.length];if(!_mUsed[_c.id]){_p1000=(_p1000+_i+1)%(_m1000.length||1);_mUsed[_c.id]=true;return _c;}}return null;}
+    function _pick250(){for(var _i=0;_i<_m250.length;_i++){var _c=_m250[(_p250+_i)%_m250.length];if(!_mUsed[_c.id]){_p250=(_p250+_i+1)%(_m250.length||1);_mUsed[_c.id]=true;return _c;}}return null;}
+    // Soundbar + heights: split channels — soundbar speakers → first amp(s), heights → last amp (height amp)
+    var isBarWithHeights=isBar&&extraGroups&&extraGroups.length>0;
+    var _barPool=[],_htPool=[],_barPtr=0,_htPtr=0;
+    if(isBarWithHeights){var _htAmpId='amp-'+(parts.length-1);allActive.forEach(function(c){if(c.ampId===_htAmpId)_htPool.push(c);else _barPool.push(c);});}
     allOutputs.forEach(function(out,oi){
       var isSub=out.nodeType==='subNode';
+      var outProd=out.extProd||prod;
       // ASM5600 speakers are bridged; ALSB64/85/106 are biamp (Sat + Sub) — each speaker uses 2 channels
-      var isAlsb=(['ALSB64','ALSB85','ALSB106'].indexOf(prod)!==-1);
-      var needCh=(!isSub&&(prod==='ASM5600'||isAlsb))?2:1;
+      var isAlsb=(['ALSB64','ALSB85','ALSB106'].indexOf(outProd)!==-1);
+      var needCh=(!isSub&&(outProd==='ASM5600'||isAlsb))?2:1;
       var assignedChs=[];
       for(var nc=0;nc<needCh;nc++){
         var pch=null;
-        if(spkPool70){
+        if(isBarWithHeights){
+          // Soundbar+heights: route soundbar speakers to bar amp, heights to height amp
+          var _isHtOut=out.extProd==='height';
+          if(_isHtOut){if(_htPool.length>0){pch=_htPool[_htPtr%_htPool.length];_htPtr++;}}
+          else{if(_barPool.length>0){pch=_barPool[_barPtr%_barPool.length];_barPtr++;}}
+        } else if(spkPool70){
           // 70v with subs: use dedicated speaker or sub pool — never shared
           if(isSub){
-            if(subPool70.length>0){pch=subPool70[subPtr70%subPool70.length];subPtr70++;}
+            if(subPool70.length>0){var _sIdx=Math.min(Math.floor(subPtr70/subMaxPerCh70),subPool70.length-1);pch=subPool70[_sIdx];subPtr70++;}
           } else {
             if(spkPool70.length>0){pch=spkPool70[spkPtr70%spkPool70.length];spkPtr70++;}
           }
+        } else if(hasMixed250_1000){
+          // Type-aware routing: subs→1000.x first, heights→250.x first, mains→1000.x first
+          var _isHt=outProd==='height';
+          if(isSub){pch=_pick1000();if(!pch&&cat!=='Landscape')pch=_pick250();}
+          else if(_isHt){pch=_pick250();if(!pch)pch=_pick1000();}
+          else if(cat==='Landscape'){pch=_pick250();if(!pch)pch=_pick1000();}
+          else{pch=_pick1000();if(!pch)pch=_pick250();}
         } else {
           // Standard round-robin
           if(pool.length===0)break;
           var poolPos=ptr%pool.length;
           pch=pool[poolPos];
           ptr++;
+          // Landscape: speakers prefer 250.x, subs prefer 1000.x
+          if(cat==='Landscape'&&pch&&pch.model){
+            if(isSub&&/^250\./.test(pch.model)){
+              var _alt=pool.find(function(c){return /^1000\./.test(c.model);});
+              if(_alt)pch=_alt;
+            } else if(!isSub&&/^1000\./.test(pch.model)){
+              var _alt2=pool.find(function(c){return /^250\./.test(c.model);});
+              if(_alt2)pch=_alt2;
+            }
+          }
           // Sub on a 250.x amp: show 250w, DNU-grey the bridged pair channel
           // Exception: BLENDSSUB800 drivers each use 125w stereo (no bridge)
           if(isSub&&!isBSub800&&pch&&pch.model&&/^250\./.test(pch.model)){
@@ -1606,7 +2269,7 @@ function closeDispersion(){
       var ch=assignedChs[0]||null;
       var ampId=ch?ch.ampId:'amp-0';
       if(!groups[ampId])groups[ampId]={spks:[],subs:[]};
-      var entry={out:out,oi:oi,ch:ch,assignedChs:assignedChs};
+      var entry={out:out,oi:oi,ch:ch,assignedChs:assignedChs,outProd:outProd};
       if(isSub)groups[ampId].subs.push(entry);
       else groups[ampId].spks.push(entry);
     });
@@ -1623,6 +2286,9 @@ function closeDispersion(){
     var ampYPos=[];
     var yAccum=20;
     parts.forEach(function(model,ai){
+      // Give the 2nd and 3rd amps extra breathing room in 3-amp configs
+      if(parts.length===3&&ai===1) yAccum+=200;
+      else if(parts.length===3&&ai===2) yAccum+=80;
       ampYPos.push(yAccum);
       var grp=groups['amp-'+ai]||{spks:[],subs:[]};
       var chCnt=AMP_SPECS[model]?AMP_SPECS[model].ch:2;
@@ -1724,8 +2390,8 @@ function closeDispersion(){
             }
             (e.assignedChs||[e.ch]).forEach(function(ach,ei){
               var edgeColor=is70v?'#4d9ef6':(ach?ach.color:'#4d9ef6');
-              var alsb=(['ALSB64','ALSB85','ALSB106'].indexOf(prod)!==-1);
-              var edgeLabel=alsb?(ei===0?'Sat':'Sub'):prod==='ASM5600'?(ei===0?'MidHi':'Low'):undefined;
+              var alsb=(['ALSB64','ALSB85','ALSB106'].indexOf(e.outProd||prod)!==-1);
+              var edgeLabel=alsb?(ei===0?'Sat':'Sub'):(e.outProd||prod)==='ASM5600'?(ei===0?'MidHi':'Low'):undefined;
               if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',label:edgeLabel,labelStyle:{fill:'rgba(255,255,255,0.75)',fontSize:9,fontWeight:600,fontFamily:'DM Sans,sans-serif'},labelBgStyle:{fill:'#151820',fillOpacity:0.9},labelBgPadding:[3,2],labelBgBorderRadius:3,style:{stroke:edgeColor,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:edgeColor,width:14,height:14}});
             });
           });
@@ -1738,8 +2404,8 @@ function closeDispersion(){
             var color=e.ch?e.ch.color:'#555';
             nodes.push({id:'out-'+e.oi,type:'speakerNode',position:{x:rx+gi*(spkW+spkGap),y:sy},data:{label:e.out.l,type:e.out.t||'',color:color},draggable:false,selectable:false});
             (e.assignedChs||[e.ch]).forEach(function(ach,ei){
-              var alsb2=(['ALSB64','ALSB85','ALSB106'].indexOf(prod)!==-1);
-              var edgeLabel2=alsb2?(ei===0?'Sat':'Sub'):prod==='ASM5600'?(ei===0?'MidHi':'Low'):undefined;
+              var alsb2=(['ALSB64','ALSB85','ALSB106'].indexOf(e.outProd||prod)!==-1);
+              var edgeLabel2=alsb2?(ei===0?'Sat':'Sub'):(e.outProd||prod)==='ASM5600'?(ei===0?'MidHi':'Low'):undefined;
               if(ach)edges.push({id:'edge-'+e.oi+'-'+ei,source:ach.ampId,target:'out-'+e.oi,sourceHandle:ach.id,targetHandle:'in',type:'smoothstep',label:edgeLabel2,labelStyle:{fill:'rgba(255,255,255,0.75)',fontSize:9,fontWeight:600,fontFamily:'DM Sans,sans-serif'},labelBgStyle:{fill:'#151820',fillOpacity:0.9},labelBgPadding:[3,2],labelBgBorderRadius:3,style:{stroke:ach.color,strokeWidth:2.5},markerEnd:{type:MarkerType.ArrowClosed,color:ach.color,width:14,height:14}});
             });
           });
@@ -1771,28 +2437,70 @@ function closeDispersion(){
         }
       }
     });
-    return{nodes:nodes,edges:edges};
+    return{nodes:nodes,edges:edges,parts:parts,ampData:ampData,groups:groups,is70v:is70v};
   }
-  function WiringDiagram(props){
-    var cw=props.containerW||320;
-    var fitPad=cw>=900?0.10:cw>=600?0.14:0.28;
-    var fitMaxZ=cw>=900?2.0:cw>=600?1.6:1.2;
-    var g=buildGraph(props.ampStr,props.spkVal,props.ohm||'8ohm',props.cat,props.subCount||0,props.prod||'',cw,props.selectedSub||'');
-    var ns=useNodesState(g.nodes),es=useEdgesState(g.edges);
-    return h(ReactFlow,{nodes:ns[0],edges:es[0],nodeTypes:nodeTypes,onNodesChange:ns[2],onEdgesChange:es[2],
-      fitView:true,fitViewOptions:{padding:fitPad,maxZoom:fitMaxZ},
-      panOnDrag:true,zoomOnScroll:false,zoomOnPinch:true,
-      nodesDraggable:false,nodesConnectable:false,elementsSelectable:false,
-      proOptions:{hideAttribution:true},style:{background:'#0d0f14',width:'100%',height:'100%'}},
-      h(Background,{color:'rgba(255,255,255,0.05)',gap:22,size:1})
-    );
+  function renderWiringTable(data){
+    var g=buildGraph(data.ampStr,data.spkVal,data.ohm||'8ohm',data.cat,data.subCount||0,data.prod||'',800,data.selectedSub||'',data.extraGroups||null);
+    var parts=g.parts,ampData=g.ampData,groups=g.groups,is70v=g.is70v;
+    var html='<div class="wt-wrap">';
+    parts.forEach(function(model,ai){
+      var ad=ampData[ai];
+      var grp=groups['amp-'+ai]||{spks:[],subs:[]};
+      // Build chId → {labels:[], type} map (accumulates multiple outputs per channel)
+      var chMap={};
+      grp.spks.forEach(function(e){
+        var chs=e.assignedChs||[e.ch];
+        chs.forEach(function(ach,ei){
+          if(!ach)return;
+          var lbl=e.out.l;
+          if(chs.length>1){var ep=e.outProd||data.prod||'';lbl+=ep==='ASM5600'?(ei===0?' (MidHi)':' (Low)'):((['ALSB64','ALSB85','ALSB106'].indexOf(ep)!==-1)?(ei===0?' (Sat)':' (Sub)'):'');}
+          var tp=/^Ht/i.test(e.out.l)?'height':/^Surr|^Rear/i.test(e.out.l)?'surr':'spk';
+          if(!chMap[ach.id]){chMap[ach.id]={labels:[],type:tp};}
+          chMap[ach.id].labels.push(lbl);
+        });
+      });
+      grp.subs.forEach(function(e){if(e.ch){if(!chMap[e.ch.id]){chMap[e.ch.id]={labels:[],type:'sub'};}chMap[e.ch.id].labels.push(e.out.l);}});
+      // Format a labels array: consecutive "Prefix N" → "Prefix 1–N", else join with ", "
+      function fmtLbls(lbls){
+        if(!lbls||lbls.length===0)return'';
+        if(lbls.length===1)return lbls[0];
+        var re=/^(.*?)(\d+)$/;
+        var ms=lbls.map(function(l){var m=l.match(re);return m?{pre:m[1],n:parseInt(m[2])}:null;});
+        if(ms.every(function(m){return m&&m.pre===ms[0].pre;})){
+          var nums=ms.map(function(m){return m.n;}).sort(function(a,b){return a-b;});
+          var consec=nums.every(function(n,i){return i===0||n===nums[i-1]+1;});
+          if(consec)return ms[0].pre+nums[0]+'\u2013'+nums[nums.length-1];
+          return ms[0].pre+nums.join(', ');
+        }
+        return lbls.join(', ');
+      }
+      // Representative per-channel wattage for header
+      var hdrWatt=(function(){for(var _i=0;_i<ad.channels.length;_i++){var _c=ad.channels[_i];if(_c.watt&&_c.watt!=='DNU'&&_c.watt!=='Future'&&_c.watt!=='—')return _c.watt;}return '—';})();
+      html+='<div class="wt-card"><div class="wt-card-hdr"><span class="wt-name">ProA '+model+'</span><span class="wt-tag">'+ad.channels.length+' Channel &nbsp;·&nbsp; '+hdrWatt+'/ch</span></div>';
+      html+='<div class="wt-table">';
+      ad.channels.forEach(function(ch,ci){
+        var mapped=chMap[ch.id];
+        var label,type,watt;
+        if(ch.watt==='DNU'){label='DNU';type='dnu';watt='DNU';}
+        else if(mapped){label=fmtLbls(mapped.labels);type=mapped.type;watt=ch.watt||'—';}
+        else if(ch.isBridgedPartner){var prevMapped=ci>0?chMap[ad.channels[ci-1].id]:null;if(prevMapped){label='DNU';type='dnu';watt='DNU';}else{label='Future';type='future';watt='—';}}
+        else{label='Future';type='future';watt='—';}
+        var dotColor=type==='dnu'?'rgba(122,128,144,0.2)':type==='future'?'rgba(77,158,246,0.25)':ch.color||'#4d9ef6';
+        html+='<div class="wt-col">';
+        html+='<div class="wt-ch-hdr">'+(type!=='dnu'&&type!=='future'?'<span class="wt-dot" style="background:'+dotColor+'"></span>':'')+'<span class="wt-ch-num">CH '+(ci+1)+'</span></div>';
+        html+='<div class="wt-watt'+(type==='dnu'?' dnu':type==='future'?' future':'')+'">'+watt+'</div>';
+        var lblColor=(type==='dnu'||type==='future')?'':' style="color:'+ch.color+'"';
+        html+='<div class="wt-lbl '+type+'"'+(mapped&&ch.color?lblColor:'')+'>'+label+'</div>';
+        if(is70v&&ch.maxW>0&&type!=='dnu'&&type!=='future'){var pct=Math.round(ch.usedW/ch.maxW*100);var barColor=pct>=90?'#ef4444':pct>=70?'#f59e0b':'#22c55e';html+='<div class="wt-usage-wrap"><div class="wt-usage-bar" style="width:'+Math.min(pct,100)+'%;background:'+barColor+';"></div></div>';html+='<div class="wt-usage-txt">'+ch.usedW+'w / '+ch.maxW+'w</div>';}
+        html+='</div>';
+      });
+      html+='</div></div>';
+    });
+    html+='</div>';
+    return html;
   }
-  var _wRoot=null;
   window._mountWiringDiagram=function(el,data){
-    try{if(_wRoot)_wRoot.unmount();}catch(e){}
-    el.innerHTML='';
-    _wRoot=RD.createRoot(el);
-    _wRoot.render(h(WiringDiagram,Object.assign({},data,{containerW:el.offsetWidth||320})));
+    el.innerHTML=renderWiringTable(data);
     window._pendingWiringMount=null;
   };
   if(window._pendingWiringMount){var pw=window._pendingWiringMount;window._mountWiringDiagram(pw.el,pw.d);}

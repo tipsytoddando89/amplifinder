@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <!-- Design Category -->
+  <!-- Diamond / gem icon -->
+  <polygon points="40,10 62,28 40,60 18,28" fill="none" stroke="#4d9ef6" stroke-width="1.5" stroke-linejoin="round"/>
+  <line x1="18" y1="28" x2="62" y2="28" stroke="#4d9ef6" stroke-width="1" opacity="0.5"/>
+  <line x1="40" y1="10" x2="29" y2="28" stroke="#4d9ef6" stroke-width="1" opacity="0.4"/>
+  <line x1="40" y1="10" x2="51" y2="28" stroke="#4d9ef6" stroke-width="1" opacity="0.4"/>
+  <line x1="29" y1="28" x2="40" y2="60" stroke="#4d9ef6" stroke-width="1" opacity="0.3"/>
+  <line x1="51" y1="28" x2="40" y2="60" stroke="#4d9ef6" stroke-width="1" opacity="0.3"/>
+  <circle cx="40" cy="28" r="2" fill="#4d9ef6" opacity="0.6"/>
+</svg>

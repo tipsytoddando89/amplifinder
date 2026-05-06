@@ -19,7 +19,14 @@ PROJECT_ROOT = "/Users/toddanderson/Documents/claude projects/amplifinder"
 # encoding is "utf-8" for text files, "base64" for binary files
 FILES = [
     ("index.html", "index.html", "utf-8"),
+    ("datasheets.html", "datasheets.html", "utf-8"),
     ("assests/125.1.png", "assests/125.1.png", "base64"),
+    ("assests/[MOS36K] -Perpendicular-1000623.png", "assests/[MOS36K] -Perpendicular-1000623.png", "base64"),
+    ("assests/LS sat.1517_LSH80S.png", "assests/LS sat.1517_LSH80S.png", "base64"),
+    ("assests/AM5600_LCR_OW_nogrille_old.png", "assests/AM5600_LCR_OW_nogrille_old.png", "base64"),
+    ("assests/[D85] 45 Angle-3272.png", "assests/[D85] 45 Angle-3272.png", "base64"),
+    ("assests/PP80 angle.png", "assests/PP80 angle.png", "base64"),
+    ("assests/ASBR.16192.png", "assests/ASBR.16192.png", "base64"),
     ("assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png", "assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png", "base64"),
     ("assests/ProA1200.4.png", "assests/ProA1200.4.png", "base64"),
     ("assests/[ProA 250.2] Origin-Pro-Amp-0180.png", "assests/[ProA 250.2] Origin-Pro-Amp-0180.png", "base64"),
@@ -41,6 +48,33 @@ FILES = [
     ("assests/logo-paintable-baffle.svg", "assests/logo-paintable-baffle.svg", "utf-8"),
     ("assests/logo-performance.svg", "assests/logo-performance.svg", "utf-8"),
     ("assests/logo-soundbars.svg", "assests/logo-soundbars.svg", "utf-8"),
+    # Landscape speaker product images
+    ("assests/LSH40.png", "assests/LSH40.png", "base64"),
+    ("assests/LSH60.png", "assests/LSH60.png", "base64"),
+    ("assests/LSH80.png", "assests/LSH80.png", "base64"),
+    ("assests/[LSR40] Quarter Right-0605.png", "assests/[LSR40] Quarter Right-0605.png", "base64"),
+    ("assests/[LSR60] Quarter Right-0687.png", "assests/[LSR60] Quarter Right-0687.png", "base64"),
+    ("assests/[LSR80] Quarter Right-0729.png", "assests/[LSR80] Quarter Right-0729.png", "base64"),
+    ("assests/ALSB64.png", "assests/ALSB64.png", "base64"),
+    ("assests/ALSB85.png", "assests/ALSB85.png", "base64"),
+    ("assests/ALSB106.png", "assests/ALSB106.png", "base64"),
+    ("assests/LS44_SAT_FRONT.png", "assests/LS44_SAT_FRONT.png", "base64"),
+    ("assests/LS64_AnglePhoto_1.png", "assests/LS64_AnglePhoto_1.png", "base64"),
+    ("assests/ASM63.png", "assests/ASM63.png", "base64"),
+    # Design Centric product images
+    ("assests/Blends 602, 802 and 803.png", "assests/Blends 602, 802 and 803.png", "base64"),
+    # Performance & Theater product images
+    ("assests/ASM6500a.png", "assests/ASM6500a.png", "base64"),
+    ("assests/AM3600_Surround_OW_nogrille_new.png", "assests/AM3600_Surround_OW_nogrille_new.png", "base64"),
+    ("assests/M2500.404.png", "assests/M2500.404.png", "base64"),
+    ("assests/[D89] Front-2875.png", "assests/[D89] Front-2875.png", "base64"),
+    ("assests/[D109] Front-2912.png", "assests/[D109] Front-2912.png", "base64"),
+    ("assests/AMD10OWSUB_ecomm-2.png", "assests/AMD10OWSUB_ecomm-2.png", "base64"),
+    # Soundbar product images
+    ("assests/SBR4.png", "assests/SBR4.png", "base64"),
+    ("assests/SBR4_Black_Netsuite_02-23-26.png", "assests/SBR4_Black_Netsuite_02-23-26.png", "base64"),
+    ("assests/ASBR5.1506 1.png", "assests/ASBR5.1506 1.png", "base64"),
+    ("assests/ASBR6.1509 1.png", "assests/ASBR6.1509 1.png", "base64"),
     # Dispersion images
     ("assests/lsr80-disp.png", "assests/lsr80-disp.png", "base64"),
     ("assests/12bpig-disp.png", "assests/12bpig-disp.png", "base64"),
@@ -54,6 +88,11 @@ FILES = [
     ("assests/OA_CSUBIW10N_Datasheet_NewFonts_03-19-26.pdf", "assests/OA_CSUBIW10N_Datasheet_NewFonts_03-19-26.pdf", "base64"),
     ("assests/OA_CSUBIW10R EX_Datasheet_NewFonts_03-19-26.pdf", "assests/OA_CSUBIW10R EX_Datasheet_NewFonts_03-19-26.pdf", "base64"),
     ("assests/BlendsCSUB10 Datasheet_10-23-25.pdf", "assests/BlendsCSUB10 Datasheet_10-23-25.pdf", "base64"),
+    ("assests/BlendsCSUB10-Datasheet_10-23-25-2.pdf", "assests/BlendsCSUB10-Datasheet_10-23-25-2.pdf", "base64"),
+    ("assests/Blends-Speakers_DATASHEET_11-05-25_lowres.pdf", "assests/Blends-Speakers_DATASHEET_11-05-25_lowres.pdf", "base64"),
+    ("assests/BLENDSSUB800.pdf", "assests/BLENDSSUB800.pdf", "base64"),
+    ("assests/AMD210 data.pdf", "assests/AMD210 data.pdf", "base64"),
+    ("assests/ASBR_Ambisonic-Soundbars_Datasheet_10-29-25.pdf", "assests/ASBR_Ambisonic-Soundbars_Datasheet_10-29-25.pdf", "base64"),
 ]
 
 def sha1_of_bytes(data: bytes) -> str:
@@ -70,7 +109,7 @@ def upload_file(file_bytes: bytes, sha: str) -> bool:
     }
     req = urllib.request.Request(url, data=file_bytes, headers=headers, method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=120) as resp:
             return True  # 200 OK
     except urllib.error.HTTPError as e:
         if e.code == 409:

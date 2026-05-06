@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiring Diagram — Table Style Test</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0d0f14;--surface:#16191f;--surface2:#1e2229;--border:#2a2e38;--accent:#4d9ef6;--gold:#f6a020;--text:#f0ede8;--muted:#7a8090;--green:#4db87a;--red:#f64d4d;}
+  body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;padding:2rem;}
+  h1{font-family:'DM Serif Display',serif;font-size:26px;color:var(--accent);margin-bottom:6px;}
+  .subtitle{font-size:13px;color:var(--muted);margin-bottom:2rem;}
+
+  /* Scenario selector */
+  .scenarios{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2rem;}
+  .scene-btn{background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all 0.15s;}
+  .scene-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .scene-btn.active{background:rgba(77,158,246,0.12);border-color:var(--accent);color:var(--accent);font-weight:500;}
+
+  /* Diagram container */
+  .diagram{display:flex;flex-direction:column;gap:28px;max-width:900px;}
+
+  /* Amp table card */
+  .amp-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .amp-card-header{padding:14px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:10px;}
+  .amp-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);}
+  .amp-tag{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+
+  /* Channel table */
+  .ch-table{display:flex;overflow-x:auto;}
+  .ch-col{flex:1;min-width:80px;border-right:1px solid var(--border);display:flex;flex-direction:column;}
+  .ch-col:last-child{border-right:none;}
+
+  .ch-header{padding:10px 12px 8px;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--border);text-align:center;}
+  .ch-num{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+
+  .ch-watt{padding:10px 12px;text-align:center;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;color:var(--text);}
+  .ch-watt.dnu{color:rgba(122,128,144,0.4);}
+  .ch-watt.future{color:var(--muted);font-style:italic;}
+
+  .ch-label{padding:10px 12px 14px;text-align:center;font-size:13px;color:var(--accent);font-weight:500;}
+  .ch-label.dnu{color:rgba(122,128,144,0.25);}
+  .ch-label.future{color:rgba(77,158,246,0.4);font-style:italic;}
+  .ch-label.sub{color:var(--gold);}
+  .ch-label.height{color:var(--green);}
+
+  /* Color dot beside channel number */
+  .ch-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+</style>
+</head>
+<body>
+
+<h1>Wiring Diagram — Table Style</h1>
+<p class="subtitle">Prototype only — not part of the live app. Switch scenarios below.</p>
+
+<div class="scenarios">
+  <button class="scene-btn active" onclick="setScene(0)">1 Amp · 1000.2 · 3 Spk</button>
+  <button class="scene-btn" onclick="setScene(1)">1 Amp · 1000.4 · 5 Spk + 2 Sub</button>
+  <button class="scene-btn" onclick="setScene(2)">2 Amps · 1000.4 + 250.2 · P&T + Heights</button>
+  <button class="scene-btn" onclick="setScene(3)">3 Amps · 1000.4 + 1000.1 + 250.4 · Full Theater</button>
+</div>
+
+<div class="diagram" id="diagram"></div>
+
+<script>
+var CH_COLORS=['#4d9ef6','#f6a020','#4db87a','#f64d8e','#c17af6','#f6e44d','#4df6f0','#f67a4d'];
+
+var AMP_SPECS={
+  '125.1':{ch:2,watts:{all:'60w'}},
+  '125.2':{ch:4,watts:{all:'60w'}},
+  '125.4':{ch:8,watts:{all:'60w'}},
+  '250.1':{ch:2,watts:{all:'125w'}},
+  '250.2':{ch:4,watts:{all:'125w'}},
+  '250.4':{ch:8,watts:{all:'125w'}},
+  '1000.1':{ch:2,watts:{all:'500w'}},
+  '1000.2':{ch:4,watts:{all:'500w'}},
+  '1000.4':{ch:8,watts:{all:'500w'}},
+  '1200.1':{ch:2,watts:{all:'400w'}},
+  '1200.2':{ch:4,watts:{all:'400w'}},
+  '1200.4':{ch:8,watts:{all:'400w'}},
+};
+
+// Each scenario: array of amp objects
+// amp: { model, channels: [{label, type}] }
+// type: 'spk' | 'sub' | 'height' | 'surr' | 'rear' | 'dnu' | 'future'
+var SCENES=[
+  // 0: 1000.2, 3 speakers
+  [{model:'1000.2',assigns:['Spk 1','Spk 2','Spk 3','Future']}],
+
+  // 1: 1000.4, 5 speakers + 2 subs
+  [{model:'1000.4',assigns:['Spk 1','Spk 2','Spk 3','Spk 4','Spk 5','Sub 1','Sub 2','Future']}],
+
+  // 2: 1000.4 (main + subs) + 250.2 (heights)
+  [
+    {model:'1000.4',assigns:['Spk 1 (MidHi)','Spk 1 (Low)','Spk 2 (MidHi)','Spk 2 (Low)','Spk 3 (MidHi)','Spk 3 (Low)','Sub 1','Sub 2']},
+    {model:'250.2',assigns:['Ht 1','Ht 2','Ht 3','Ht 4']},
+  ],
+
+  // 3: 1000.4 (main) + 1000.1 (surrounds) + 250.4 (heights)
+  [
+    {model:'1000.4',assigns:['Spk 1 (MidHi)','Spk 1 (Low)','Spk 2 (MidHi)','Spk 2 (Low)','Spk 3 (MidHi)','Spk 3 (Low)','Sub 1','Sub 2']},
+    {model:'1000.1',assigns:['Surr 1','Surr 2']},
+    {model:'250.4',assigns:['Ht 1','Ht 2','Ht 3','Ht 4','Ht 5','Ht 6','Future','Future']},
+  ],
+];
+
+function labelType(lbl){
+  if(!lbl||lbl==='DNU')return 'dnu';
+  if(lbl==='Future')return 'future';
+  if(/^Sub/i.test(lbl))return 'sub';
+  if(/^Ht/i.test(lbl))return 'height';
+  if(/^Surr|^Rear/i.test(lbl))return 'surr';
+  return 'spk';
+}
+
+function renderScene(idx){
+  document.querySelectorAll('.scene-btn').forEach(function(b,i){b.classList.toggle('active',i===idx);});
+  var scene=SCENES[idx];
+  var colorIdx=0;
+  var html='';
+
+  scene.forEach(function(amp){
+    var spec=AMP_SPECS[amp.model]||{ch:2,watts:{all:'—'}};
+    var chCount=spec.ch;
+    var watt=spec.watts.all||'—';
+    var assigns=amp.assigns||[];
+
+    html+='<div class="amp-card">';
+    html+='<div class="amp-card-header">';
+    html+='<span class="amp-name">ProA '+amp.model+'</span>';
+    html+='<span class="amp-tag">'+chCount+' Channel · '+watt+' per ch</span>';
+    html+='</div>';
+    html+='<div class="ch-table">';
+
+    for(var ci=0;ci<chCount;ci++){
+      var label=assigns[ci]||'Future';
+      var type=labelType(label);
+      var color=type==='dnu'?'rgba(122,128,144,0.25)':type==='future'?'rgba(77,158,246,0.3)':CH_COLORS[colorIdx%CH_COLORS.length];
+      if(type!=='dnu'&&type!=='future')colorIdx++;
+
+      html+='<div class="ch-col">';
+      // Header
+      html+='<div class="ch-header">';
+      if(type!=='dnu'&&type!=='future'){
+        html+='<span class="ch-dot" style="background:'+color+'"></span>';
+      }
+      html+='<span class="ch-num">CH '+(ci+1)+'</span>';
+      html+='</div>';
+      // Wattage
+      html+='<div class="ch-watt'+(type==='dnu'?' dnu':type==='future'?' future':'')+'">'+
+        (type==='dnu'?'DNU':type==='future'?'—':watt)+
+      '</div>';
+      // Label
+      html+='<div class="ch-label '+type+'">'+label+'</div>';
+      html+='</div>';
+    }
+
+    html+='</div></div>';
+  });
+
+  document.getElementById('diagram').innerHTML=html;
+}
+
+function setScene(idx){renderScene(idx);}
+renderScene(0);
+</script>
+</body>
+</html>

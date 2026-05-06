@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <!-- Architectural Category -->
+  <!-- Ceiling / wall border -->
+  <rect x="14" y="14" width="52" height="40" rx="3" fill="none" stroke="#4d9ef6" stroke-width="1.5" opacity="0.4"/>
+  <!-- In-ceiling speaker viewed from below -->
+  <!-- Outer ring -->
+  <circle cx="40" cy="34" r="16" fill="none" stroke="#4d9ef6" stroke-width="1.5"/>
+  <!-- Mid ring -->
+  <circle cx="40" cy="34" r="10" fill="none" stroke="#4d9ef6" stroke-width="1" opacity="0.6"/>
+  <!-- Driver -->
+  <circle cx="40" cy="34" r="4.5" fill="rgba(77,158,246,0.15)" stroke="#4d9ef6" stroke-width="1.5"/>
+  <!-- Center dot -->
+  <circle cx="40" cy="34" r="1.5" fill="#4d9ef6"/>
+  <!-- Mounting screws (4 corners of ring) -->
+  <circle cx="40" cy="18" r="1.2" fill="#4d9ef6" opacity="0.5"/>
+  <circle cx="56" cy="34" r="1.2" fill="#4d9ef6" opacity="0.5"/>
+  <circle cx="40" cy="50" r="1.2" fill="#4d9ef6" opacity="0.5"/>
+  <circle cx="24" cy="34" r="1.2" fill="#4d9ef6" opacity="0.5"/>
+</svg>
