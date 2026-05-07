@@ -20,6 +20,7 @@ PROJECT_ROOT = "/Users/toddanderson/Documents/claude projects/amplifinder"
 FILES = [
     ("index.html", "index.html", "utf-8"),
     ("datasheets.html", "datasheets.html", "utf-8"),
+    ("dsp-library.html", "dsp-library.html", "utf-8"),
     ("assests/125.1.png", "assests/125.1.png", "base64"),
     ("assests/[MOS36K] -Perpendicular-1000623.png", "assests/[MOS36K] -Perpendicular-1000623.png", "base64"),
     ("assests/LS sat.1517_LSH80S.png", "assests/LS sat.1517_LSH80S.png", "base64"),
@@ -93,7 +94,19 @@ FILES = [
     ("assests/BLENDSSUB800.pdf", "assests/BLENDSSUB800.pdf", "base64"),
     ("assests/AMD210 data.pdf", "assests/AMD210 data.pdf", "base64"),
     ("assests/ASBR_Ambisonic-Soundbars_Datasheet_10-29-25.pdf", "assests/ASBR_Ambisonic-Soundbars_Datasheet_10-29-25.pdf", "base64"),
+    # Director Series datasheets
+    ("assests/DIRECTORS_5_DATASHEET_02-19-24.pdf", "assests/DIRECTORS_5_DATASHEET_02-19-24.pdf", "base64"),
+    ("assests/DIRECTORS_6_DATASHEET_05-30-23.pdf", "assests/DIRECTORS_6_DATASHEET_05-30-23.pdf", "base64"),
+    ("assests/DIRECTORS_8_DATASHEET_07-27-23.pdf", "assests/DIRECTORS_8_DATASHEET_07-27-23.pdf", "base64"),
+    ("assests/DIRECTORS_10_DATASHEET_06-13-23.pdf", "assests/DIRECTORS_10_DATASHEET_06-13-23.pdf", "base64"),
 ]
+
+# Auto-discover all ZCP preset files
+import pathlib
+_zcp_root = pathlib.Path(PROJECT_ROOT) / "assests" / "Amplifinder_2U_Presets_zcp"
+for _zcp_file in sorted(_zcp_root.rglob("*.zcp")):
+    _rel = str(_zcp_file.relative_to(PROJECT_ROOT))
+    FILES.append((_rel, _rel, "base64"))
 
 def sha1_of_bytes(data: bytes) -> str:
     return hashlib.sha1(data).hexdigest()

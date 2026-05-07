@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSP Library — AmpliFINDER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d0f14;
+      --surface:#16191f;
+      --surface2:#1e2229;
+      --border:#2a2e38;
+      --text:#f0ede8;
+      --muted:#7a8090;
+      --accent:#7d9bc1;
+      --gold:#caab79;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
+
+    /* Header */
+    .header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface);}
+    .header-logo{height:26px;opacity:0.9;}
+    .back-btn{display:flex;align-items:center;gap:5px;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:6px 0;transition:color 0.15s;}
+    .back-btn:hover{color:var(--accent);}
+    .back-btn svg{width:15px;height:15px;}
+
+    /* Top bar */
+    .top-bar{flex-shrink:0;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+    .page-title{font-size:17px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;}
+    .select-wrap{position:relative;flex:1;min-width:200px;max-width:360px;}
+    .select-wrap svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);width:15px;height:15px;}
+    select{width:100%;appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 36px 9px 12px;cursor:pointer;outline:none;transition:border-color 0.15s;}
+    select:focus{border-color:var(--accent);}
+    select option,select optgroup{background:#1a1e28;color:var(--text);}
+    select optgroup{color:var(--muted);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;}
+    .btn-dl{display:none;align-items:center;gap:6px;padding:9px 14px;background:none;color:var(--muted);border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.15s;white-space:nowrap;flex-shrink:0;}
+    .btn-dl:hover{border-color:var(--accent);color:var(--accent);}
+    .btn-dl svg{width:13px;height:13px;}
+    .btn-dl.visible{display:flex;}
+
+    /* Content area */
+    .content-wrap{flex:1;display:flex;flex-direction:column;min-height:0;overflow-y:auto;}
+
+    /* Placeholder */
+    .placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);padding:3rem 1.5rem;}
+    .placeholder svg{width:44px;height:44px;opacity:0.2;}
+    .placeholder p{font-size:14px;text-align:center;line-height:1.5;}
+
+    /* Product info card */
+    .prod-card{display:none;flex-direction:column;padding:1.5rem;gap:0;}
+    .prod-card.visible{display:flex;}
+
+    .prod-header{margin-bottom:1.25rem;}
+    .prod-eyebrow{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .prod-name{font-size:22px;font-weight:600;color:var(--text);letter-spacing:-0.01em;}
+    .prod-cat{font-size:12px;color:var(--muted);margin-top:3px;}
+
+    /* DSP file list */
+    .file-section-label{font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:1.25rem;}
+    .file-section-label:first-of-type{margin-top:0;}
+
+    .file-list{display:flex;flex-direction:column;gap:8px;}
+
+    .file-row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:border-color 0.15s;}
+    .file-row:hover{border-color:var(--accent);}
+    .file-icon{width:34px;height:34px;border-radius:8px;background:rgba(125,155,193,0.1);border:1px solid rgba(125,155,193,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .file-icon svg{width:16px;height:16px;stroke:var(--accent);fill:none;}
+    .file-info{flex:1;min-width:0;}
+    .file-name{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .file-meta{font-size:11px;color:var(--muted);margin-top:1px;}
+    .file-dl{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);border-radius:7px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:6px 10px;cursor:pointer;text-decoration:none;transition:all 0.15s;flex-shrink:0;white-space:nowrap;}
+    .file-dl:hover{border-color:var(--accent);color:var(--accent);}
+    .file-dl svg{width:11px;height:11px;}
+
+    /* Coming soon state */
+    .coming-soon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:3rem 1.5rem;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin:0.5rem 0;}
+    .coming-soon svg{width:36px;height:36px;opacity:0.2;}
+    .coming-soon p{font-size:13px;color:var(--muted);line-height:1.5;}
+    .coming-soon strong{color:var(--text);}
+    .coming-soon-badge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(202,171,121,0.12);border:1px solid rgba(202,171,121,0.3);border-radius:20px;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;}
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img class="header-logo" src="/assests/OA-PRO_AmpliFINDER_Logo_Vector_Final_08-29-25-TM-04.png" alt="AmpliFINDER">
+    <button class="back-btn" onclick="window.location.href='/'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back
+    </button>
+  </div>
+
+  <div class="top-bar">
+    <div class="page-title">DSP Library</div>
+    <div class="select-wrap">
+      <select id="prod-select" onchange="onSelect()">
+        <option value="">— Select a product —</option>
+        <optgroup label="Design Centric">
+          <option value="MOS|Design Centric">MOS</option>
+          <option value="Blends 602|Design Centric">Blends 602</option>
+          <option value="Blends 802|Design Centric">Blends 802</option>
+          <option value="Blends 803|Design Centric">Blends 803</option>
+        </optgroup>
+        <optgroup label="Landscape">
+          <option value="LSH40|Landscape">LSH40</option>
+          <option value="LSH60|Landscape">LSH60</option>
+          <option value="LSH80|Landscape">LSH80</option>
+          <option value="LSR40|Landscape">LSR40</option>
+          <option value="LSR60|Landscape">LSR60</option>
+          <option value="LSR80|Landscape">LSR80</option>
+          <option value="LS44|Landscape">LS44</option>
+          <option value="LS64|Landscape">LS64</option>
+          <option value="ALSB64|Landscape">ALSB64</option>
+          <option value="ALSB85|Landscape">ALSB85</option>
+          <option value="ALSB106|Landscape">ALSB106</option>
+          <option value="ASM63|Landscape">ASM63</option>
+        </optgroup>
+        <optgroup label="Soundbars">
+          <option value="SBR4|Soundbars">SBR4</option>
+          <option value="ASBR4|Soundbars">ASBR4</option>
+          <option value="ASBR5|Soundbars">ASBR5</option>
+          <option value="ASBR6|Soundbars">ASBR6</option>
+        </optgroup>
+        <optgroup label="Performance &amp; Theater">
+          <option value="ASM5600|Performance &amp; Theater">ASM5600</option>
+          <option value="ASM3600|Performance &amp; Theater">ASM3600</option>
+        </optgroup>
+        <optgroup label="Architectural Speakers">
+          <option value="Director 5|Architectural Speakers">Director 5</option>
+          <option value="Director 6|Architectural Speakers">Director 6</option>
+          <option value="Director 8|Architectural Speakers">Director 8</option>
+          <option value="Director 10|Architectural Speakers">Director 10</option>
+        </optgroup>
+        <optgroup label="Subwoofers">
+          <option value="MOS36 Sub|Subwoofers">MOS36 Sub</option>
+          <option value="Blends CSUB10|Subwoofers">Blends CSUB10</option>
+          <option value="Blends 800 Sub|Subwoofers">Blends 800 Sub</option>
+          <option value="OSUB8|Subwoofers">OSUB8</option>
+          <option value="OSUB10|Subwoofers">OSUB10</option>
+          <option value="OSUB12|Subwoofers">OSUB12</option>
+          <option value="ASM63 Sub|Subwoofers">ASM63 Sub</option>
+          <option value="AMD10 IW Sub|Subwoofers">AMD10 IW Sub</option>
+          <option value="AMD10 OW Sub|Subwoofers">AMD10 OW Sub</option>
+          <option value="DSUB6|Subwoofers">DSUB6</option>
+          <option value="DSUB6X2|Subwoofers">DSUB6X2</option>
+          <option value="DSUB8|Subwoofers">DSUB8</option>
+          <option value="PSUB10X2|Subwoofers">PSUB10X2</option>
+        </optgroup>
+      </select>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- Default placeholder -->
+    <div class="placeholder" id="placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+        <path d="M7 7h.01M11 7h6M7 11h.01M11 11h6"/>
+      </svg>
+      <p>Select a product above to view its DSP presets</p>
+    </div>
+
+    <!-- Product card (shown when selected) -->
+    <div class="prod-card" id="prod-card">
+      <div class="prod-header">
+        <div class="prod-eyebrow" id="prod-eyebrow"></div>
+        <div class="prod-name" id="prod-name"></div>
+        <div class="prod-cat" id="prod-cat"></div>
+      </div>
+      <div id="prod-files"></div>
+    </div>
+
+  </div>
+
+  <script>
+    var DSP_FILES = {
+  'ALSB106': [
+    { label: 'ALSB106_HEX_SAT_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_HEX/ALSB106_HEX_SAT_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106_HEX_SAT_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_HEX/ALSB106_HEX_SAT_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106_HEX_SAT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_HEX/ALSB106_HEX_SAT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106_HEX_SUB_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_HEX/ALSB106_HEX_SUB_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106_HEX_SUB_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_HEX/ALSB106_HEX_SUB_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106_HEX_SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_HEX/ALSB106_HEX_SUB_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'ALSB64': [
+    { label: 'ALSB64_HEX_SAT_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB64_HEX/ALSB64_HEX_SAT_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB64_HEX_SAT_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB64_HEX/ALSB64_HEX_SAT_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB64_HEX_SAT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB64_HEX/ALSB64_HEX_SAT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB64_HEX_SUB_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB64_HEX/ALSB64_HEX_SUB_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB64_HEX_SUB_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB64_HEX/ALSB64_HEX_SUB_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB64_HEX_SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB64_HEX/ALSB64_HEX_SUB_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'ALSB85': [
+    { label: 'ALSB85_HEX_SAT_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB85_HEX/ALSB85_HEX_SAT_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB85_HEX_SAT_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB85_HEX/ALSB85_HEX_SAT_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB85_HEX_SAT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB85_HEX/ALSB85_HEX_SAT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB85_HEX_SUB_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB85_HEX/ALSB85_HEX_SUB_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB85_HEX_SUB_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB85_HEX/ALSB85_HEX_SUB_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB85_HEX_SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB85_HEX/ALSB85_HEX_SUB_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'ASM3600': [
+    { label: 'AM3600IW_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AM3600IW/AM3600IW_V0.zcp', type: 'ZCP Preset' },
+    { label: 'AM3600OW_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AM3600OW/AM3600OW_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'ASM5600': [
+    { label: 'AM5600IW_MidHi_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AM5600IW/AM5600IW_MidHi_V0.zcp', type: 'ZCP Preset' },
+    { label: 'AM5600IW_Woofer_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AM5600IW/AM5600IW_Woofer_V0.zcp', type: 'ZCP Preset' },
+    { label: 'AM5600OW_MidHi_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AM5600OW/AM5600OW_MidHi_V0.zcp', type: 'ZCP Preset' },
+    { label: 'AM5600OW_Woofer_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AM5600OW/AM5600OW_Woofer_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'ASM63': [
+    { label: 'ASM63_4PI_USING_ASM63SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Surface Mount_ASM63/ASM63_4PI_USING_ASM63SUB_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ASM63_4PI_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Surface Mount_ASM63/ASM63_4PI_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ASM63_OW_2PI_USING_ASM63SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Surface Mount_ASM63/ASM63_OW_2PI_USING_ASM63SUB_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ASM63_OW_2PI_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Surface Mount_ASM63/ASM63_OW_2PI_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Blends 602': [
+    { label: 'B602_USING_B800SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS602/B602_USING_B800SUB_V0.zcp', type: 'ZCP Preset' },
+    { label: 'B602_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS602/B602_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Blends 802': [
+    { label: 'B802_USING_B800SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS802/B802_USING_B800SUB_V0.zcp', type: 'ZCP Preset' },
+    { label: 'B802_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS802/B802_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Blends 803': [
+    { label: 'B803_USING_B800SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS803/B803_USING_B800SUB_V0.zcp', type: 'ZCP Preset' },
+    { label: 'B803_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS803/B803_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Director 10': [
+    { label: 'D101_V00', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D10/D101_V00.zcp', type: 'ZCP Preset' },
+    { label: 'D103DT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D10/D103DT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D103_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D10/D103_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D105_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D10/D105_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D107_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D10/D107_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D109_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D10/D109_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Director 5': [
+    { label: 'D50_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D50_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D51DT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D51DT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D51_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D51_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D53DT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D53DT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D53EX_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D53EX_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D53_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D53_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D55EX_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D55EX_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D55_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D55_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D57_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D57_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D59_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D5/D59_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Director 6': [
+    { label: 'D60_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D60_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D61DT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D61DT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D61_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D61_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D63DT_SUR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D63DT_SUR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D63_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D63_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D65_V00', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D65_V00.zcp', type: 'ZCP Preset' },
+    { label: 'D67_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D67_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D69_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D6/D69_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Director 8': [
+    { label: 'D80DT_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D80DT_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D80_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D80_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D81_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D81_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D83A_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D83A_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D83DT_SUR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D83DT_SUR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D83_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D83_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D85_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D85_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D87_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D87_V0.zcp', type: 'ZCP Preset' },
+    { label: 'D89_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin IC Director_D8/D89_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'LS44': [
+    { label: 'LS44_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_ONLY/LS44_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS44_USING_OSUB10_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB10/LS44_USING_OSUB10_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS44_USING_OSUB10_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB10/LS44_USING_OSUB10_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LS44_USING_OSUB12_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB12/LS44_USING_OSUB12_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS44_USING_OSUB12_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB12/LS44_USING_OSUB12_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LS44_USING_OSUB8_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB8/LS44_USING_OSUB8_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS44_USING_OSUB8_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB8/LS44_USING_OSUB8_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LS44_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_ONLY/LS44_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'LS64': [
+    { label: 'LS64_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_ONLY/LS64_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS64_USING_OSUB10_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB10/LS64_USING_OSUB10_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS64_USING_OSUB10_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB10/LS64_USING_OSUB10_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LS64_USING_OSUB12_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB12/LS64_USING_OSUB12_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS64_USING_OSUB12_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB12/LS64_USING_OSUB12_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LS64_USING_OSUB8_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB8/LS64_USING_OSUB8_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LS64_USING_OSUB8_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB8/LS64_USING_OSUB8_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LS64_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_ONLY/LS64_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'LSH40': [
+    { label: 'LSH40_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_ONLY/LSH40_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_10BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_10BP-IG/LSH40_USING_10BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_10BP-IG_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_10BP-IG/LSH40_USING_10BP-IG_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_10HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_10HDR/LSH40_USING_10HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_10HDR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_10HDR/LSH40_USING_10HDR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_12BP_IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_12BP-IG/LSH40_USING_12BP_IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_12BP_IG_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_12BP-IG/LSH40_USING_12BP_IG_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_12HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_12HDR/LSH40_USING_12HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_12HDR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_USING_12HDR/LSH40_USING_12HDR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_S11BP_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisnoc Landscape_LSH40_USING_S11BP/LSH40_USING_S11BP_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_USING_S11BP_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisnoc Landscape_LSH40_USING_S11BP/LSH40_USING_S11BP_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH40_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH40_ONLY/LSH40_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'LSH60': [
+    { label: 'LSH60_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_ONLY/LSH60_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_10BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_10BP-IG/LSH60_USING_10BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_10BP-IG_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_10BP-IG/LSH60_USING_10BP-IG_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_10HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_10HDR/LSH60_USING_10HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_10HDR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_10HDR/LSH60_USING_10HDR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_12BP_IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_12BP-IG/LSH60_USING_12BP_IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_12BP_IG_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_12BP-IG/LSH60_USING_12BP_IG_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_12HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_12HDR/LSH60_USING_12HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_12HDR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_USING_12HDR/LSH60_USING_12HDR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_S11BP_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisnoc Landscape_LSH60_USING_S11BP/LSH60_USING_S11BP_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_USING_S11BP_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisnoc Landscape_LSH60_USING_S11BP/LSH60_USING_S11BP_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH60_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH60_ONLY/LSH60_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'LSH80': [
+    { label: 'LSH80_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_ONLY/LSH80_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_10BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_10BP-IG/LSH80_USING_10BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_10BP-IG_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_10BP-IG/LSH80_USING_10BP-IG_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_10HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_10HDR/LSH80_USING_10HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_10HDR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_10HDR/LSH80_USING_10HDR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_12BP_IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_12BP-IG/LSH80_USING_12BP_IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_12BP_IG_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_12BP-IG/LSH80_USING_12BP_IG_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_12HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_12HDR/LSH80_USING_12HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_12HDR_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_USING_12HDR/LSH80_USING_12HDR_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_S11BP_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisnoc Landscape_LSH80_USING_S11BP/LSH80_USING_S11BP_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_USING_S11BP_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisnoc Landscape_LSH80_USING_S11BP/LSH80_USING_S11BP_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSH80_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSH80_ONLY/LSH80_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'LSR40': [
+    { label: 'LSR40_USING_10BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_10BP-IG/LSR40_USING_10BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_10BP-IG_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_10BP-IG/LSR40_USING_10BP-IG_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_10HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_10HDR/LSR40_USING_10HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_10HDR_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_10HDR/LSR40_USING_10HDR_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_12BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_12BP-IG/LSR40_USING_12BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_12BP-IG_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_12BP-IG/LSR40_USING_12BP-IG_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_12HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_12HDR/LSR40_USING_12HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_12HDR_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_12HDR/LSR40_USING_12HDR_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_S11BP_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_S11BP/LSR40_USING_S11BP_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR40_USING_S11BP_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR40_USING_S11BP/LSR40_USING_S11BP_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'LSR60': [
+    { label: 'LSR60_USING_10BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_10BP-IG/LSR60_USING_10BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_10BP-IG_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_10BP-IG/LSR60_USING_10BP-IG_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_10HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_10HDR/LSR60_USING_10HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_10HDR_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_10HDR/LSR60_USING_10HDR_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_12BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_12BP-IG/LSR60_USING_12BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_12BP-IG_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_12BP-IG/LSR60_USING_12BP-IG_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_12HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_12HDR/LSR60_USING_12HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_12HDR_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_12HDR/LSR60_USING_12HDR_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_S11BP_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_S11BP/LSR60_USING_S11BP_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR60_USING_S11BP_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR60_USING_S11BP/LSR60_USING_S11BP_V1.zcp', type: 'ZCP Preset' },
+  ],
+  'LSR80': [
+    { label: 'LSR80_USING_10BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_10BP-IG/LSR80_USING_10BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_10BP-IG_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_10BP-IG/LSR80_USING_10BP-IG_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_10HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_10HDR/LSR80_USING_10HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_10HDR_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_10HDR/LSR80_USING_10HDR_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_12BP-IG_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_12BP-IG/LSR80_USING_12BP-IG_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_12BP-IG_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_12BP-IG/LSR80_USING_12BP-IG_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_12HDR_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_12HDR/LSR80_USING_12HDR_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_12HDR_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_12HDR/LSR80_USING_12HDR_V1.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_S11BP_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_S11BP/LSR80_USING_S11BP_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSR80_USING_S11BP_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_LSR80_USING_S11BP/LSR80_USING_S11BP_V1.zcp', type: 'ZCP Preset' },
+  ],
+  'MOS': [
+    { label: 'MOS36K_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Minimal Opening System_MOS36/MOS36K_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'MOS36 Sub': [
+    { label: 'MOS36SUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Minimal Opening System_MOS36/MOS36SUB_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Blends CSUB10': [
+    { label: 'BLENDSCSUB10_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_CSUB10/BLENDSCSUB10_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'Blends 800 Sub': [
+    { label: 'B800SUB_USING_B602_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS602/B800SUB_USING_B602_V0.zcp', type: 'ZCP Preset' },
+    { label: 'B800SUB_USING_B802_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS802/B800SUB_USING_B802_V0.zcp', type: 'ZCP Preset' },
+    { label: 'B800SUB_USING_B803_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/BLENDS_BLENDS803/B800SUB_USING_B803_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'OSUB8': [
+    { label: 'OSUB8_USING_LS44_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB8/OSUB8_USING_LS44_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB8_USING_LS44_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB8/OSUB8_USING_LS44_V2.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB8_USING_LS64_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB8/OSUB8_USING_LS64_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB8_USING_LS64_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB8/OSUB8_USING_LS64_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'OSUB10': [
+    { label: 'OSUB10_USING_LS44_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB10/OSUB10_USING_LS44_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB10_USING_LS44_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB10/OSUB10_USING_LS44_V2.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB10_USING_LS64_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB10/OSUB10_USING_LS64_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB10_USING_LS64_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB10/OSUB10_USING_LS64_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'OSUB12': [
+    { label: 'OSUB12_USING_LS64_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB12/OSUB12_USING_LS64_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB12_USING_LS64_V2.1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS64_USING_OSUB12/OSUB12_USING_LS64_V2.1.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB12_USING__LS44_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB12/OSUB12_USING__LS44_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'OSUB12_USING__LS44_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LS44_USING_OSUB12/OSUB12_USING__LS44_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'LSB64 Round': [
+    { label: 'LSB64RD_SAT_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD180/LSB64RD_SAT_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SAT_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD180/LSB64RD_SAT_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SAT_180_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD180/LSB64RD_SAT_180_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SAT_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD360/LSB64RD_SAT_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SAT_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD360/LSB64RD_SAT_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SAT_360_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD360/LSB64RD_SAT_360_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SUB_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD180/LSB64RD_SUB_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SUB_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD180/LSB64RD_SUB_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SUB_180_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD180/LSB64RD_SUB_180_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SUB_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD360/LSB64RD_SUB_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SUB_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD360/LSB64RD_SUB_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64RD_SUB_360_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64RD360/LSB64RD_SUB_360_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'LSB64 Square': [
+    { label: 'LSB64SQ_SAT_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ180/LSB64SQ_SAT_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SAT_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ180/LSB64SQ_SAT_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SAT_180_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ180/LSB64SQ_SAT_180_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SAT_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ360/LSB64SQ_SAT_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SAT_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ360/LSB64SQ_SAT_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SAT_360_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ360/LSB64SQ_SAT_360_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SUB_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ180/LSB64SQ_SUB_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SUB_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ180/LSB64SQ_SUB_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SUB_180_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ180/LSB64SQ_SUB_180_V2.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SUB_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ360/LSB64SQ_SUB_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SUB_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ360/LSB64SQ_SUB_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'LSB64SQ_SUB_360_V2', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin Landscape_LSB64SQ360/LSB64SQ_SUB_360_V2.zcp', type: 'ZCP Preset' },
+  ],
+  'ALSB106 Round': [
+    { label: 'ALSB106RD_SAT_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_180/ALSB106RD_SAT_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SAT_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_180/ALSB106RD_SAT_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SAT_180_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_180/ALSB106RD_SAT_180_V1.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SAT_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_360/ALSB106RD_SAT_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SAT_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_360/ALSB106RD_SAT_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SAT_360_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_360/ALSB106RD_SAT_360_V1.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SUB_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_180/ALSB106RD_SUB_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SUB_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_180/ALSB106RD_SUB_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SUB_180_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_180/ALSB106RD_SUB_180_V1.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SUB_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_360/ALSB106RD_SUB_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SUB_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_360/ALSB106RD_SUB_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106RD_SUB_360_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_RD_360/ALSB106RD_SUB_360_V1.zcp', type: 'ZCP Preset' },
+  ],
+  'ALSB106 Square': [
+    { label: 'ALSB106SQ_SAT_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_180/ALSB106SQ_SAT_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SAT_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_180/ALSB106SQ_SAT_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SAT_180_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_180/ALSB106SQ_SAT_180_V1.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SAT_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_360/ALSB106SQ_SAT_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SAT_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_360/ALSB106SQ_SAT_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SAT_360_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_360/ALSB106SQ_SAT_360_V1.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SUB_180_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_180/ALSB106SQ_SUB_180_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SUB_180_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_180/ALSB106SQ_SUB_180_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SUB_180_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_180/ALSB106SQ_SUB_180_V1.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SUB_360_100V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_360/ALSB106SQ_SUB_360_100V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SUB_360_70V_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_360/ALSB106SQ_SUB_360_70V_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ALSB106SQ_SUB_360_V1', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Landscape_ALSB106_SQ_360/ALSB106SQ_SUB_360_V1.zcp', type: 'ZCP Preset' },
+  ],
+  'ASM63 Sub': [
+    { label: 'ASM63SUB_4PI_WITH_ASM63_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Surface Mount_ASM63/ASM63SUB_4PI_WITH_ASM63_V0.zcp', type: 'ZCP Preset' },
+    { label: 'ASM63SUB_OW_2PI_USING_ASM63_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Surface Mount_ASM63/ASM63SUB_OW_2PI_USING_ASM63_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'AMD10 IW Sub': [
+    { label: 'AMD10IWSUB_USING_AM5600_MUSIC_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AMD10IWSUB/AMD10IWSUB_USING_AM5600_MUSIC_V0.zcp', type: 'ZCP Preset' },
+    { label: 'AMD10IWSUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AMD10IWSUB/AMD10IWSUB_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'AMD10 OW Sub': [
+    { label: 'AMD10OWSUB_USING_AM5600_MUSIC_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AMD10OWSUB/AMD10OWSUB_USING_AM5600_MUSIC_V0.zcp', type: 'ZCP Preset' },
+    { label: 'AMD10OWSUB_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Ambisonic Marquee_AMD10OWSUB/AMD10OWSUB_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'DSUB6': [
+    { label: 'DSUB6_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin_DSUB6/DSUB6_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'DSUB6X2': [
+    { label: 'DSUB6x2_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin_DSUB6X2/DSUB6x2_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'DSUB8': [
+    { label: 'DSUB8_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/Origin_DSUB8/DSUB8_V0.zcp', type: 'ZCP Preset' },
+  ],
+  'PSUB10X2': [
+    { label: 'PSUB10X2_V0', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/OriginPro_PSUB10X2/PSUB10X2_V0.zcp', type: 'ZCP Preset' },
+    { label: 'PSUB10X2_V0_100V', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/OriginPro_PSUB10X2/PSUB10X2_V0_100V.zcp', type: 'ZCP Preset' },
+    { label: 'PSUB10X2_V0_70V', file: 'Amplifinder_2U_Presets_zcp/Amplifinder 2U Presets/OriginPro_PSUB10X2/PSUB10X2_V0_70V.zcp', type: 'ZCP Preset' },
+  ],
+};
+
+    function onSelect() {
+      var val = document.getElementById('prod-select').value;
+      var placeholder = document.getElementById('placeholder');
+      var card = document.getElementById('prod-card');
+
+      if (!val) {
+        placeholder.style.display = 'flex';
+        card.classList.remove('visible');
+        return;
+      }
+
+      var parts = val.split('|');
+      var prod = parts[0];
+      var cat  = parts[1];
+
+      placeholder.style.display = 'none';
+      card.classList.add('visible');
+
+      document.getElementById('prod-eyebrow').textContent = cat;
+      document.getElementById('prod-name').textContent = prod;
+      document.getElementById('prod-cat').textContent = '';
+
+      var filesEl = document.getElementById('prod-files');
+      var files = DSP_FILES[prod];
+
+      if (files && files.length) {
+        var html = '<div class="file-section-label">Available Presets</div><div class="file-list">';
+        files.forEach(function(f) {
+          var url = '/assests/' + encodeURIComponent(f.file);
+          html += '<div class="file-row">'
+            + '<div class="file-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 7h.01M11 7h6M7 11h.01M11 11h6"/></svg></div>'
+            + '<div class="file-info"><div class="file-name">' + f.label + '</div>'
+            + '<div class="file-meta">' + f.type + (f.description ? ' · ' + f.description : '') + '</div></div>'
+            + '<a class="file-dl" href="' + url + '" download>'
+            + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
+            + 'Download</a>'
+            + '</div>';
+        });
+        html += '</div>';
+        filesEl.innerHTML = html;
+      } else {
+        filesEl.innerHTML = '<div class="coming-soon">'
+          + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 7h.01M11 7h6M7 11h.01M11 11h6"/></svg>'
+          + '<p><strong>DSP presets for ' + prod + '</strong><br>are being prepared and will appear here.</p>'
+          + '<span class="coming-soon-badge">Coming Soon</span>'
+          + '</div>';
+      }
+    }
+  </script>
+
+</body>
+</html>
