@@ -426,6 +426,10 @@
               <div class="cfg-section-label" id="cfg-spk-lbl">Number of Speakers</div>
               <div class="btn-group" id="cfg-g-spk"></div>
             </div>
+            <div id="cfg-sub-section" style="display:none;">
+              <div class="cfg-section-label">Number of Subs</div>
+              <div class="btn-group" id="cfg-g-sub"></div>
+            </div>
             <div id="cfg-surround-section" style="display:none;">
               <div id="cfg-surround-options">
                 <div class="cfg-section-label">Speaker Options</div>
@@ -433,17 +437,34 @@
                   <button class="btn-opt" id="cfg-btn-surrounds" onclick="toggleSurround('surrounds')">Add Surrounds</button>
                   <button class="btn-opt" id="cfg-btn-rear" onclick="toggleSurround('rear')">Add Rear</button>
                 </div>
+                <div id="cfg-surround-model-wrap" style="display:none;margin-bottom:10px;">
+                  <select id="cfg-surround-model" onchange="onSurroundModelChange(this.id)" style="width:100%;appearance:auto;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;cursor:pointer;outline:none;">
+                    <option value="">— Speaker model —</option>
+                    <option value="THTR67">THTR67</option>
+                    <option value="THTR69">THTR69</option>
+                    <option value="LCR 67">LCR 67</option>
+                    <option value="LCR 69">LCR 69</option>
+                    <option value="ASM6500wa">ASM6500wa</option>
+                    <option value="M2500ic">M2500ic</option>
+                  </select>
+                </div>
               </div>
+              <div id="cfg-atmos-section">
               <div class="cfg-section-label">Atmos</div>
-              <div class="btn-group">
+              <div class="btn-group" style="margin-bottom:10px;">
                 <button class="btn-opt" id="cfg-btn-atmos2" onclick="toggleAtmos('2')">2 Atmos</button>
                 <button class="btn-opt" id="cfg-btn-atmos4" onclick="toggleAtmos('4')">4 Atmos</button>
                 <button class="btn-opt" id="cfg-btn-atmos6" onclick="toggleAtmos('6')">6 Atmos</button>
               </div>
-            </div>
-            <div id="cfg-sub-section" style="display:none;">
-              <div class="cfg-section-label">Number of Subs</div>
-              <div class="btn-group" id="cfg-g-sub"></div>
+              <div id="cfg-atmos-model-wrap" style="display:none;margin-top:8px;">
+                <select id="cfg-atmos-model" onchange="onAtmosModelChange(this.id)" style="width:100%;appearance:auto;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;cursor:pointer;outline:none;">
+                  <option value="">— Speaker model —</option>
+                  <option value="D89">D89</option>
+                  <option value="D109">D109</option>
+                  <option value="M2500ic">M2500ic</option>
+                </select>
+              </div>
+              </div><!-- end cfg-atmos-section -->
             </div>
           </div>
         </div>
@@ -469,11 +490,30 @@
               <button class="btn-opt" id="btn-surrounds" onclick="toggleSurround('surrounds')">Add Surrounds</button>
               <button class="btn-opt" id="btn-rear" onclick="toggleSurround('rear')">Add Rear</button>
             </div>
+            <div id="surround-model-wrap" style="display:none;margin-bottom:10px;">
+              <select id="surround-model" onchange="onSurroundModelChange(this.id)" style="width:100%;appearance:auto;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;cursor:pointer;outline:none;">
+                <option value="">— Speaker model —</option>
+                <option value="THTR67">THTR67</option>
+                <option value="THTR69">THTR69</option>
+                <option value="LCR 67">LCR 67</option>
+                <option value="LCR 69">LCR 69</option>
+                <option value="ASM6500wa">ASM6500wa</option>
+                <option value="M2500ic">M2500ic</option>
+              </select>
+            </div>
             <div class="bundles-label" style="margin-top:6px;margin-bottom:6px;">Atmos</div>
             <div class="btn-group" style="margin-bottom:10px;">
               <button class="btn-opt" id="btn-atmos2" onclick="toggleAtmos('2')">2 Atmos</button>
               <button class="btn-opt" id="btn-atmos4" onclick="toggleAtmos('4')">4 Atmos</button>
               <button class="btn-opt" id="btn-atmos6" onclick="toggleAtmos('6')">6 Atmos</button>
+            </div>
+            <div id="atmos-model-wrap" style="display:none;margin-bottom:10px;">
+              <select id="atmos-model" onchange="onAtmosModelChange(this.id)" style="width:100%;appearance:auto;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;cursor:pointer;outline:none;">
+                <option value="">— Speaker model —</option>
+                <option value="D89">D89</option>
+                <option value="D109">D109</option>
+                <option value="M2500ic">M2500ic</option>
+              </select>
             </div>
             <button class="surround-continue-btn" onclick="proceedFromSurround()">Continue</button>
           </div>
@@ -897,6 +937,201 @@ const raw=[
   {cat:"Landscape",prod:"ALSB106",ohm:"8ohm",spk:"6",sub:null,res:"1000.4+1000.2"},
   {cat:"Landscape",prod:"ALSB106",ohm:"70v",spk:"8",sub:null,res:"1000.4"},
   {cat:"Landscape",prod:"ALSB106",ohm:"8ohm",spk:"8",sub:null,res:"1000.4+1000.4"},
+  // Professional > Landscape (ALSB — same routing as Landscape category)
+  {cat:"Professional",prod:"ALSB64",ohm:"70v",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB64",ohm:"8ohm",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB64",ohm:"70v",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB64",ohm:"8ohm",spk:"4",sub:null,res:"1000.4"},
+  {cat:"Professional",prod:"ALSB64",ohm:"70v",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB64",ohm:"8ohm",spk:"6",sub:null,res:"1000.4+1000.2"},
+  {cat:"Professional",prod:"ALSB64",ohm:"8ohm",spk:"8",sub:null,res:"1000.4+1000.4"},
+  {cat:"Professional",prod:"ALSB85",ohm:"70v",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB85",ohm:"8ohm",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB85",ohm:"70v",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB85",ohm:"8ohm",spk:"4",sub:null,res:"1000.4"},
+  {cat:"Professional",prod:"ALSB85",ohm:"70v",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB85",ohm:"8ohm",spk:"6",sub:null,res:"1000.4+1000.2"},
+  {cat:"Professional",prod:"ALSB85",ohm:"8ohm",spk:"8",sub:null,res:"1000.4+1000.4"},
+  {cat:"Professional",prod:"ALSB106",ohm:"70v",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB106",ohm:"8ohm",spk:"2",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB106",ohm:"70v",spk:"4",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB106",ohm:"8ohm",spk:"4",sub:null,res:"1000.4"},
+  {cat:"Professional",prod:"ALSB106",ohm:"70v",spk:"6",sub:null,res:"1000.2"},
+  {cat:"Professional",prod:"ALSB106",ohm:"8ohm",spk:"6",sub:null,res:"1000.4+1000.2"},
+  {cat:"Professional",prod:"ALSB106",ohm:"70v",spk:"8",sub:null,res:"1000.4"},
+  {cat:"Professional",prod:"ALSB106",ohm:"8ohm",spk:"8",sub:null,res:"1000.4+1000.4"},
+  // Professional > Pendants — 70v, no sub
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"2",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"6",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"8",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"10",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"12",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"14",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"2",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"6",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"8",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"10",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"12",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"14",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"2",sub:0,res:"125.1"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"4",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"6",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"8",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"10",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"12",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"14",sub:0,res:"1000.1"},
+  // Professional > Pendants — 8ohm, no sub
+  {cat:"Professional",prod:"PP80",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Professional",prod:"PP80",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP80",ohm:"8ohm",spk:"6",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PP80",ohm:"8ohm",spk:"8",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PP60",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Professional",prod:"PP60",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PP60",ohm:"8ohm",spk:"6",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PP60",ohm:"8ohm",spk:"8",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PP50",ohm:"8ohm",spk:"2",sub:0,res:"125.1"},
+  {cat:"Professional",prod:"PP50",ohm:"8ohm",spk:"4",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PP50",ohm:"8ohm",spk:"6",sub:0,res:"125.4"},
+  {cat:"Professional",prod:"PP50",ohm:"8ohm",spk:"8",sub:0,res:"125.4"},
+  // Professional > Pendants — 8ohm, 1 sub
+  {cat:"Professional",prod:"PP80",ohm:"8ohm",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP80",ohm:"8ohm",spk:"4",sub:1,res:"250.2+250.1"},
+  {cat:"Professional",prod:"PP80",ohm:"8ohm",spk:"6",sub:1,res:"250.4"},
+  {cat:"Professional",prod:"PP60",ohm:"8ohm",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP60",ohm:"8ohm",spk:"4",sub:1,res:"250.2+250.1"},
+  {cat:"Professional",prod:"PP60",ohm:"8ohm",spk:"6",sub:1,res:"250.4"},
+  {cat:"Professional",prod:"PP50",ohm:"8ohm",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP50",ohm:"8ohm",spk:"4",sub:1,res:"250.2+250.1"},
+  {cat:"Professional",prod:"PP50",ohm:"8ohm",spk:"6",sub:1,res:"250.4"},
+  // Professional > Pendants — 70v, with subs (sub count scales with speaker count)
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"12",sub:3,res:"1000.2"},
+  {cat:"Professional",prod:"PP80",ohm:"70v",spk:"14",sub:4,res:"1200.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"12",sub:3,res:"1000.2"},
+  {cat:"Professional",prod:"PP60",ohm:"70v",spk:"14",sub:4,res:"1200.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"4",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"6",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"12",sub:3,res:"1000.2"},
+  {cat:"Professional",prod:"PP50",ohm:"70v",spk:"14",sub:4,res:"1000.2"},
+  // Professional > In-Ceiling — 8ohm, no sub
+  {cat:"Professional",prod:"PC80",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Professional",prod:"PC80",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC80",ohm:"8ohm",spk:"6",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PC80",ohm:"8ohm",spk:"8",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PC60",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Professional",prod:"PC60",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC60",ohm:"8ohm",spk:"6",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PC60",ohm:"8ohm",spk:"8",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PC50",ohm:"8ohm",spk:"2",sub:0,res:"125.1"},
+  {cat:"Professional",prod:"PC50",ohm:"8ohm",spk:"4",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PC50",ohm:"8ohm",spk:"6",sub:0,res:"125.4"},
+  {cat:"Professional",prod:"PC50",ohm:"8ohm",spk:"8",sub:0,res:"125.4"},
+  // Professional > In-Ceiling — 70v, no sub
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"2",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"6",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"8",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"10",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"12",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"14",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"2",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"6",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"8",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"10",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"12",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"14",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"2",sub:0,res:"125.1"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"4",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"6",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"8",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"10",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"12",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"14",sub:0,res:"1000.1"},
+  // Professional > In-Ceiling — 8ohm (6Ω speakers), 1 sub
+  {cat:"Professional",prod:"PC80",ohm:"8ohm",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PC80",ohm:"8ohm",spk:"4",sub:1,res:"250.2+250.1"},
+  {cat:"Professional",prod:"PC80",ohm:"8ohm",spk:"6",sub:1,res:"250.4"},
+  {cat:"Professional",prod:"PC60",ohm:"8ohm",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PC60",ohm:"8ohm",spk:"4",sub:1,res:"250.2+250.1"},
+  {cat:"Professional",prod:"PC60",ohm:"8ohm",spk:"6",sub:1,res:"250.4"},
+  {cat:"Professional",prod:"PC50",ohm:"8ohm",spk:"2",sub:1,res:"125.1+250.1"},
+  {cat:"Professional",prod:"PC50",ohm:"8ohm",spk:"4",sub:1,res:"125.2+250.1"},
+  {cat:"Professional",prod:"PC50",ohm:"8ohm",spk:"6",sub:1,res:"250.4"},
+  // Professional > In-Ceiling — 70v, with subs (sub count scales with speaker count)
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"12",sub:3,res:"1000.2"},
+  {cat:"Professional",prod:"PC80",ohm:"70v",spk:"14",sub:4,res:"1200.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"4",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"6",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"12",sub:3,res:"1000.2"},
+  {cat:"Professional",prod:"PC60",ohm:"70v",spk:"14",sub:4,res:"1200.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"2",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"4",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"6",sub:1,res:"250.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"8",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"10",sub:2,res:"1000.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"12",sub:3,res:"1000.2"},
+  {cat:"Professional",prod:"PC50",ohm:"70v",spk:"14",sub:4,res:"1000.2"},
+  // Professional > Landscape — 6.5HD / 6.5HD2
+  {cat:"Professional",prod:"6.5HD",ohm:"8ohm",spk:"2",sub:1,res:"1000.2"},
+  {cat:"Professional",prod:"6.5HD2",ohm:"4ohm",spk:"2",sub:1,res:"1200.2"},
+  // Professional > Landscape PS — 8ohm, no sub
+  {cat:"Professional",prod:"PS80",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Professional",prod:"PS80",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS80",ohm:"8ohm",spk:"6",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PS80",ohm:"8ohm",spk:"8",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PS60",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
+  {cat:"Professional",prod:"PS60",ohm:"8ohm",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS60",ohm:"8ohm",spk:"6",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PS60",ohm:"8ohm",spk:"8",sub:0,res:"250.4"},
+  {cat:"Professional",prod:"PS50",ohm:"8ohm",spk:"2",sub:0,res:"125.1"},
+  {cat:"Professional",prod:"PS50",ohm:"8ohm",spk:"4",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PS50",ohm:"8ohm",spk:"6",sub:0,res:"125.4"},
+  {cat:"Professional",prod:"PS50",ohm:"8ohm",spk:"8",sub:0,res:"125.4"},
+  // Professional > Landscape PS — 70v, no sub
+  {cat:"Professional",prod:"PS80",ohm:"70v",spk:"2",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PS80",ohm:"70v",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS80",ohm:"70v",spk:"6",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PS80",ohm:"70v",spk:"8",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PS80",ohm:"70v",spk:"10",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PS80",ohm:"70v",spk:"12",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PS80",ohm:"70v",spk:"14",sub:0,res:"1000.2"},
+  {cat:"Professional",prod:"PS60",ohm:"70v",spk:"2",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PS60",ohm:"70v",spk:"4",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS60",ohm:"70v",spk:"6",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS60",ohm:"70v",spk:"8",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PS60",ohm:"70v",spk:"10",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PS60",ohm:"70v",spk:"12",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PS60",ohm:"70v",spk:"14",sub:0,res:"1000.1"},
+  {cat:"Professional",prod:"PS50",ohm:"70v",spk:"2",sub:0,res:"125.1"},
+  {cat:"Professional",prod:"PS50",ohm:"70v",spk:"4",sub:0,res:"125.2"},
+  {cat:"Professional",prod:"PS50",ohm:"70v",spk:"6",sub:0,res:"250.1"},
+  {cat:"Professional",prod:"PS50",ohm:"70v",spk:"8",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS50",ohm:"70v",spk:"10",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS50",ohm:"70v",spk:"12",sub:0,res:"250.2"},
+  {cat:"Professional",prod:"PS50",ohm:"70v",spk:"14",sub:0,res:"1000.1"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LS44",ohm:"8ohm",spk:"2",sub:0,res:"250.1"},
   {cat:"Landscape",prod:"LS44",ohm:"70v",spk:"2",sub:1,res:"1000.2"},
@@ -957,24 +1192,36 @@ const raw=[
   {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"Mono",sub:1,res:"250.2"},
   {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"LCR",sub:1,res:"250.4"},
   {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"L&R",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"Mono",sub:2,res:"250.4"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"LCR",sub:2,res:"250.4+125.1"},
+  {cat:"Soundbars",prod:"SBR4",ohm:"8ohm",spk:"L&R",sub:2,res:"1000.4"},
   {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"Mono",sub:0,res:"250.1"},
   {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"LCR",sub:0,res:"250.1"},
   {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"L&R",sub:0,res:"250.4"},
   {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"Mono",sub:1,res:"250.2"},
   {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"LCR",sub:1,res:"250.4"},
   {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"L&R",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"Mono",sub:2,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"LCR",sub:2,res:"1000.4"},
+  {cat:"Soundbars",prod:"ASBR4",ohm:"8ohm",spk:"L&R",sub:2,res:"1000.4"},
   {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"Mono",sub:0,res:"250.1"},
   {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"LCR",sub:0,res:"250.2"},
   {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"L&R",sub:0,res:"250.1"},
   {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"Mono",sub:1,res:"250.1"},
   {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"LCR",sub:1,res:"250.2"},
   {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"L&R",sub:1,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"Mono",sub:2,res:"250.2"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"LCR",sub:2,res:"250.4"},
+  {cat:"Soundbars",prod:"ASBR5",ohm:"8ohm",spk:"L&R",sub:2,res:"1000.2"},
   {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"Mono",sub:0,res:"1000.1"},
   {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"LCR",sub:0,res:"1000.2"},
   {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"L&R",sub:0,res:"1000.1"},
   {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"Mono",sub:1,res:"1000.2"},
   {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"LCR",sub:1,res:"1000.4"},
   {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"L&R",sub:1,res:"1000.2"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"Mono",sub:2,res:"1000.4"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"LCR",sub:2,res:"1000.4+250.2"},
+  {cat:"Soundbars",prod:"ASBR6",ohm:"8ohm",spk:"L&R",sub:2,res:"1000.2"},
   {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"1",sub:0,res:"1000.1"},
   {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"2",sub:0,res:"1000.2"},
   {cat:"Performance & Theater",prod:"ASM5600",ohm:"8ohm",spk:"3",sub:0,res:"1000.4"},
@@ -1050,9 +1297,9 @@ const raw=[
   {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"8",sub:1,res:"250.1+250.4"},
   {cat:"Architectural Speakers",prod:"Director 10",ohm:null,spk:"8",sub:2,res:"250.2+250.4"},
 ];
-function getSugSub(m){if(!m||!m.sub)return null;const c=m.cat,p=m.prod,sub=m.sub,ohm=m.ohm,spk=m.spk;let cov=[],perf=[];if(c==='Design Centric'){if(p==='MOS'){cov=['MOS SUB'];perf=['CSUB10IW','CSUB10R'];}else{cov=['BLENDSSUB800'];perf=['BLENDS CSUB10'];}}else if(c==='Landscape'){if(p==='LSH40'||p==='LSH60'||p==='LSH80'||p==='LSR40'||p==='LSR60'||p==='LSR80'){cov=['10HDR','10BPIG','S11BP'];perf=['12HDR','12BPIG'];}else if(p==='LS44'||p==='LS64'||p==='ASM63'){cov=['OSUB10','OSUB12'];perf=['12HDR','12BPIG'];}}else if(c==='Soundbars'){cov=['CSUB10IW','CSUB10R'];if(p==='ASBR6')perf=['AMD210'];}else if(c==='Performance & Theater'){cov=['AMD210'];}else if(c==='Architectural Speakers'){cov=['CSUB10IW','CSUB10R','DSUB6x2','DSUB6F5K'];}if(!cov.length&&!perf.length)return null;return{cov,perf};}
-const catProds={"Design Centric":["MOS","Blends 602","Blends 802","Blends 803"],"Landscape":["LSH40","LSH60","LSH80","LSR40","LSR60","LSR80","ALSB64","ALSB85","ALSB106","LS44","LS64","ASM63"],"Soundbars":["SBR4","ASBR4","ASBR5","ASBR6"],"Performance & Theater":["ASM5600","ASM3600"],"Architectural Speakers":["Director 5","Director 6","Director 8","Director 10"],"Professional":[]};
-let sel={cat:null,prod:null,ohm:null,spk:null,sub:null};window._surroundSel=[];window._atmosSel=null;
+function getSugSub(m){if(!m||!m.sub)return null;const c=m.cat,p=m.prod,sub=m.sub,ohm=m.ohm,spk=m.spk;let cov=[],perf=[];if(c==='Design Centric'){if(p==='MOS'){cov=['MOS SUB'];perf=['CSUB10IW','CSUB10R'];}else{cov=['BLENDSSUB800'];perf=['BLENDS CSUB10'];}}else if(c==='Landscape'){if(p==='LSH40'||p==='LSH60'||p==='LSH80'||p==='LSR40'||p==='LSR60'||p==='LSR80'){cov=['10HDR','10BPIG','S11BP'];perf=['12HDR','12BPIG'];}else if(p==='LS44'||p==='LS64'||p==='ASM63'){cov=['OSUB10','OSUB12'];perf=['12HDR','12BPIG'];}}else if(c==='Soundbars'){cov=['CSUB10IW','CSUB10R'];if(p==='ASBR5'||p==='ASBR6')perf=['AMD210'];}else if(c==='Performance & Theater'){cov=['AMD210'];}else if(c==='Architectural Speakers'){cov=['CSUB10IW','CSUB10R','DSUB6x2','DSUB6F5K'];}else if(c==='Professional'){if(p==='6.5HD'||p==='6.5HD2'){cov=['10HDR','10BPIG','S11BP'];perf=['12HDR','12BPIG'];}}if(!cov.length&&!perf.length)return null;return{cov,perf};}
+const catProds={"Design Centric":["MOS","Blends 602","Blends 802","Blends 803"],"Landscape":["LSH40","LSH60","LSH80","LSR40","LSR60","LSR80","ALSB64","ALSB85","ALSB106","LS44","LS64","ASM63"],"Soundbars":["SBR4","ASBR4","ASBR5","ASBR6"],"Performance & Theater":["ASM5600","ASM3600"],"Architectural Speakers":["Director 5","Director 6","Director 8","Director 10"],"Professional":["Pendants","In-Ceiling","Landscape"]};
+let sel={cat:null,prod:null,ohm:null,spk:null,sub:null};window._surroundSel=[];window._atmosSel=null;window._surroundModel=null;window._atmosModel=null;
 const stepOrder=['s-cat','s-prod','s-ohm','s-spk','s-sub'];
 let history=[];
 function noSub(){return sel.prod&&NO_SUB_PRODS.includes(sel.prod);}
@@ -1072,6 +1319,34 @@ function uncollapse(gid){document.querySelectorAll('#'+gid+' button').forEach(b=
 function updateCatBtnImg(prodVal){const activeCat=document.querySelector('#g-cat button.active');if(!activeCat)return;const img=activeCat.querySelector('img');if(!img)return;const prodSrc=prodVal?SPK_IMGS[String(prodVal)]||null:null;if(prodSrc){img.src=prodSrc;}else{const orig=img.getAttribute('data-orig-src');if(orig)img.src=orig;}}
 function rebuildGroup(gid,vals){const g=document.getElementById(gid);g.innerHTML='';vals.forEach(v=>{const b=document.createElement('button');const imgSrc=SPK_IMGS[String(v)]||null;if(imgSrc){b.className='btn-opt btn-opt-with-img';b.dataset.val=String(v);b.innerHTML='<img src="'+imgSrc+'" alt="'+String(v)+'"><span>'+String(v)+'</span>';}else{b.className='btn-opt';b.dataset.val=String(v);b.textContent=String(v);}g.appendChild(b);});}
 const DIRECTOR_MODELS={'Director 5':['D59','D57','D57DT/SUR','D50-8'],'Director 6':['D69','D67','D65','D63','D63DT/SUR','D61DT','D61-6','D60-8'],'Director 8':['D89','D87','D85','D83','D83A','D83DT/SUR','D81-6','D80DT','D80-8'],'Director 10':['D109','D107','D105','D103DT','D101']};
+const PROFESSIONAL_GROUPS={'Pendants':['PP50','PP60','PP80'],'In-Ceiling':['PC50','PC60','PC80'],'Landscape':['ALSB64','ALSB85','ALSB106','PS50','PS60','PS80','6.5HD','6.5HD2']};
+function rebuildProfessionalGroup(gid){
+  const g=document.getElementById(gid);g.innerHTML='';
+  catProds['Professional'].forEach(function(item){
+    if(PROFESSIONAL_GROUPS[item]){
+      const models=PROFESSIONAL_GROUPS[item];
+      const card=document.createElement('div');card.className='dir-card';card.dataset.group=item;
+      const hdr=document.createElement('button');hdr.className='dir-hdr';
+      hdr.innerHTML='<span>'+item+'</span><svg class="dir-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+      hdr.addEventListener('click',function(e){e.stopPropagation();const wasOpen=card.classList.contains('open');g.querySelectorAll('.dir-card').forEach(c=>c.classList.remove('open'));if(!wasOpen)card.classList.add('open');});
+      const mdiv=document.createElement('div');mdiv.className='dir-models';
+      models.forEach(function(m){
+        const b=document.createElement('button');
+        const mImg=SPK_IMGS[m]||null;
+        if(mImg){b.className='btn-opt btn-opt-with-img prof-model-btn';b.dataset.val=m;b.innerHTML='<img src="'+mImg+'" alt="'+m+'"><span>'+m+'</span>';}
+        else{b.className='btn-opt prof-model-btn';b.dataset.val=m;b.textContent=m;}
+        mdiv.appendChild(b);
+      });
+      card.appendChild(hdr);card.appendChild(mdiv);g.appendChild(card);
+    }else{
+      const b=document.createElement('button');
+      const imgSrc=SPK_IMGS[item]||null;
+      if(imgSrc){b.className='btn-opt btn-opt-with-img';b.dataset.val=item;b.innerHTML='<img src="'+imgSrc+'" alt="'+item+'"><span>'+item+'</span>';}
+      else{b.className='btn-opt';b.dataset.val=item;b.textContent=item;}
+      g.appendChild(b);
+    }
+  });
+}
 function rebuildDirectorGroup(gid){
   const g=document.getElementById(gid);g.innerHTML='';
   Object.entries(DIRECTOR_MODELS).forEach(([series,models])=>{
@@ -1084,9 +1359,9 @@ function rebuildDirectorGroup(gid){
     card.appendChild(hdr);card.appendChild(mdiv);g.appendChild(card);
   });
 }
-function clearStepFrom(sid){const idx=stepOrder.indexOf(sid);if(idx<=stepOrder.indexOf('s-prod')){updateCatBtnImg(null);}if(idx===0){const rb=document.getElementById('resource-btns');if(rb)rb.style.display='flex';}const keys=['cat','prod','ohm','spk','sub'];const gids=['g-cat','g-prod','g-ohm','g-spk','g-sub'];stepOrder.slice(idx).forEach((s,i)=>{sel[keys[idx+i]]=null;const g=document.getElementById(gids[idx+i]);if(g){g.querySelectorAll('button').forEach(b=>{b.style.display='';b.classList.remove('active');});}const numEl=document.getElementById('n-'+keys[idx+i]);if(numEl)numEl.classList.remove('done');if(idx+i>0)document.getElementById(s).style.display='none';});document.getElementById('result-area').innerHTML='';const prodIdx=stepOrder.indexOf('s-prod');if(idx<=prodIdx){document.getElementById('s-config').style.display='none';document.getElementById('n-config').classList.remove('done');}const spkIdx=stepOrder.indexOf('s-spk');if(idx<=spkIdx){window._surroundSel=[];window._atmosSel=null;document.getElementById('s-surround').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('surround-change-btn').style.display='none';document.getElementById('surround-toggles').style.display='';['btn-surrounds','btn-rear','cfg-btn-surrounds','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.remove('active');});});}}
+function clearStepFrom(sid){const idx=stepOrder.indexOf(sid);if(idx<=stepOrder.indexOf('s-prod')){updateCatBtnImg(null);}if(idx===0){const rb=document.getElementById('resource-btns');if(rb)rb.style.display='flex';}const keys=['cat','prod','ohm','spk','sub'];const gids=['g-cat','g-prod','g-ohm','g-spk','g-sub'];stepOrder.slice(idx).forEach((s,i)=>{sel[keys[idx+i]]=null;const g=document.getElementById(gids[idx+i]);if(g){g.querySelectorAll('button').forEach(b=>{b.style.display='';b.classList.remove('active');});}const numEl=document.getElementById('n-'+keys[idx+i]);if(numEl)numEl.classList.remove('done');if(idx+i>0)document.getElementById(s).style.display='none';});document.getElementById('result-area').innerHTML='';const prodIdx=stepOrder.indexOf('s-prod');if(idx<=prodIdx){document.getElementById('s-config').style.display='none';document.getElementById('n-config').classList.remove('done');}const spkIdx=stepOrder.indexOf('s-spk');if(idx<=spkIdx){window._surroundSel=[];window._atmosSel=null;window._surroundModel=null;window._atmosModel=null;document.getElementById('s-surround').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('surround-change-btn').style.display='none';document.getElementById('surround-toggles').style.display='';['btn-surrounds','btn-rear','cfg-btn-surrounds','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.remove('active');});});['cfg-surround-model-wrap','surround-model-wrap','cfg-atmos-model-wrap','atmos-model-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});['cfg-surround-model','surround-model','cfg-atmos-model','atmos-model'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}}
 function resetFrom(sid){const idx=stepOrder.indexOf(sid);history=history.filter(h=>stepOrder.indexOf(h)<idx);clearStepFrom(sid);updateProgress();updateToolbar();}
-function fullReset(){history=[];clearStepFrom('s-cat');updateProgress();updateToolbar();setAddProjectBtn(false);setHeightBtn(false);closeWiring();window._wiringData=null;window._selectedSub=null;window._surroundSel=[];window._atmosSel=null;ptResetAll();document.getElementById('s-surround').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('surround-change-btn').style.display='none';document.getElementById('surround-toggles').style.display='';['btn-surrounds','btn-rear','cfg-btn-surrounds','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.remove('active');});});}
+function fullReset(){history=[];clearStepFrom('s-cat');updateProgress();updateToolbar();setAddProjectBtn(false);setHeightBtn(false);closeWiring();window._wiringData=null;window._selectedSub=null;window._surroundSel=[];window._atmosSel=null;window._surroundModel=null;window._atmosModel=null;ptResetAll();document.getElementById('s-surround').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('surround-change-btn').style.display='none';document.getElementById('surround-toggles').style.display='';['btn-surrounds','btn-rear','cfg-btn-surrounds','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.remove('active');});});['cfg-surround-model-wrap','surround-model-wrap','cfg-atmos-model-wrap','atmos-model-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});['cfg-surround-model','surround-model','cfg-atmos-model','atmos-model'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
 function goBack(){if(history.length===0)return;const lastCompleted=history[history.length-1];resetFrom(lastCompleted);uncollapse(lastCompleted.replace('s-','g-'));document.getElementById(lastCompleted).style.display='';}
 function setAddProjectBtn(visible){const btn=document.getElementById('add-project-btn');btn.style.display=visible?'flex':'none';}
 function setHeightBtn(visible){const HEIGHT_CATS=[];const hBtn=document.getElementById('add-height-btn');hBtn.style.display=(visible&&HEIGHT_CATS.includes(sel.cat))?'flex':'none';}
@@ -1284,7 +1559,7 @@ function buildOptimizedRackWiringData(){
     if(spkVal==='LCR'){labels=[zp+'Left',zp+'Center',zp+'Right'];}
     else if(spkVal==='L&R'){labels=[zp+'Left',zp+'Right'];}
     else if(spkVal==='Mono'){labels=[zp+'Soundbar'];}
-    else{var n=parseInt(spkVal)||0;for(var i=0;i<n;i++)labels.push(zp+prod+' '+(i+1));}
+    else{var n=parseInt(spkVal)||0;for(var i=0;i<n;i++)labels.push(zp+prod+' #'+(i+1));}
     if(labels.length)extraGroups.push({prod:prod,spkCount:labels.length,labels:labels});
     if(wd&&wd.extraGroups&&wd.extraGroups.length){
       wd.extraGroups.forEach(function(grp){
@@ -1436,23 +1711,40 @@ const SPK_IMGS={
   'ASBR4':'/assests/SBR4_Black_Netsuite_02-23-26.png',
   'ASBR5':'/assests/ASBR5.1506%201.png',
   'ASBR6':'/assests/ASBR6.1509%201.png',
+  // Professional (placeholder images — update when product images are provided)
+  'PP50':'/assests/PP80%20angle.png',
+  'PP60':'/assests/PP80%20angle.png',
+  'PP80':'/assests/PP80%20angle.png',
+  'Pendants':'/assests/PP80%20angle.png',
+  'PC50':'/assests/PC60%20angle.png',
+  'PC60':'/assests/PC60%20angle.png',
+  'PC80':'/assests/PC60%20angle.png',
+  'In-Ceiling':'/assests/PC60%20angle.png',
+  'Landscape':'/assests/ALSB64.png',
+  'PS50':'/assests/%5BPS50%5D-Black-9508.png',
+  'PS60':'/assests/%5BPS60%5D-Black-9505.png',
+  'PS80':'/assests/%5BPS80%5D-Black-9501.png',
+  '6.5HD':'/assests/%5B%206.5HD-AW-S%20%5D%20Left%20PNG-%20WHITE%20(2).png',
+  '6.5HD2':'/assests/%5B%206.5HD2-AW-L%20%5D%20Right-Black-7064.png',
 };
 function renderResult(){const area=document.getElementById('result-area');
 // ── Theater packages: fixed config, skip normal flow ──
 if(THEATER_PACKAGES[sel.prod]){const pkg=THEATER_PACKAGES[sel.prod];const parts=pkg.res.split('+');const isCombo=parts.length>1;const IMGS={'250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','125.4':'/assests/%5BProA125.4%5D%20Origin%20Pro%20Amp-Front.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.1':'/assests/%5BProA%201200.1%5D%20Origin-Pro-Amp-0091.png','1200.2':'/assests/%5BProA%201200.2%5D%20Origin-Pro-Amp-0088.png','1200.4':'/assests/ProA1200.4.png'};const NARROW=['125.1','125.2','250.1','250.2'];const comboImgs=parts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img${NARROW.includes(parts[0].trim())?' amp-narrow':''}" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const lineupHtml='<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">'+pkg.speakers.map(s=>`<div class="theater-lineup-item${SUB_DATA[s.model]?' theater-lineup-item--tappable':''}" ${SUB_DATA[s.model]?`onclick="openSubDetail('${s.model}')" style="cursor:pointer"`:''}><span class="theater-lineup-count">${s.count}×</span><span class="theater-lineup-model">${s.model}</span>${SUB_DATA[s.model]?'<span class="theater-lineup-info">ⓘ</span>':''}</div>`).join('')+'</div></div>';setAddProjectBtn(true);setHeightBtn(sel.prod==='Media Room 3.2');window._wiringData=null;area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Configuration<span>${sel.prod}</span></div></div>${isCombo?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}</div>`;return;}
-const effOhm=singleOhm()||sel.ohm;const skipSub=noSub();const complete=sel.cat&&sel.prod&&(!needsOhmStep()||sel.ohm)&&sel.spk!==null&&(skipSub||sel.sub!==null);if(!complete){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const match=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&(skipSub||d.sub===sel.sub));if(!match||String(match.res).toUpperCase()==='N/A'){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const parts=mergeAmps(String(match.res).split('+').map(p=>p.trim()));const isCombo=parts.length>1;const spkLabel=sel.cat==='Soundbars'?'Configuration':'Speakers';const IMGS={'250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','125.4':'/assests/%5BProA125.4%5D%20Origin%20Pro%20Amp-Front.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.1':'/assests/%5BProA%201200.1%5D%20Origin-Pro-Amp-0091.png','1200.2':'/assests/%5BProA%201200.2%5D%20Origin-Pro-Amp-0088.png','1200.4':'/assests/ProA1200.4.png'};const NARROW_MODELS=['125.1','125.2','250.1','250.2'];const comboImgs=parts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img${NARROW_MODELS.includes(parts[0].trim())?' amp-narrow':''}" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const sugSub=getSugSub(match);const pills=arr=>arr.map(v=>`<button class="sug-sub-pill${window._selectedSub===v?' selected':''}" data-model="${v}" onclick="openSubMenu('${v}')">${v}</button>`).join('');const sugSubHtml=sugSub?(sugSub.perf.length?`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-options"><div class="sug-sub-option"><div class="sug-sub-option-label">Coverage</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div><div class="sug-sub-option"><div class="sug-sub-option-label">Performance</div><div class="sug-sub-pills">${pills(sugSub.perf)}</div></div></div></div>`:`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div>`):'';setAddProjectBtn(true);setHeightBtn(true);window._wiringData={ampStr:parts.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||''};if(sel.cat==='Performance & Theater'){const sSel=window._surroundSel||[];const atrSel=window._atmosSel||null;const hasSurrounds=sSel.includes('surrounds');const hasRear=sSel.includes('rear');const ATMOS_AMP={'2':'250.1','4':'250.2','6':'250.4'};const allParts=[...parts];let sAmp=null,sSpkCount=0,sLabels=[];if(sSel.length>0){sAmp=(hasSurrounds&&hasRear)?'1000.2':'1000.1';sSpkCount=(hasSurrounds&&hasRear)?4:2;if(hasSurrounds)sLabels.push('Surrounds');if(hasRear)sLabels.push('Rear');allParts.push(sAmp);}let aAmp=null;if(atrSel){aAmp=ATMOS_AMP[atrSel];allParts.push(aAmp);}const allPartsMerged=mergeAmps(allParts);const allPills=allPartsMerged.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('');const allImgHtml=allPartsMerged.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const comboProdImg=allImgHtml?`<div class="amp-combo-imgs">${allImgHtml}</div>`:'';const lineupRows=[];lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sel.spk}×</span><span class="theater-lineup-model">${sel.prod}</span></div>`);if(sLabels.length>0)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sSpkCount}×</span><span class="theater-lineup-model">ASM3600 <span style="color:var(--muted);font-size:11px">(${sLabels.join(' + ')})</span></span></div>`);if(atrSel)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${atrSel}</span><span class="theater-lineup-model">Atmos Channels</span></div>`);const lineupHtml=`<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">${lineupRows.join('')}</div></div>`;const totalAmps=allPartsMerged.length;const _ptEG=[];if(sSel.length>0){const _ptSL=[];if(hasSurrounds){_ptSL.push('Surr 1');_ptSL.push('Surr 2');}if(hasRear){_ptSL.push('Rear 1');_ptSL.push('Rear 2');}_ptEG.push({prod:'ASM3600',spkCount:sSpkCount,labels:_ptSL});}if(atrSel){const _na=parseInt(atrSel);const _al=[];for(let _i=0;_i<_na;_i++)_al.push('Ht '+(_i+1));_ptEG.push({prod:'height',spkCount:_na,labels:_al});}window._wiringData={ampStr:allPartsMerged.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||'',extraGroups:_ptEG.length?_ptEG:null};area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${totalAmps>1?'s':''}</div><div class="result-amps">${allPills}${comboProdImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">Speakers<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${totalAmps>1?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}else if(sel.cat==='Soundbars'){const atrSel=window._atmosSel||null;const ATMOS_AMP={'2':'250.1','4':'250.2','6':'250.4'};const allParts=[...parts];if(atrSel){allParts.push(ATMOS_AMP[atrSel]);}const allPills=allParts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('');const allImgHtml=allParts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const finalProdImg=atrSel?(allImgHtml?`<div class="amp-combo-imgs">${allImgHtml}</div>`:''):prodImg;const totalAmps=allParts.length;const _sbEG=[];if(atrSel){const _naSb=parseInt(atrSel);const _alSb=[];for(let _i=0;_i<_naSb;_i++)_alSb.push('Ht '+(_i+1));_sbEG.push({prod:'height',spkCount:_naSb,labels:_alSb});}window._wiringData={ampStr:allParts.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||'',extraGroups:_sbEG.length?_sbEG:null};let lineupHtml='';if(atrSel){const lineupRows=[];lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sel.spk}</span><span class="theater-lineup-model">${sel.prod}</span></div>`);lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${atrSel}</span><span class="theater-lineup-model">Height Channels</span></div>`);lineupHtml=`<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">${lineupRows.join('')}</div></div>`;}area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${totalAmps>1?'s':''}</div><div class="result-amps">${allPills}${finalProdImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">Configuration<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${totalAmps>1?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}else{const spkImg=SPK_IMGS[sel.prod]||null;area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div>${spkImg?`<img class="result-spk-img" src="${spkImg}" alt="${sel.prod}">`:''}<div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">${spkLabel}<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${isCombo?'<div class="combo-note">This configuration requires two amplifier models.</div>':''}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}refreshWiringBtn();}
+const effOhm=singleOhm()||sel.ohm;const skipSub=noSub();const complete=sel.cat&&sel.prod&&(!needsOhmStep()||sel.ohm)&&sel.spk!==null&&(skipSub||sel.sub!==null);if(!complete){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const match=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&(skipSub||d.sub===sel.sub));if(!match||String(match.res).toUpperCase()==='N/A'){area.innerHTML='';setAddProjectBtn(false);setHeightBtn(false);return;}const parts=mergeAmps(String(match.res).split('+').map(p=>p.trim()));const isCombo=parts.length>1;const spkLabel=sel.cat==='Soundbars'?'Configuration':'Speakers';const IMGS={'250.2':'/assests/%5BProA%20250.2%5D%20Origin-Pro-Amp-0180.png','250.1':'/assests/%5BProA%20250.1%5D%20Origin-Pro-Amp-0183.png','125.1':'/assests/125.1.png','125.2':'/assests/%5BProA%20125.2%5D%20Origin-Pro-Amp-0179.png','125.4':'/assests/%5BProA125.4%5D%20Origin%20Pro%20Amp-Front.png','250.4':'/assests/%5BProA250.4%5D%20Origin%20Pro%20Amp-Front.png','1000.1':'/assests/%5BProA%201000.1%5D%20Origin-Pro-Amp-0086.png','1000.2':'/assests/%5BProA%201000.2%5D%20Origin-Pro-Amp-0083.png','1000.4':'/assests/%5BProA%201000.4%5D%20Origin-Pro-Amp-0083%20copy.png','1200.1':'/assests/%5BProA%201200.1%5D%20Origin-Pro-Amp-0091.png','1200.2':'/assests/%5BProA%201200.2%5D%20Origin-Pro-Amp-0088.png','1200.4':'/assests/ProA1200.4.png'};const NARROW_MODELS=['125.1','125.2','250.1','250.2'];const comboImgs=parts.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const prodImg=isCombo?(comboImgs?`<div class="amp-combo-imgs">${comboImgs}</div>`:''):(IMGS[parts[0].trim()]?`<img class="amp-product-img${NARROW_MODELS.includes(parts[0].trim())?' amp-narrow':''}" src="${IMGS[parts[0].trim()]}" alt="ProA${parts[0].trim()}">`:'');const sugSub=getSugSub(match);const pills=arr=>arr.map(v=>`<button class="sug-sub-pill${window._selectedSub===v?' selected':''}" data-model="${v}" onclick="openSubMenu('${v}')">${v}</button>`).join('');const sugSubHtml=sugSub?(sugSub.perf.length?`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-options"><div class="sug-sub-option"><div class="sug-sub-option-label">Coverage</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div><div class="sug-sub-option"><div class="sug-sub-option-label">Performance</div><div class="sug-sub-pills">${pills(sugSub.perf)}</div></div></div></div>`:`<div class="sug-sub"><div class="sug-sub-label">Suggested Subwoofer</div><div class="sug-sub-pills">${pills(sugSub.cov)}</div></div>`):'';setAddProjectBtn(true);setHeightBtn(true);window._wiringData={ampStr:parts.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:(sel.cat==='Architectural Speakers'&&window._dirModel)?window._dirModel:(sel.prod||'')};if(sel.cat==='Performance & Theater'){const sSel=window._surroundSel||[];const atrSel=window._atmosSel||null;const hasSurrounds=sSel.includes('surrounds');const hasRear=sSel.includes('rear');const ATMOS_AMP={'2':'250.1','4':'250.2','6':'250.4'};const allParts=[...parts];let sAmp=null,sSpkCount=0,sLabels=[];if(sSel.length>0){sAmp=(hasSurrounds&&hasRear)?'1000.2':'1000.1';sSpkCount=(hasSurrounds&&hasRear)?4:2;if(hasSurrounds)sLabels.push('Surrounds');if(hasRear)sLabels.push('Rear');allParts.push(sAmp);}let aAmp=null;if(atrSel){aAmp=ATMOS_AMP[atrSel];allParts.push(aAmp);}const allPartsMerged=mergeAmps(allParts);const allPills=allPartsMerged.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('');const allImgHtml=allPartsMerged.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const comboProdImg=allImgHtml?`<div class="amp-combo-imgs">${allImgHtml}</div>`:'';const lineupRows=[];lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sel.spk}×</span><span class="theater-lineup-model">${sel.prod}</span></div>`);if(sLabels.length>0)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sSpkCount}×</span><span class="theater-lineup-model">${window._surroundModel||'Surrounds'} <span style="color:var(--muted);font-size:11px">(${sLabels.join(' + ')})</span></span></div>`);if(atrSel)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${atrSel}</span><span class="theater-lineup-model">${window._atmosModel?window._atmosModel+' ':''} Atmos Channels</span></div>`);const lineupHtml=`<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">${lineupRows.join('')}</div></div>`;const totalAmps=allPartsMerged.length;const _ptEG=[];if(sSel.length>0){const _ptSL=[];if(hasSurrounds){_ptSL.push('Surr 1');_ptSL.push('Surr 2');}if(hasRear){_ptSL.push('Rear 1');_ptSL.push('Rear 2');}_ptEG.push({prod:window._surroundModel||'Surrounds',spkCount:sSpkCount,labels:_ptSL});}if(atrSel){const _na=parseInt(atrSel);const _al=[];for(let _i=0;_i<_na;_i++)_al.push('Ht '+(_i+1));_ptEG.push({prod:window._atmosModel||'height',spkCount:_na,labels:_al});}window._wiringData={ampStr:allPartsMerged.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||'',extraGroups:_ptEG.length?_ptEG:null};area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${totalAmps>1?'s':''}</div><div class="result-amps">${allPills}${comboProdImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">Speakers<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${totalAmps>1?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}else if(sel.cat==='Soundbars'){const sSel=window._surroundSel||[];const atrSel=window._atmosSel||null;const hasSurrounds=sSel.includes('surrounds');const hasRear=sSel.includes('rear');const ATMOS_AMP={'2':'250.1','4':'250.2','6':'250.4'};const allParts=[...parts];let sAmp=null,sSpkCount=0,sLabels=[];if(sSel.length>0){sSpkCount=(hasSurrounds&&hasRear)?4:2;if(hasSurrounds)sLabels.push('Surrounds');if(hasRear)sLabels.push('Rear');if(atrSel==='6'){/* 250.4 has 2 open ch — absorbs one surround/rear pair; only add 250.1 if BOTH surr+rear */if(hasSurrounds&&hasRear){sAmp='250.1';allParts.push(sAmp);}}else{sAmp=(hasSurrounds&&hasRear)?'250.2':'250.1';allParts.push(sAmp);}}if(atrSel){allParts.push(ATMOS_AMP[atrSel]);}const allPartsMerged=mergeAmps(allParts);const allPills=allPartsMerged.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('');const allImgHtml=allPartsMerged.map(p=>{const m=p.trim();return IMGS[m]?`<img class="amp-product-img-sm${NARROW_MODELS.includes(m)?' amp-narrow':''}" src="${IMGS[m]}" alt="ProA${m}">`:''}).join('');const finalProdImg=(sSel.length>0||atrSel)?(allImgHtml?`<div class="amp-combo-imgs">${allImgHtml}</div>`:''):prodImg;const totalAmps=allPartsMerged.length;const _sbEG=[];if(sSel.length>0){const _sbSL=[];if(hasSurrounds){_sbSL.push('Surr 1');_sbSL.push('Surr 2');}if(hasRear){_sbSL.push('Rear 1');_sbSL.push('Rear 2');}_sbEG.push({prod:window._surroundModel||'Surrounds',spkCount:sSpkCount,labels:_sbSL});}if(atrSel){const _naSb=parseInt(atrSel);const _alSb=[];for(let _i=0;_i<_naSb;_i++)_alSb.push('Ht '+(_i+1));_sbEG.push({prod:window._atmosModel||'height',spkCount:_naSb,labels:_alSb});}window._wiringData={ampStr:allPartsMerged.join('+'),spkVal:sel.spk,ohm:effOhm||'8ohm',cat:sel.cat,subCount:sel.sub||0,prod:sel.prod||'',extraGroups:_sbEG.length?_sbEG:null};let lineupHtml='';if(sSel.length>0||atrSel){const lineupRows=[];lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sel.spk}</span><span class="theater-lineup-model">${sel.prod}</span></div>`);if(sLabels.length>0)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${sSpkCount}×</span><span class="theater-lineup-model">${window._surroundModel||'Surrounds'} <span style="color:var(--muted);font-size:11px">(${sLabels.join(' + ')})</span></span></div>`);if(atrSel)lineupRows.push(`<div class="theater-lineup-item"><span class="theater-lineup-count">${atrSel}</span><span class="theater-lineup-model">${window._atmosModel?window._atmosModel+' ':''}Atmos Channels</span></div>`);lineupHtml=`<div class="theater-lineup"><div class="theater-lineup-label">Speaker Lineup</div><div class="theater-lineup-items">${lineupRows.join('')}</div></div>`;}area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${totalAmps>1?'s':''}</div><div class="result-amps">${allPills}${finalProdImg}</div><div class="result-divider"></div><div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">Configuration<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${totalAmps>1?'<div class="combo-note">This configuration requires multiple amplifier models.</div>':''}${lineupHtml}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}else{const spkImg=SPK_IMGS[sel.prod]||null;area.innerHTML=`<div class="result-card fadein"><div class="result-eyebrow">Recommended amplifier${isCombo?'s':''}</div><div class="result-amps">${parts.map(p=>`<span class="amp-pill">${p.trim()}</span>`).join('')}${prodImg}</div><div class="result-divider"></div>${spkImg?`<img class="result-spk-img" src="${spkImg}" alt="${sel.prod}">`:''}<div class="result-meta"><div class="meta-item">Category<span>${sel.cat}</span></div><div class="meta-item">Product<span>${sel.prod}</span></div>${effOhm?`<div class="meta-item">Type<span>${effOhm}</span></div>`:''}<div class="meta-item">${spkLabel}<span>${sel.spk}</span></div>${!skipSub?`<div class="meta-item">Subwoofers<span>${sel.sub}</span></div>`:''}</div>${isCombo?'<div class="combo-note">This configuration requires two amplifier models.</div>':''}${sugSubHtml}<div id="wiring-btn-wrap"></div><button class="dispersion-btn" onclick="openDispersion()"><svg viewBox="0 0 24 24"><circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none"/><path d="M8 17 Q12 11 16 17"/><path d="M5 14 Q12 4 19 14"/><path d="M2 11 Q12 -2 22 11"/></svg>Speaker Dispersion</button></div>`;}refreshWiringBtn();}
 function goToSpeakers(){const filtered=getFiltered('ohm');const spks=uniqueSpk(filtered);rebuildGroup('g-spk',spks);const stepN=needsOhmStep()?4:3;const label=sel.cat==='Soundbars'?'Speaker configuration':'Number of speakers';document.getElementById('n-spk').textContent=`0${stepN} — ${label}`;showStep('s-spk');}
-function showConfigStep(){sel.ohm=null;sel.spk=null;sel.sub=null;const ohmOpts=getOhmOptions();const so=singleOhm();const cfgOhmSec=document.getElementById('cfg-ohm-section');if(!needsOhmStep()){sel.ohm=so||ohmOpts[0]||null;cfgOhmSec.style.display='none';}else{rebuildGroup('cfg-g-ohm',ohmOpts);document.querySelectorAll('#cfg-g-ohm button').forEach(b=>b.classList.remove('active'));cfgOhmSec.style.display='';}const isPack8=!!(window._dirModel&&window._dirModel.endsWith('-8'));if(isPack8){sel.spk='8';document.getElementById('cfg-spk-section').style.display='none';}else{const spks=uniqueSpk(getFiltered(needsOhmStep()?'prod':'ohm'));const spkLabel=sel.cat==='Soundbars'?'Speaker Configuration':'Number of Speakers';document.getElementById('cfg-spk-lbl').textContent=spkLabel;rebuildGroup('cfg-g-spk',spks);document.querySelectorAll('#cfg-g-spk button').forEach(b=>b.classList.remove('active'));document.getElementById('cfg-spk-section').style.display='';}const cfgSurroundSec=document.getElementById('cfg-surround-section');if(sel.cat==='Performance & Theater'||sel.cat==='Soundbars'){window._surroundSel=[];window._atmosSel=null;['cfg-btn-surrounds','cfg-btn-rear','cfg-btn-atmos2','cfg-btn-atmos4','cfg-btn-atmos6'].forEach(id=>document.getElementById(id).classList.remove('active'));cfgSurroundSec.style.display='';const cfgSurrOpts=document.getElementById('cfg-surround-options');if(cfgSurrOpts)cfgSurrOpts.style.display=sel.cat==='Soundbars'?'none':'';}else{cfgSurroundSec.style.display='none';}const cfgSubSec=document.getElementById('cfg-sub-section');if(!noSub()){const allSubs=uniqueSub(isPack8?getFiltered('spk'):getFiltered('prod'));rebuildGroup('cfg-g-sub',allSubs);document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));cfgSubSec.style.display='';}else{cfgSubSec.style.display='none';}document.getElementById('n-config').textContent='03 — Configuration';document.getElementById('n-config').classList.remove('done');showStep('s-config');}
+function showConfigStep(){sel.ohm=null;sel.spk=null;sel.sub=null;const ohmOpts=getOhmOptions();const so=singleOhm();const cfgOhmSec=document.getElementById('cfg-ohm-section');if(!needsOhmStep()){sel.ohm=so||ohmOpts[0]||null;cfgOhmSec.style.display='none';}else{rebuildGroup('cfg-g-ohm',ohmOpts);document.querySelectorAll('#cfg-g-ohm button').forEach(b=>b.classList.remove('active'));cfgOhmSec.style.display='';}const isPack8=!!(window._dirModel&&window._dirModel.endsWith('-8'));const isPack6=!!(window._dirModel&&window._dirModel.endsWith('-6'));const isPackN=isPack8||isPack6;if(isPackN){sel.spk=isPack8?'8':'6';document.getElementById('cfg-spk-section').style.display='none';}else{const spks=uniqueSpk(getFiltered(needsOhmStep()?'prod':'ohm'));const spkLabel=sel.cat==='Soundbars'?'Speaker Configuration':'Number of Speakers';document.getElementById('cfg-spk-lbl').textContent=spkLabel;rebuildGroup('cfg-g-spk',spks);document.querySelectorAll('#cfg-g-spk button').forEach(b=>b.classList.remove('active'));document.getElementById('cfg-spk-section').style.display='';}const cfgSurroundSec=document.getElementById('cfg-surround-section');if(sel.cat==='Performance & Theater'){window._surroundSel=[];window._atmosSel=null;window._surroundModel=null;window._atmosModel=null;['cfg-btn-surrounds','cfg-btn-rear','cfg-btn-atmos2','cfg-btn-atmos4','cfg-btn-atmos6'].forEach(id=>document.getElementById(id).classList.remove('active'));['cfg-surround-model-wrap','cfg-atmos-model-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});['cfg-surround-model','cfg-atmos-model'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});cfgSurroundSec.style.display='';const cfgSurrOpts=document.getElementById('cfg-surround-options');if(cfgSurrOpts)cfgSurrOpts.style.display='';const isBar=sel.cat==='Soundbars';const cfgRearBtn=document.getElementById('cfg-btn-rear');if(cfgRearBtn)cfgRearBtn.style.display=isBar?'none':'';const cfgAtmosSec=document.getElementById('cfg-atmos-section');if(cfgAtmosSec)cfgAtmosSec.style.display=isBar?'none':'';}else{cfgSurroundSec.style.display='none';}const cfgSubSec=document.getElementById('cfg-sub-section');if(!noSub()){const allSubs=uniqueSub(isPackN?getFiltered('spk'):getFiltered('prod'));rebuildGroup('cfg-g-sub',allSubs);document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));cfgSubSec.style.display='';}else{cfgSubSec.style.display='none';}document.getElementById('n-config').textContent='03 — Configuration';document.getElementById('n-config').classList.remove('done');showStep('s-config');}
 function afterProduct(){if(THEATER_PACKAGES[sel.prod]){sel.ohm=null;sel.spk=null;sel.sub=null;['s-ohm','s-spk','s-sub'].forEach(id=>{document.getElementById(id).style.display='none';});renderResult();setAddProjectBtn(true);updateProgress();updateToolbar();return;}showConfigStep();updateProgress();updateToolbar();}
 document.getElementById('cfg-g-ohm').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;document.querySelectorAll('#cfg-g-ohm button').forEach(b=>b.classList.remove('active'));e.target.classList.add('active');sel.ohm=e.target.dataset.val;sel.spk=null;sel.sub=null;document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));rebuildGroup('cfg-g-spk',uniqueSpk(getFiltered('ohm')));document.querySelectorAll('#cfg-g-spk button').forEach(b=>b.classList.remove('active'));renderResult();updateProgress();updateToolbar();});
 document.getElementById('cfg-g-spk').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;document.querySelectorAll('#cfg-g-spk button').forEach(b=>b.classList.remove('active'));e.target.classList.add('active');sel.spk=e.target.dataset.val;sel.sub=null;document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));if(!noSub()){const effOhm=singleOhm()||sel.ohm;const validSubs=uniqueSub(getFiltered('spk')).filter(sv=>{const m=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&d.sub===sv);return m&&String(m.res).toUpperCase()!=='N/A';});rebuildGroup('cfg-g-sub',validSubs);}document.getElementById('n-config').classList.add('done');if(!history.includes('s-config'))history.push('s-config');renderResult();updateProgress();updateToolbar();});
 document.getElementById('cfg-g-sub').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;document.querySelectorAll('#cfg-g-sub button').forEach(b=>b.classList.remove('active'));e.target.classList.add('active');sel.sub=parseInt(e.target.dataset.val);document.getElementById('n-config').classList.add('done');if(!history.includes('s-config'))history.push('s-config');renderResult();updateProgress();updateToolbar();});
 function afterSpeakers(){if(sel.cat==='Performance & Theater'){window._surroundSel=[];document.getElementById('btn-surrounds').classList.remove('active');document.getElementById('btn-rear').classList.remove('active');document.getElementById('surround-toggles').style.display='';document.getElementById('surround-change-btn').style.display='none';document.getElementById('n-surround').classList.remove('done');showStep('s-surround');updateProgress();updateToolbar();}else{proceedToSub();}}
 function proceedToSub(){if(noSub()){sel.sub=null;document.getElementById('s-sub').style.display='none';updateProgress();updateToolbar();renderResult();}else{const effOhm=singleOhm()||sel.ohm;const validSubs=uniqueSub(getFiltered('spk')).filter(sv=>{const m=raw.find(d=>d.cat===sel.cat&&d.prod===sel.prod&&(d.ohm===null||!effOhm||d.ohm===effOhm)&&d.spk===sel.spk&&d.sub===sv);return m&&String(m.res).toUpperCase()!=='N/A';});rebuildGroup('g-sub',validSubs);const stepN=needsOhmStep()?5:4;document.getElementById('n-sub').textContent=`0${stepN} — Subwoofers`;showStep('s-sub');updateProgress();updateToolbar();}}
-function toggleSurround(opt){if(!window._surroundSel)window._surroundSel=[];const idx=window._surroundSel.indexOf(opt);if(idx===-1){window._surroundSel.push(opt);}else{window._surroundSel.splice(idx,1);}const hasSurr=window._surroundSel.includes('surrounds');const hasRear=window._surroundSel.includes('rear');['btn-surrounds','cfg-btn-surrounds'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',hasSurr);});['btn-rear','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',hasRear);});renderResult();}
-function toggleAtmos(count){window._atmosSel=(window._atmosSel===count)?null:count;['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.toggle('active',window._atmosSel===n);});});renderResult();}
+function toggleSurround(opt){if(!window._surroundSel)window._surroundSel=[];const idx=window._surroundSel.indexOf(opt);if(idx===-1){window._surroundSel.push(opt);}else{window._surroundSel.splice(idx,1);}const hasSurr=window._surroundSel.includes('surrounds');const hasRear=window._surroundSel.includes('rear');['btn-surrounds','cfg-btn-surrounds'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',hasSurr);});['btn-rear','cfg-btn-rear'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',hasRear);});const hasSurrOrRear=hasSurr||hasRear;['cfg-surround-model-wrap','surround-model-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=hasSurrOrRear?'':'none';});if(!hasSurrOrRear){window._surroundModel=null;['cfg-surround-model','surround-model'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}renderResult();}
+function toggleAtmos(count){window._atmosSel=(window._atmosSel===count)?null:count;['2','4','6'].forEach(n=>{['btn-atmos','cfg-btn-atmos'].forEach(p=>{const el=document.getElementById(p+n);if(el)el.classList.toggle('active',window._atmosSel===n);});});['cfg-atmos-model-wrap','atmos-model-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=window._atmosSel?'':'none';});if(!window._atmosSel){window._atmosModel=null;['cfg-atmos-model','atmos-model'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}renderResult();}
+function onSurroundModelChange(elId){window._surroundModel=document.getElementById(elId).value||null;['cfg-surround-model','surround-model'].forEach(id=>{if(id!==elId){const el=document.getElementById(id);if(el)el.value=window._surroundModel||'';}});renderResult();}
+function onAtmosModelChange(elId){window._atmosModel=document.getElementById(elId).value||null;['cfg-atmos-model','atmos-model'].forEach(id=>{if(id!==elId){const el=document.getElementById(id);if(el)el.value=window._atmosModel||'';}});renderResult();}
 function proceedFromSurround(){document.getElementById('surround-toggles').style.display='none';document.getElementById('surround-change-btn').style.display='';document.getElementById('n-surround').classList.add('done');history.push('s-surround');proceedToSub();}
-function changeSurround(){window._surroundSel=[];window._atmosSel=null;document.getElementById('btn-surrounds').classList.remove('active');document.getElementById('btn-rear').classList.remove('active');['2','4','6'].forEach(n=>document.getElementById('btn-atmos'+n).classList.remove('active'));document.getElementById('surround-toggles').style.display='';document.getElementById('surround-change-btn').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('s-sub').style.display='none';sel.sub=null;document.getElementById('result-area').innerHTML='';setAddProjectBtn(false);setHeightBtn(false);history=history.filter(h=>h!=='s-surround');}
+function changeSurround(){window._surroundSel=[];window._atmosSel=null;window._surroundModel=null;window._atmosModel=null;document.getElementById('btn-surrounds').classList.remove('active');document.getElementById('btn-rear').classList.remove('active');['2','4','6'].forEach(n=>document.getElementById('btn-atmos'+n).classList.remove('active'));['surround-model-wrap','atmos-model-wrap','cfg-surround-model-wrap','cfg-atmos-model-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});['surround-model','atmos-model','cfg-surround-model','cfg-atmos-model'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('surround-toggles').style.display='';document.getElementById('surround-change-btn').style.display='none';document.getElementById('n-surround').classList.remove('done');document.getElementById('s-sub').style.display='none';sel.sub=null;document.getElementById('result-area').innerHTML='';setAddProjectBtn(false);setHeightBtn(false);history=history.filter(h=>h!=='s-surround');}
 // ── P&T Custom Flow ───────────────────────────────────────────────────
 var _ptActive=false;
 var _PT_STEPS=['lrc','surround','rear','atmos','subs'];
@@ -1579,8 +1871,8 @@ function renderPtResult(){
 }
 // ── End P&T Custom Flow ───────────────────────────────────────────────
 
-document.getElementById('g-cat').addEventListener('click',e=>{const btn=e.target.closest('.btn-cat');if(!btn)return;resetFrom('s-cat');ptResetAll();sel.cat=btn.dataset.val;btn.classList.add('active');collapse('g-cat');document.getElementById('resource-btns').style.display='none';document.getElementById('n-cat').classList.add('done');history.push('s-cat');if(sel.cat==='Performance & Theater'){initPtFlow();return;}if(sel.cat==='Architectural Speakers'){rebuildDirectorGroup('g-prod');}else{rebuildGroup('g-prod',catProds[sel.cat]);}const bSec=document.getElementById('bundles-section');bSec.style.display='none';showStep('s-prod');updateProgress();updateToolbar();});
-document.getElementById('g-prod').addEventListener('click',e=>{const btn=e.target.closest('.btn-opt');if(!btn)return;resetFrom('s-prod');sel.prod=btn.dataset.val;window._dirModel=btn.dataset.model||null;btn.classList.add('active');if(btn.classList.contains('dir-model-btn')){const card=btn.closest('.dir-card');if(card)card.classList.add('active','open');}collapse('g-prod');document.getElementById('bundles-section').style.display='none';document.getElementById('n-prod').classList.add('done');history.push('s-prod');updateCatBtnImg(sel.prod);afterProduct();});
+document.getElementById('g-cat').addEventListener('click',e=>{const btn=e.target.closest('.btn-cat');if(!btn)return;resetFrom('s-cat');ptResetAll();sel.cat=btn.dataset.val;btn.classList.add('active');collapse('g-cat');document.getElementById('resource-btns').style.display='none';document.getElementById('n-cat').classList.add('done');history.push('s-cat');if(sel.cat==='Performance & Theater'){initPtFlow();return;}if(sel.cat==='Architectural Speakers'){rebuildDirectorGroup('g-prod');}else if(sel.cat==='Professional'){rebuildProfessionalGroup('g-prod');}else{rebuildGroup('g-prod',catProds[sel.cat]);}const bSec=document.getElementById('bundles-section');bSec.style.display='none';showStep('s-prod');updateProgress();updateToolbar();});
+document.getElementById('g-prod').addEventListener('click',e=>{const btn=e.target.closest('.btn-opt');if(!btn)return;resetFrom('s-prod');sel.prod=btn.dataset.val;window._dirModel=btn.dataset.model||null;btn.classList.add('active');if(btn.classList.contains('dir-model-btn')||btn.classList.contains('prof-model-btn')){const card=btn.closest('.dir-card');if(card)card.classList.add('active','open');}collapse('g-prod');document.getElementById('bundles-section').style.display='none';document.getElementById('n-prod').classList.add('done');history.push('s-prod');updateCatBtnImg(sel.prod);afterProduct();});
 document.getElementById('g-bundles').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-prod');sel.prod=e.target.dataset.val;e.target.classList.add('active');document.querySelectorAll('#g-prod button').forEach(b=>b.style.display='none');collapse('g-bundles');document.getElementById('n-prod').classList.add('done');history.push('s-prod');afterProduct();});
 document.getElementById('g-ohm').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-ohm');sel.ohm=e.target.dataset.val;e.target.classList.add('active');collapse('g-ohm');document.getElementById('n-ohm').classList.add('done');history.push('s-ohm');goToSpeakers();updateProgress();updateToolbar();});
 document.getElementById('g-spk').addEventListener('click',e=>{if(!e.target.classList.contains('btn-opt'))return;resetFrom('s-spk');sel.spk=e.target.dataset.val;e.target.classList.add('active');collapse('g-spk');document.getElementById('n-spk').classList.add('done');history.push('s-spk');afterSpeakers();});
@@ -2088,9 +2380,17 @@ function closeDispersion(){
     'LSR60':75,
     'LSR80':100,
     'LS44':30,
-    'LS64':50
-    // ALSB64, ALSB85, ALSB106: TBD
+    'LS64':50,
+    'ALSB64':50,'ALSB85':50,'ALSB106':100,
+    // Pendants
+    'PP50':30,'PP60':60,'PP80':60,
+    // In-Ceiling
+    'PC50':30,'PC60':60,'PC80':60,
+    // PS Landscape
+    'PS50':30,'PS60':60,'PS80':80
   };
+  var ALSB_SAT_WATTS={'ALSB64':50,'ALSB85':50,'ALSB106':100};
+  var ALSB_SUB_WATTS={'ALSB64':50,'ALSB85':100,'ALSB106':200};
   // Per-product sub 70v watt draw. Add other product subs as data is confirmed.
   var SUB_70V_WATTS={
     'LSH40':300,
@@ -2101,7 +2401,11 @@ function closeDispersion(){
     'LSR80':300,
     'LS44':300,
     'LS64':300,
-    'ASM63':300
+    'ASM63':300,
+    // Pendants (PPSUB8)
+    'PP50':120,'PP60':120,'PP80':120,
+    // In-Ceiling (PCSUB8)
+    'PC50':100,'PC60':100,'PC80':100
   };
   function getChSpecs(model,ohm){
     var sp=AMP_SPECS[model];if(!sp)return['—','—'];
@@ -2209,7 +2513,7 @@ function closeDispersion(){
     var isBar=cat==='Soundbars';
     var spkItems;
     if(isBar){spkItems=spkVal==='LCR'?[{l:'Left',t:'L'},{l:'Center',t:'C'},{l:'Right',t:'R'}]:spkVal==='L&R'?[{l:'Left',t:'L'},{l:'Right',t:'R'}]:[{l:'Soundbar',t:''}];}
-    else{spkItems=[];if(!(extraGroups&&extraGroups.length)){var ns=parseInt(spkVal)||2;for(var si2=0;si2<ns;si2++)spkItems.push({l:(prod||'Speaker')+' '+(si2+1),t:'',nodeType:'speakerNode'});}}
+    else{spkItems=[];if(!(extraGroups&&extraGroups.length)){var ns=parseInt(spkVal)||2;for(var si2=0;si2<ns;si2++)spkItems.push({l:(prod||'Speaker')+' #'+(si2+1),t:'',nodeType:'speakerNode'});}}
     if(extraGroups&&extraGroups.length){extraGroups.forEach(function(grp){var _gl=grp.labels||[];for(var _gi=0;_gi<grp.spkCount;_gi++){spkItems.push({l:_gl[_gi]||('Ext '+(spkItems.length+1)),t:'',nodeType:'speakerNode',extProd:grp.prod||''});}});}
     var numSubs=parseInt(subCount)||0;
     var isBSub800=selectedSub==='BLENDSSUB800';
@@ -2282,6 +2586,7 @@ function closeDispersion(){
       // ASM5600 speakers are bridged; ALSB64/85/106 are biamp (Sat + Sub) — each speaker uses 2 channels
       var isAlsb=(['ALSB64','ALSB85','ALSB106'].indexOf(outProd)!==-1);
       var needCh=(!isSub&&(outProd==='ASM5600'||isAlsb))?2:1;
+      var isArchNoDnu=(cat==='Architectural Speakers'&&parseInt(spkVal)===6&&numSubs===2);
       var assignedChs=[];
       for(var nc=0;nc<needCh;nc++){
         var pch=null;
@@ -2322,7 +2627,8 @@ function closeDispersion(){
           }
           // Sub on a 250.x amp: show 250w, DNU-grey the bridged pair channel
           // Exception: BLENDSSUB800 drivers each use 125w stereo (no bridge)
-          if(isSub&&!isBSub800&&pch&&pch.model&&/^250\./.test(pch.model)){
+          // Exception: Architectural Speakers 6spk+2sub — each item gets its own channel, no DNU
+          if(isSub&&!isBSub800&&!isArchNoDnu&&pch&&pch.model&&/^250\./.test(pch.model)){
             pch.chRef.watt='250w';
             if(pool.length>0){
               var nextPos=ptr%pool.length;
@@ -2336,6 +2642,15 @@ function closeDispersion(){
           }
         }
         if(pch)assignedChs.push(pch);
+      }
+      // ALSB biamp: stamp per-component wattage onto each assigned channel
+      if(isAlsb&&ALSB_SAT_WATTS[outProd]){
+        if(assignedChs[0]&&assignedChs[0].chRef)assignedChs[0].chRef.watt=ALSB_SAT_WATTS[outProd]+'w';
+        if(assignedChs[1]&&assignedChs[1].chRef)assignedChs[1].chRef.watt=ALSB_SUB_WATTS[outProd]+'w';
+      }
+      // Arch 6spk+2sub: subs→250w, speakers→PowerShare
+      if(isArchNoDnu&&assignedChs[0]&&assignedChs[0].chRef){
+        assignedChs[0].chRef.watt=isSub?'250w':'PowerShare';
       }
       var ch=assignedChs[0]||null;
       var ampId=ch?ch.ampId:'amp-0';

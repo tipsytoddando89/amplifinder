@@ -76,6 +76,13 @@ FILES = [
     ("assests/SBR4_Black_Netsuite_02-23-26.png", "assests/SBR4_Black_Netsuite_02-23-26.png", "base64"),
     ("assests/ASBR5.1506 1.png", "assests/ASBR5.1506 1.png", "base64"),
     ("assests/ASBR6.1509 1.png", "assests/ASBR6.1509 1.png", "base64"),
+    # Professional product images
+    ("assests/PC60 angle.png", "assests/PC60 angle.png", "base64"),
+    ("assests/[PS50]-Black-9508.png", "assests/[PS50]-Black-9508.png", "base64"),
+    ("assests/[PS60]-Black-9505.png", "assests/[PS60]-Black-9505.png", "base64"),
+    ("assests/[PS80]-Black-9501.png", "assests/[PS80]-Black-9501.png", "base64"),
+    ("assests/[ 6.5HD-AW-S ] Left PNG- WHITE (2).png", "assests/[ 6.5HD-AW-S ] Left PNG- WHITE (2).png", "base64"),
+    ("assests/[ 6.5HD2-AW-L ] Right-Black-7064.png", "assests/[ 6.5HD2-AW-L ] Right-Black-7064.png", "base64"),
     # Dispersion images
     ("assests/lsr80-disp.png", "assests/lsr80-disp.png", "base64"),
     ("assests/12bpig-disp.png", "assests/12bpig-disp.png", "base64"),
